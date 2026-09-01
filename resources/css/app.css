@@ -5,6 +5,24 @@
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
+@font-face {
+    font-family: 'DePixelKlein';
+    src: url('../fonts/DePixelKlein.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KemcoPixelBold';
+    src: url('../fonts/Kemco Pixel Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -12,6 +30,8 @@
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+    --font-depixel: 'DePixelKlein', sans-serif;
+    --font-kemco: 'KemcoPixelBold', sans-serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -95,6 +115,7 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.87 0 0);
+    --merah-avenge: oklch(38.559% 0.14924 20.3);
 }
 
 .dark {
@@ -139,5 +160,66 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    
+    .animate-marquee {
+        animation: marquee 55s linear infinite;
+    }
+}
+
+@layer components {
+    .btn-pixelated {
+        --btn-color: theme('colors.amber.500');
+        --btn-dark: color-mix(in srgb, var(--btn-color) 65%, black);
+
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: .5rem 2rem;
+        font-size: 0.875rem;
+        font-family: 'DePixelKlein', system-ui;
+        text-transform: uppercase;
+        color: #ffffff;
+        background-color: var(--btn-color);
+
+        border: none;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.05s steps(2);
+
+        box-shadow:
+            inset 0 2px 0 0 rgba(255, 255, 255, 0.4),
+            inset 0 -2px 0 0 var(--btn-dark),
+            0 -2px 0 0 #000,
+            0 2px 0 0 #000,
+            -2px 0 0 0 #000,
+            2px 0 0 0 #000,
+
+            0 4px 0 0 #000;
+
+        margin-bottom: 4px;
+    }
+
+    .btn-pixelated:hover {
+        filter: brightness(1.08);
+    }
+
+    .btn-pixelated:active {
+        transform: translateY(2px);
+        box-shadow:
+            inset 0 1px 0 0 rgba(0, 0, 0, 0.2),
+            inset 0 -1px 0 0 var(--btn-dark),
+            0 -2px 0 0 #000,
+            0 2px 0 0 #000,
+            -2px 0 0 0 #000,
+            2px 0 0 0 #000,
+            0 2px 0 0 #000;
     }
 }
