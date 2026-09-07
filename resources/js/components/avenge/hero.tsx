@@ -8,7 +8,7 @@ import SiluetIfaruzImg from '../../../assets/SiluetIfaruz.png';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-export const HeroSection = () => {
+export const    HeroSection = () => {
     const container = useRef(null);
     const gunung1 = useRef(null);
     const gunung2 = useRef(null);
