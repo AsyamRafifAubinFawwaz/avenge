@@ -24,6 +24,9 @@ import { dashboard } from '@/routes';
 import { index as categoriesIndex } from '@/actions/App/Http/Controllers/SuperAdmin/CategoryController';
 import type { NavItem } from '@/types';
 import { index as newsIndex } from '@/actions/App/Http/Controllers/SuperAdmin/NewsController';
+import TextureLeft from '../../assets/dashboard/left-texture-sidebar.png';
+import TextureCenter from '../../assets/dashboard/center-texture-sidebar.png';
+import TextureRight from '../../assets/dashboard/right-texture-sidebar.png';
 
 export function AppSidebar() {
     const page = usePage();
@@ -50,8 +53,19 @@ export function AppSidebar() {
     ];
 
     return (
-        <Sidebar collapsible="icon" variant="inset">
-            <SidebarHeader>
+        <Sidebar
+            collapsible="icon"
+            variant="inset"
+            className="sidebar-texture "
+            style={
+                {
+                    '--sidebar-bg-left': `url(${TextureLeft})`,
+                    '--sidebar-bg-center': `url(${TextureCenter})`,
+                    '--sidebar-bg-right': `url(${TextureRight})`,
+                } as React.CSSProperties
+            }
+        >
+            <SidebarHeader className="h-20 justify-center py-2 group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>

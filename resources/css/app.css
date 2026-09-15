@@ -23,6 +23,10 @@
     display: none;
 }
 
+body {
+    font-family: 'DePixelKlein', sans-serif;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -107,7 +111,7 @@
     --chart-4: oklch(0.828 0.189 84.429);
     --chart-5: oklch(0.769 0.188 70.08);
     --radius: 0.625rem;
-    --sidebar: #81081F;
+    --sidebar: #111216;
     --sidebar-foreground: #facc15;
     --sidebar-primary: #A90C1F;
     --sidebar-primary-foreground: #ffffff;
@@ -163,16 +167,27 @@
     }
 
     @keyframes marquee {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
     }
-    
+
     .animate-marquee {
         animation: marquee 55s linear infinite;
     }
 }
 
 @layer components {
+    .table-header-background {
+        background-image: url('../assets/dashboard/background-table-header.png');
+        background-size: contain;
+        image-rendering: pixelated;
+    }
+
     .btn-pixelated {
         --btn-color: theme('colors.amber.500');
         --btn-dark: color-mix(in srgb, var(--btn-color) 65%, black);
@@ -222,4 +237,291 @@
             2px 0 0 0 #000,
             0 2px 0 0 #000;
     }
+}
+
+/* css buat sidebar */
+.sidebar-texture>[data-sidebar="sidebar"] {
+    position: relative;
+    overflow: hidden;
+    background-color: #111216;
+
+    /* Menambahkan linear-gradient di depan --sidebar-bg-center untuk mempergelapnya */
+    background-image:
+        var(--sidebar-bg-left),
+        linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(255, 0, 0, 0)),
+        var(--sidebar-bg-center),
+        var(--sidebar-bg-right);
+
+    /* Posisi, repeat, dan size harus ditambah satu nilai di posisi kedua untuk linear-gradient */
+    background-position: left top, 45px top, 45px top, right top;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+    background-size: auto 100%, calc(100% - 90px) 100%, calc(100% - 90px) 100%, auto 100%;
+
+    image-rendering: pixelated;
+}
+
+/* Background dan teks untuk menu sidebar (normal, hover, aktif) */
+[data-sidebar="menu-button"] {
+    color: #ffffff !important;
+}
+
+[data-sidebar="menu-button"][data-active="true"],
+[data-sidebar="menu-button"]:hover {
+    background-image: url('../assets/dashboard/active-item-background.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    image-rendering: pixelated;
+    color: #ffffff !important;
+}
+
+/* Jangan gunakan background image untuk tombol di header dan footer */
+[data-sidebar="header"] [data-sidebar="menu-button"]:hover,
+[data-sidebar="header"] [data-sidebar="menu-button"][data-active="true"],
+[data-sidebar="footer"] [data-sidebar="menu-button"]:hover,
+[data-sidebar="footer"] [data-sidebar="menu-button"][data-active="true"] {
+    background-image: none !important;
+    background-color: transparent !important;
+}
+
+/* Background untuk header dan footer sidebar */
+[data-sidebar="header"],
+[data-sidebar="footer"] {
+    background-image:
+        url('../assets/dashboard/background-border-left.png'),
+        url('../assets/dashboard/background-border-right.png'),
+        url('../assets/dashboard/background-border-center.png'),
+        linear-gradient(#0A0F14, #0A0F14);
+    background-color: transparent;
+    /* Ubah ukuran warna (layer 4) agar nge-fill, layer 1-3 untuk bingkai */
+    background-size:
+        auto 100%,
+        auto 100%,
+        auto 100%,
+        calc(100% - 8px) calc(100% - 8px);
+    background-position:
+        left top,
+        right top,
+        center top,
+        center;
+    background-repeat:
+        no-repeat,
+        no-repeat,
+        repeat-x,
+        no-repeat;
+    background-origin: border-box, border-box, border-box, border-box;
+    background-clip: border-box, border-box, border-box, border-box;
+    image-rendering: pixelated;
+}
+
+[data-sidebar="header"]:hover,
+[data-sidebar="footer"]:hover {
+    background-image:
+        url('../assets/dashboard/background-border-left.png'),
+        url('../assets/dashboard/background-border-right.png'),
+        url('../assets/dashboard/background-border-center.png'),
+        linear-gradient(#780221, #780221);
+}
+
+[data-slot="sidebar-inset"] {
+    background-color: #0A0F14 !important;
+}
+
+.dashboard-content {
+    position: relative;
+    background-image: url('../assets/dashboard/paperframe-background-center.png');
+    background-size: auto 100%;
+    background-position: center top;
+    background-repeat: repeat-x;
+    image-rendering: pixelated;
+    padding: 2rem;
+}
+
+.dashboard-content::before,
+.dashboard-content::after {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    content: '';
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    image-rendering: pixelated;
+}
+
+.dashboard-content::before {
+    background-image: url('../assets/dashboard/paperframe-background-left.png');
+    background-position: left top;
+}
+
+.dashboard-content::after {
+    background-image: url('../assets/dashboard/paperframe-background-right.png');
+    background-position: right top;
+}
+
+.dashboard-content>* {
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-section-header {
+    background-color: #0a0f14;
+    background-image:
+        url('../assets/dashboard/paperframe-header-background-left.png'),
+        url('../assets/dashboard/paperframe-header-background-center.png'),
+        url('../assets/dashboard/paperframe-header-background-right.png');
+    background-position: left top, center top, right top;
+    background-repeat: no-repeat, repeat-x, no-repeat;
+    background-size: auto 100%, auto 100%, auto 100%;
+    image-rendering: pixelated;
+    padding: 0.75rem 1.5rem;
+    color: #ffffff;
+    font-family: 'DePixelKlein', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.app-topbar {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    margin-top: 0;
+    background-color: #0a0f14;
+    background-image: url('../assets/dashboard/background-border-2-center.png');
+    background-position: center top;
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    image-rendering: pixelated;
+}
+
+.app-topbar::before,
+.app-topbar::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    content: '';
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    image-rendering: pixelated;
+}
+
+.app-topbar::before {
+    background-image: url('../assets/dashboard/background-border-2-left.png');
+    background-position: left top;
+}
+
+.app-topbar::after {
+    background-image: url('../assets/dashboard/background-border-2-right.png');
+    background-position: right top;
+}
+
+.app-topbar>* {
+    position: relative;
+    z-index: 1;
+}
+
+.app-sidebar-inset {
+    margin-top: 0 !important;
+}
+
+.app-topbar-switch {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    color: #ffffff !important;
+    image-rendering: pixelated;
+}
+
+.app-topbar-switch:hover {
+    background: transparent !important;
+    color: #ffffff !important;
+}
+
+.app-topbar .app-breadcrumbs {
+    color: #ffffff;
+}
+
+.app-topbar .app-breadcrumbs a {
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.app-topbar .app-breadcrumbs a:hover,
+.app-topbar .app-breadcrumbs [data-slot='breadcrumb-page'] {
+    color: #facc15;
+}
+
+.dashboard-admin-page {
+    background: #0a0f14;
+    color: #ffffff;
+}
+
+.dashboard-admin-page .dashboard-content {
+    min-height: 0;
+}
+
+.dashboard-admin-page .dashboard-content table {
+    color: #ffffff;
+    border-collapse: separate;
+    border-spacing: 0 3px;
+}
+
+.dashboard-admin-page .dashboard-content thead {
+    /* background-color: rgba(10, 15, 20, 0.72); */
+}
+
+.dashboard-admin-page .dashboard-content tbody tr {
+    border: 1px solid #5c3828;
+    transition: border-color 100ms steps(2), color 100ms steps(2);
+}
+
+.dashboard-admin-page .dashboard-content tbody tr:hover {
+    border-color: #a66a3f;
+}
+
+.dashboard-admin-page .dashboard-content input,
+.dashboard-admin-page .dashboard-content select {
+    border-color: rgba(255, 255, 255, 0.22);
+    background: #0a0f14;
+    color: #ffffff;
+}
+
+.pixel-button {
+    --pixel-button-color: #790221;
+
+    background-color: var(--pixel-button-color);
+    background-image: none;
+    border: 0;
+    border-radius: 0;
+    color: #ffffff;
+    image-rendering: pixelated;
+    text-shadow: 1px 1px 0 #7f0000;
+    -webkit-mask-image: url('../assets/dashboard/base-button.png');
+    mask-image: url('../assets/dashboard/base-button.png');
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+.pixel-button--default {
+    --pixel-button-color: #790221;
+}
+
+.pixel-button--gold {
+    --pixel-button-color: #c58b16;
+}
+
+.pixel-button--green {
+    --pixel-button-color: #28734a;
+}
+
+.pixel-button:hover {
+    background-color: color-mix(in srgb, var(--pixel-button-color) 88%, white);
 }
