@@ -10,8 +10,8 @@ export default function WorldSection() {
             </div>
 
             <div className="relative w-full min-h-screen pb-24 flex items-center flex-col bg-[#A90C1F]">
-                <p className="font-depixel text-2xl mt-16 text-white text-center max-w-4xl px-4 z-10 relative">
-                    Lorem ipsum dolor sit amet adispicing polije sip sip sip dupaktiting jos jis solid solid solid
+                <p className="font-depixel text-lg mt-16 text-white text-center max-w-4xl px-4 z-10 relative">
+                    Lorem ipsum dolor sit amet adispicing polije sip sip sip dupaktiting jos jis solid solid solid 
                 </p>
 
                 <img

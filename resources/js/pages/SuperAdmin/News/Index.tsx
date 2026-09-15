@@ -127,34 +127,29 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                 </AlertDialogContent>
             </AlertDialog>
 
-            <div className="flex flex-col gap-8 p-6 bg-[url('https://pics.craiyon.com/2023-06-24/4f9ad32060a14942ac3cc523c917b6ec.webp')] bg-cover bg-center bg-no-repeat">
-                <div className="flex items-center justify-between">
+            <div className="dashboard-admin-page flex h-full flex-1 flex-col gap-4 p-4">
+                {/* Header */}
+                <div className="dashboard-section-header flex items-center justify-between gap-4">
                     <div>
-                        <h1 className="font-kemco text-3xl text-amber-400 drop-shadow-[4px_4px_0_rgba(0,0,0,1)]">
-                            BERITA
-                        </h1>
-                        <p className="font-depixel text-[10px] text-amber-400/80 mt-2 uppercase tracking-wider">
+                        <h1 className="font-kemco text-base leading-tight tracking-normal text-white">Berita</h1>
+                        <p className="mt-1 font-sans text-xs font-normal normal-case tracking-normal text-white/65">
                             Total {news.total} berita
                         </p>
                     </div>
-                    <Link
-                        href={create.url()}
-                        className="flex items-center gap-2 font-depixel text-xs bg-amber-500 text-black px-6 py-3 border-4 border-black transition-all hover:bg-amber-400 hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[6px] active:translate-y-[6px]"
-                        style={{ boxShadow: '6px 6px 0 0 #000' }}
-                    >
-                        <Plus className="size-4 stroke-[3]" />
-                        TAMBAH BERITA
-                    </Link>
+                    <Button asChild className="pixel-button pixel-button--default shrink-0">
+                        <Link href={create.url()}>
+                            <Plus className="size-4" />
+                            Tambah Berita
+                        </Link>
+                    </Button>
                 </div>
 
-                <div className="flex flex-wrap gap-4">
-                    <form
-                        onSubmit={handleSearch}
-                        className="flex min-w-[200px] flex-1 gap-3"
-                    >
+                {/* Filter */}
+                <div className="flex flex-wrap gap-3">
+                    <form onSubmit={handleSearch} className="flex gap-2 flex-1 min-w-[200px]">
                         <div className="relative flex-1">
-                            <Search className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-amber-400/60" />
-                            <input
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-amber-400/70" />
+                            <Input
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 placeholder="Cari judul berita..."
@@ -162,19 +157,12 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                                 style={{ boxShadow: '6px 6px 0 0 #000' }}
                             />
                         </div>
-                        <button
-                            type="submit"
-                            className="font-depixel text-xs text-amber-400 px-6 py-3 border-4 border-black bg-black hover:bg-neutral-800 hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
-                            style={{ boxShadow: '6px 6px 0 0 #000' }}
-                        >
-                            CARI
-                        </button>
+                        <Button type="submit" className="pixel-button pixel-button--gold">Cari</Button>
                     </form>
                     <select
                         value={filters.category ?? ''}
-                        onChange={(e) => handleCategoryFilter(e.target.value)}
-                        className="bg-[#A90C1F] text-amber-400 border-4 border-black font-depixel text-xs px-4 py-3 focus:outline-none focus:bg-[#81081F] transition-all"
-                        style={{ boxShadow: '6px 6px 0 0 #000' }}
+                        onChange={e => handleCategoryFilter(e.target.value)}
+                        className="px-3 py-2 text-sm outline-none focus-visible:border-amber-400 focus-visible:ring-amber-400/50 focus-visible:ring-[3px]"
                     >
                         <option value="">Semua Kategori</option>
                         {categories.map((cat) => (
@@ -185,37 +173,29 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                     </select>
                 </div>
 
-                <div
-                    className="overflow-hidden border-4 border-black bg-[#81081F]"
-                    style={{ boxShadow: '8px 8px 0 0 #000' }}
-                >
+                {/* Tabel */}
+                <div className="dashboard-content flex-1 overflow-auto">
                     <table className="w-full text-sm">
                         <thead className="bg-black border-b-4 border-black">
                             <tr>
-                                <th className="w-12 px-5 py-4 text-left font-depixel text-[11px] uppercase text-amber-500">#</th>
-                                <th className="w-16 px-5 py-4 text-left font-depixel text-[11px] uppercase text-amber-500">Gambar</th>
-                                <th className="px-5 py-4 text-left font-depixel text-[11px] uppercase text-amber-500">Judul</th>
-                                <th className="px-5 py-4 text-left font-depixel text-[11px] uppercase text-amber-500">Kategori</th>
-                                <th className="w-24 px-5 py-4 text-right font-depixel text-[11px] uppercase text-amber-500">Aksi</th>
+                                <th className="px-4 py-3 text-left font-medium text-amber-400/80 w-12">#</th>
+                                <th className="px-4 py-3 text-left font-medium text-amber-400/80 w-16">Gambar</th>
+                                <th className="px-4 py-3 text-left font-medium text-amber-400/80">Judul</th>
+                                <th className="px-4 py-3 text-left font-medium text-amber-400/80">Kategori</th>
+                                <th className="px-4 py-3 text-right font-medium text-amber-400/80 w-24">Aksi</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y-4 divide-black">
                             {news.data.length === 0 ? (
                                 <tr>
-                                    <td
-                                        colSpan={5}
-                                        className="py-12 text-center font-depixel text-sm text-amber-400/50 uppercase bg-[#A90C1F]"
-                                    >
-                                        [ Belum ada berita ]
+                                    <td colSpan={5} className="py-10 text-center text-white/50">
+                                        Belum ada berita
                                     </td>
                                 </tr>
                             ) : (
                                 news.data.map((item, i) => (
-                                    <tr
-                                        key={item.id}
-                                        className="transition-colors hover:bg-[#A90C1F]"
-                                    >
-                                        <td className="px-5 py-4 font-depixel text-[11px] text-amber-400">
+                                    <tr key={item.id} className="hover:bg-muted/30 transition-colors">
+                                        <td className="px-4 py-3 text-white/50">
                                             {(news.current_page - 1) * 10 + i + 1}
                                         </td>
                                         <td className="px-5 py-4">
@@ -227,20 +207,17 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                                                     style={{ imageRendering: 'pixelated', boxShadow: '2px 2px 0 0 rgba(0,0,0,0.5)' }}
                                                 />
                                             ) : (
-                                                <div className="flex h-12 w-14 items-center justify-center bg-black/80 border-4 border-black" style={{ boxShadow: '2px 2px 0 0 rgba(0,0,0,0.5)' }}>
-                                                    <span className="font-depixel text-[9px] text-amber-500/50">N/A</span>
+                                                <div className="flex h-10 w-12 items-center justify-center bg-white/10 text-xs text-white/45">
+                                                    N/A
                                                 </div>
                                             )}
                                         </td>
-                                        <td className="px-5 py-4">
-                                            <p className="font-depixel text-sm text-amber-400 line-clamp-1 drop-shadow-[2px_2px_0_#000]">{item.title}</p>
-                                            <p className="font-depixel text-[10px] text-amber-400/60 mt-1.5">{item.slug}</p>
+                                        <td className="px-4 py-3">
+                                            <p className="font-medium line-clamp-1">{item.title}</p>
+                                            <p className="font-mono text-xs text-white/45">{item.slug}</p>
                                         </td>
-                                        <td className="px-5 py-4">
-                                            <span
-                                                className="font-depixel text-[10px] text-black bg-amber-500 px-3 py-1.5 uppercase border-2 border-black"
-                                                style={{ boxShadow: '2px 2px 0 #000' }}
-                                            >
+                                        <td className="px-4 py-3">
+                                            <span className="inline-flex items-center bg-amber-400/15 px-2.5 py-0.5 text-xs font-medium text-amber-300">
                                                 {item.category?.name ?? '-'}
                                             </span>
                                         </td>
@@ -248,24 +225,21 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                                             <div className="flex items-center justify-end gap-2">
                                                 <Link
                                                     href={show.url(item.id)}
-                                                    className="p-2 bg-black text-amber-500 border-2 border-black hover:bg-amber-500 hover:text-black transition-all hover:translate-x-[1px] hover:translate-y-[1px]"
-                                                    style={{ boxShadow: '2px 2px 0 0 #000' }}
+                                                    className="p-1.5 text-white/55 transition-colors hover:text-amber-400"
                                                     title="Lihat"
                                                 >
                                                     <Eye className="size-4" />
                                                 </Link>
                                                 <Link
                                                     href={edit.url(item.id)}
-                                                    className="p-2 bg-black text-amber-500 border-2 border-black hover:bg-amber-500 hover:text-black transition-all hover:translate-x-[1px] hover:translate-y-[1px]"
-                                                    style={{ boxShadow: '2px 2px 0 0 #000' }}
+                                                    className="p-1.5 text-white/55 transition-colors hover:text-amber-400"
                                                     title="Edit"
                                                 >
                                                     <Pencil className="size-4" />
                                                 </Link>
                                                 <button
                                                     onClick={() => setDeleteTarget(item)}
-                                                    className="p-2 bg-black text-amber-500 border-2 border-black hover:bg-[#A90C1F] hover:text-white transition-all hover:translate-x-[1px] hover:translate-y-[1px]"
-                                                    style={{ boxShadow: '2px 2px 0 0 #000' }}
+                                                    className="p-1.5 text-white/55 transition-colors hover:text-red-400"
                                                     title="Hapus"
                                                 >
                                                     <Trash2 className="size-4" />
@@ -289,14 +263,11 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                             <Link
                                 key={page}
                                 href={index.url({ query: { ...filters, page } })}
-                                className={`inline-flex h-10 w-10 items-center justify-center font-depixel text-sm border-4 border-black transition-all ${
-                                    news.current_page === page
-                                        ? 'bg-amber-500 text-black translate-x-[2px] translate-y-[2px]'
-                                        : 'bg-[#A90C1F] text-amber-400 hover:bg-black hover:translate-x-[2px] hover:translate-y-[2px]'
-                                }`}
-                                style={{
-                                    boxShadow: news.current_page === page ? '2px 2px 0 0 #000' : '4px 4px 0 0 #000'
-                                }}
+                                className={`inline-flex h-8 w-8 items-center justify-center rounded-md text-sm transition-colors
+                                    ${news.current_page === page
+                                        ? 'bg-[#790221] text-white'
+                                        : 'text-white/60 hover:text-amber-400'
+                                    }`}
                             >
                                 {page}
                             </Link>

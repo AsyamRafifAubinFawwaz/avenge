@@ -174,57 +174,57 @@ export default function CategoriesIndex({ categories }: Props) {
                 </AlertDialogContent>
             </AlertDialog>
 
-            <div className="flex flex-col gap-6 p-6">
-                {/* Header */}
-                <div className="flex items-center justify-between">
+            <div className="dashboard-admin-page flex h-full flex-1 flex-col gap-4 p-4">
+            {/* Header */}
+                <div className="dashboard-section-header flex items-center justify-between gap-4">
                     <div>
-                        <h1 className="text-2xl font-bold tracking-tight">Kategori</h1>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <h1 className="font-kemco text-base leading-tight tracking-normal text-white">Kategori</h1>
+                        <p className="mt-1 font-sans text-xs font-normal normal-case tracking-normal text-white/65">
                             Kelola kategori berita
                         </p>
                     </div>
-                    <Button onClick={() => setAddOpen(true)}>
+                    <Button onClick={() => setAddOpen(true)} className="pixel-button pixel-button--default shrink-0">
                         <Plus className="size-4" />
                         Tambah Kategori
                     </Button>
                 </div>
 
                 {/* Tabel Kategori */}
-                <div className="rounded-xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
+                <div className="dashboard-content flex-1 overflow-auto">
                     <table className="w-full text-sm">
-                        <thead className="bg-muted/50">
+                        <thead className="table-header-background">
                             <tr>
-                                <th className="text-left px-4 py-3 font-medium text-muted-foreground w-12">#</th>
-                                <th className="text-left px-4 py-3 font-medium text-muted-foreground">Nama</th>
-                                <th className="text-left px-4 py-3 font-medium text-muted-foreground">Slug</th>
-                                <th className="text-right px-4 py-3 font-medium text-muted-foreground w-24">Aksi</th>
+                                <th className="px-4 py-3 text-left font-medium text-amber-400/80 w-12">#</th>
+                                <th className="px-4 py-3 text-left font-medium text-amber-400/80">Nama</th>
+                                <th className="px-4 py-3 text-left font-medium text-amber-400/80">Slug</th>
+                                <th className="px-4 py-3 text-right font-medium text-amber-400/80 w-24">Aksi</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-border">
                             {categories.length === 0 ? (
                                 <tr>
-                                    <td colSpan={4} className="text-center py-10 text-muted-foreground">
+                                    <td colSpan={4} className="py-10 text-center text-white/50">
                                         Belum ada kategori
                                     </td>
                                 </tr>
                             ) : (
                                 categories.map((category, i) => (
                                     <tr key={category.id} className="hover:bg-muted/30 transition-colors">
-                                        <td className="px-4 py-3 text-muted-foreground">{i + 1}</td>
+                                        <td className="px-4 py-3 text-white/50">{i + 1}</td>
                                         <td className="px-4 py-3 font-medium">{category.name}</td>
-                                        <td className="px-4 py-3 text-muted-foreground font-mono text-xs">{category.slug}</td>
+                                        <td className="px-4 py-3 font-mono text-xs text-white/50">{category.slug}</td>
                                         <td className="px-4 py-3">
                                             <div className="flex items-center justify-end gap-1">
                                                 <button
                                                     onClick={() => openEdit(category)}
-                                                    className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                                                    className="p-1.5 text-white/55 transition-colors hover:text-amber-400"
                                                     title="Edit"
                                                 >
                                                     <Pencil className="size-3.5" />
                                                 </button>
                                                 <button
                                                     onClick={() => setDeleteTarget(category)}
-                                                    className="p-1.5 rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+                                                    className="p-1.5 text-white/55 transition-colors hover:text-red-400"
                                                     title="Hapus"
                                                 >
                                                     <Trash2 className="size-3.5" />
