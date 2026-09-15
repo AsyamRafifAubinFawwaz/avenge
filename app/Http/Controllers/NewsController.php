@@ -14,21 +14,21 @@ class NewsController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::with(['news' => function ($query) {
-            $query->latest()->take(6);
-        }])
-            ->has('news')
-            ->orderBy('name', 'asc')
-            ->get();
+        $query = News::with('category')->latest();
 
-        $latestNews = News::with('category')
-            ->latest()
-            ->take(5)
-            ->get();
+        if ($request->has('category') && $request->category !== 'all') {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('name', $request->category);
+            });
+        }
+
+        $news = $query->paginate(12)->withQueryString();
+        $categories = Category::orderBy('name', 'asc')->get();
 
         return Inertia::render('News/Index', [
+            'news' => $news,
             'categories' => $categories,
-            'latestNews' => $latestNews,
+            'currentCategory' => $request->category ?? 'all',
         ]);
     }
 

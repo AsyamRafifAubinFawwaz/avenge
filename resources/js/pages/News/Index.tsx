@@ -1,12 +1,12 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { NavbarHome } from '@/components/avenge/navbar';
 import MainLayout from '@/layouts/MainLayouts';
+import CardNewsBG from '../../../assets/CardNewsBG.png';
 
 type Category = {
     id: number;
     name: string;
     slug: string;
-    news: NewsItem[];
 };
 
 type NewsItem = {
@@ -20,9 +20,19 @@ type NewsItem = {
     created_at: string;
 };
 
+type PaginatedNews = {
+    data: NewsItem[];
+    current_page: number;
+    last_page: number;
+    prev_page_url: string | null;
+    next_page_url: string | null;
+    links: { url: string | null; label: string; active: boolean }[];
+};
+
 type Props = {
     categories: Category[];
-    latestNews: NewsItem[];
+    news: PaginatedNews;
+    currentCategory: string;
 };
 
 function stripHtml(html: string) {
@@ -37,87 +47,76 @@ function formatDate(dateStr: string) {
     });
 }
 
-function PixelNewsCard({ item, large = false }: { item: NewsItem; large?: boolean }) {
+function PixelNewsCard({ item }: { item: NewsItem }) {
     return (
         <Link
             href={`/news/${item.slug}`}
-            className={`group relative flex flex-col overflow-hidden bg-[#1a0509] cursor-pointer
-                transition-transform duration-100 active:translate-y-[2px]
-                ${large ? 'min-h-[360px]' : 'min-h-[220px]'}
-            `}
-            style={{
-                boxShadow: `
-                    inset 0 2px 0 0 rgba(255,255,255,0.08),
-                    inset 0 -2px 0 0 rgba(0,0,0,0.5),
-                    0 -2px 0 0 #000,
-                    0 2px 0 0 #000,
-                    -2px 0 0 0 #000,
-                    2px 0 0 0 #000,
-                    0 4px 0 0 #000
-                `,
-                marginBottom: '4px',
-            }}
+            className="group block cursor-pointer select-none"
         >
-            {/* Image */}
-            <div className={`relative overflow-hidden flex-shrink-0 ${large ? 'h-56' : 'h-36'}`}>
-                {item.image ? (
-                    <img
-                        src={`/storage/${item.image}`}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        style={{ imageRendering: 'pixelated' }}
-                    />
-                ) : (
-                    <div className="w-full h-full bg-[#A90C1F]/30 flex items-center justify-center">
-                        <span className="font-depixel text-white/20 text-2xl">[ NO IMG ]</span>
-                    </div>
-                )}
-                {/* Scanline */}
-                <div
-                    className="absolute inset-0 pointer-events-none opacity-20"
-                    style={{
-                        background: 'repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0,0,0,0.4) 2px, rgba(0,0,0,0.4) 4px)',
-                    }}
+            <div
+                className="relative transition-transform duration-100 group-hover:-translate-y-2 group-active:translate-y-[2px]"
+                style={{ filter: 'drop-shadow(4px 6px 0px rgba(0,0,0,0.65))' }}
+            >
+                <img
+                    src={CardNewsBG}
+                    alt=""
+                    aria-hidden
+                    className="w-full h-auto block pointer-events-none"
+                    style={{ imageRendering: 'pixelated' }}
                 />
-                {/* Category badge */}
-                {item.category && (
-                    <span
-                        className="absolute top-2 left-2 font-depixel text-[10px] text-white bg-[#A90C1F] px-2 py-0.5 uppercase"
-                        style={{ boxShadow: '1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000' }}
-                    >
-                        {item.category.name}
-                    </span>
-                )}
-            </div>
 
-            {/* Content */}
-            <div className="flex flex-col gap-1 p-3 flex-1 bg-[#1a0509] group-hover:bg-[#2a0810] transition-colors">
-                <div className="w-full h-[2px] bg-[#A90C1F] mb-1" />
-                <h3 className={`font-depixel text-white leading-relaxed group-hover:text-amber-400 transition-colors line-clamp-2 ${large ? 'text-sm' : 'text-xs'}`}>
-                    {item.title}
-                </h3>
-                {large && (
-                    <p className="font-depixel text-[10px] text-white/50 line-clamp-2 leading-relaxed mt-1">
-                        {stripHtml(item.description)}
-                    </p>
-                )}
-                <div className="mt-auto pt-2 flex items-center justify-between">
-                    <span className="font-depixel text-[9px] text-white/30">{formatDate(item.created_at)}</span>
-                    <span
-                        className="font-depixel text-[9px] text-amber-400 uppercase px-2 py-0.5"
-                        style={{ boxShadow: '1px 1px 0 #000, -1px -1px 0 #000' }}
+                <div className="absolute inset-0 flex flex-col px-[12%] pt-[9%] pb-[13%]">
+                    <div
+                        className="relative w-full flex-[0_0_55%] overflow-hidden bg-[#998568] border-4 border-[#998568]"
+                        style={{
+                            boxShadow: '4px 4px 0px rgba(0,0,0,0.5)',
+                        }}
                     >
-                        READ &gt;
-                    </span>
+                        {item.image ? (
+                            <img
+                                src={`/storage/${item.image}`}
+                                alt={item.title}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                style={{ imageRendering: 'pixelated' }}
+                            />
+                        ) : (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="font-depixel text-[#5a3a00]/40 text-base">[ NO IMG ]</span>
+                            </div>
+                        )}
+                        <div
+                            className="absolute inset-0 pointer-events-none z-10"
+                            style={{
+                                boxShadow: 'inset 5px 5px 8px rgba(0,0,0,0.55), inset -4px -4px 6px rgba(0,0,0,0.2)',
+                            }}
+                        />
+                    </div>
+
+                    <div className="flex flex-col pt-3 flex-1 min-h-0 overflow-hidden">
+                        <p className="font-kemco text-[#030200]/80 text-lg sm:text-xl leading-snug uppercase font-bold line-clamp-2 mb-1">
+                            {item.title}
+                        </p>
+
+                        <p className="font-depixel text-[#030200]/60 text-xs leading-relaxed line-clamp-3 overflow-hidden">
+                            {stripHtml(item.description)}
+                        </p>
+
+                        <div className="flex items-center justify-between mt-auto pt-2">
+                            <p className="font-depixel font-bold text-[#030200]/60 text-[10px] uppercase truncate mr-2">
+                                {item.category?.name}
+                            </p>
+                            <p className="font-depixel text-[#030200]/50 text-[10px] shrink-0">
+                                {formatDate(item.created_at)}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </Link>
     );
 }
 
-export default function NewsIndex({ categories, latestNews }: Props) {
-    const [featured, ...rest] = latestNews;
-
+export default function NewsIndex({ categories, news, currentCategory }: Props) {
     return (
         <>
             <Head title="Berita — Avenge: Last Manager Kopdes" />
@@ -126,16 +125,13 @@ export default function NewsIndex({ categories, latestNews }: Props) {
 
                 <main className="min-h-screen bg-[#0d0203] pt-20">
 
-                    {/* ── Hero banner ── */}
                     <div className="relative w-full bg-[#A90C1F] py-12 px-6 overflow-hidden flex flex-col items-center text-center">
-                        {/* Scanline overlay */}
                         <div
                             className="absolute inset-0 pointer-events-none opacity-10"
                             style={{
                                 background: 'repeating-linear-gradient(to bottom, transparent, transparent 3px, rgba(0,0,0,0.6) 3px, rgba(0,0,0,0.6) 6px)',
                             }}
                         />
-                        {/* Pixel corner deco */}
                         <div className="absolute top-3 left-3 w-4 h-4 bg-amber-500" style={{ boxShadow: '2px 2px 0 #000' }} />
                         <div className="absolute top-3 right-3 w-4 h-4 bg-amber-500" style={{ boxShadow: '-2px 2px 0 #000' }} />
                         <div className="absolute bottom-3 left-3 w-4 h-4 bg-amber-500" style={{ boxShadow: '2px -2px 0 #000' }} />
@@ -149,7 +145,6 @@ export default function NewsIndex({ categories, latestNews }: Props) {
                         </p>
                     </div>
 
-                    {/* Pixel border bottom banner */}
                     <div className="flex flex-col">
                         <div className="w-full bg-[#A90C1F] h-3" />
                         <div className="w-full bg-[#A90C1F80] h-3" />
@@ -157,68 +152,97 @@ export default function NewsIndex({ categories, latestNews }: Props) {
                     </div>
 
                     <div className="max-w-7xl mx-auto px-6 py-14">
-
-                        {/* ── Featured / Latest ── */}
-                        {latestNews.length > 0 && (
-                            <div className="mb-16">
-                                <div className="flex items-center gap-4 mb-8">
-                                    <div className="flex flex-col gap-1">
-                                        <div className="w-3 h-3 bg-[#A90C1F]" style={{ boxShadow: '2px 2px 0 #000' }} />
-                                        <div className="w-3 h-3 bg-amber-500" style={{ boxShadow: '2px 2px 0 #000' }} />
-                                    </div>
-                                    <h2 className="font-kemco text-2xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">
-                                        BERITA TERBARU
-                                    </h2>
-                                    <div className="flex-1 h-[2px] bg-[#A90C1F]" style={{ boxShadow: '0 2px 0 #000' }} />
-                                </div>
-
-                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                                    {featured && (
-                                        <div className="lg:col-span-2">
-                                            <PixelNewsCard item={featured} large />
-                                        </div>
-                                    )}
-                                    <div className="flex flex-col gap-4">
-                                        {rest.slice(0, 3).map(item => (
-                                            <PixelNewsCard key={item.id} item={item} />
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* ── Per-category sections ── */}
-                        {categories.length > 0 ? (
-                            <div className="flex flex-col gap-16">
-                                {categories.map(cat => (
-                                    <div key={cat.id}>
-                                        {/* Category header */}
-                                        <div className="flex items-center gap-3 mb-6">
-                                            <div className="w-2 h-7 bg-amber-500" style={{ boxShadow: '2px 0 0 #000' }} />
-                                            <h2 className="font-kemco text-xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                        
+                        <div className="flex justify-end mb-14">
+                            <div className="relative inline-flex flex-col sm:flex-row items-center gap-4">
+                                {/* <span className="font-depixel text-white/70 text-[10px] uppercase">
+                                    FILTER KATEGORI:
+                                </span> */}
+                                <div className="relative group">
+                                    <select
+                                        value={currentCategory}
+                                        onChange={(e) => {
+                                            if (e.target.value === 'all') {
+                                                router.get('/news');
+                                            } else {
+                                                router.get('/news', { category: e.target.value });
+                                            }
+                                        }}
+                                        className="appearance-none font-kemco text-white text-sm tracking-wider px-5 py-3 pr-12 focus:outline-none cursor-pointer select-none uppercase active:translate-y-[2px] active:translate-x-[2px] transition-transform"
+                                        style={{
+                                            backgroundColor: '#434343',
+                                            border: '2px solid #111',
+                                            boxShadow: 'inset 2px 2px 0 0 #7b7b7b, inset -2px -2px 0 0 #2b2b2b, 4px 4px 0 0 rgba(0,0,0,0.8)',
+                                            borderRadius: '4px',
+                                            textShadow: '2px 2px 0 #000',
+                                        }}
+                                    >
+                                        <option value="all">SEMUA BERITA</option>
+                                        {categories.map((cat) => (
+                                            <option key={cat.id} value={cat.name}>
                                                 {cat.name.toUpperCase()}
-                                            </h2>
-                                            <div className="flex-1 h-[1px] bg-white/10" />
-                                            <Link
-                                                href={`/news?category=${encodeURIComponent(cat.name)}`}
-                                                className="font-depixel text-[10px] text-amber-400 hover:text-white transition-colors uppercase"
-                                            >
-                                                LIHAT SEMUA &gt;
-                                            </Link>
-                                        </div>
-
-                                        {/* Grid */}
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                            {cat.news.map(item => (
-                                                <PixelNewsCard
-                                                    key={item.id}
-                                                    item={{ ...item, category: { id: cat.id, name: cat.name } }}
-                                                />
-                                            ))}
-                                        </div>
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div 
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white font-depixel text-[10px] group-active:translate-y-[calc(-50%+2px)] group-active:translate-x-[2px] transition-transform"
+                                        style={{ textShadow: '2px 2px 0 #000' }}
+                                    >
+                                        ▼
                                     </div>
-                                ))}
+                                </div>
                             </div>
+                        </div>
+
+                        {news.data.length > 0 ? (
+                            <>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                                    {news.data.map(item => (
+                                        <PixelNewsCard key={item.id} item={item} />
+                                    ))}
+                                </div>
+
+                                {(news.prev_page_url || news.next_page_url) && (
+                                    <div className="flex items-center justify-center gap-6 mt-20">
+                                        {news.prev_page_url && (
+                                            <Link
+                                                href={news.prev_page_url}
+                                                className="group relative flex items-center justify-center px-6 py-3 bg-[#434343] active:translate-y-[2px] active:translate-x-[2px] transition-transform select-none"
+                                                style={{
+                                                    border: '2px solid #111',
+                                                    boxShadow: 'inset 2px 2px 0 0 #7b7b7b, inset -2px -2px 0 0 #2b2b2b, 4px 4px 0 0 rgba(0,0,0,0.8)',
+                                                    borderRadius: '4px',
+                                                }}
+                                            >
+                                                <span 
+                                                    className="font-kemco text-white text-lg tracking-wider"
+                                                    style={{ textShadow: '2px 2px 0 #000' }}
+                                                >
+                                                    KEMBALI
+                                                </span>
+                                            </Link>
+                                        )}
+                                        {news.next_page_url && (
+                                            <Link
+                                                href={news.next_page_url}
+                                                className="group relative flex items-center justify-center px-8 py-3 bg-[#434343] active:translate-y-[2px] active:translate-x-[2px] transition-transform select-none"
+                                                style={{
+                                                    border: '2px solid #111',
+                                                    boxShadow: 'inset 2px 2px 0 0 #7b7b7b, inset -2px -2px 0 0 #2b2b2b, 4px 4px 0 0 rgba(0,0,0,0.8)',
+                                                    borderRadius: '4px',
+                                                }}
+                                            >
+                                                <span 
+                                                    className="font-kemco text-white text-lg tracking-wider"
+                                                    style={{ textShadow: '2px 2px 0 #000' }}
+                                                >
+                                                    LAINNYA
+                                                </span>
+                                            </Link>
+                                        )}
+                                    </div>
+                                )}
+                            </>
                         ) : (
                             <div className="flex flex-col items-center gap-4 py-24">
                                 <div
@@ -229,9 +253,9 @@ export default function NewsIndex({ categories, latestNews }: Props) {
                                 </div>
                             </div>
                         )}
+                        
                     </div>
 
-                    {/* Bottom pixel border */}
                     <div className="flex flex-col">
                         <div className="w-full bg-[#A90C1F40] h-3" />
                         <div className="w-full bg-[#A90C1F80] h-3" />

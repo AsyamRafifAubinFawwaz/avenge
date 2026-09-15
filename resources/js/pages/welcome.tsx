@@ -4,6 +4,7 @@ import { HeroSection } from '@/components/avenge/hero';
 import MarqueeSeparator from '@/components/avenge/marquee_separator';
 import { NavbarHome } from '@/components/avenge/navbar';
 import NewsSection from '@/components/avenge/news';
+import TeamSection from '@/components/avenge/team';
 import MainLayout from '@/layouts/MainLayouts';
 import WorldSection from './section/world';
 
@@ -33,6 +34,7 @@ export default function Welcome({ latestNews }: Props) {
                 <WorldSection />
                 <MarqueeSeparator />
                 <CharacterSection />
+                <TeamSection />
                 <NewsSection latestNews={latestNews} />
             </MainLayout>
         </>

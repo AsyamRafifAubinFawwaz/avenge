@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('superadmin')->name('superadmin.')->group(function () {
         Route::resource('categories', CategoryController::class);
         Route::resource('news', SuperAdminNewsController::class);
+        Route::resource('gameplay', App\Http\Controllers\SuperAdmin\GameplayController::class);
     });
 
 });
