@@ -76,7 +76,8 @@ class NewsController extends Controller
 
         News::create($validated);
 
-        return redirect()->back()->with('success', 'Berita berhasil ditambahkan');
+        return redirect()->route('superadmin.news.index')
+            ->with('success', 'Berita berhasil ditambahkan');
     }
 
     /**
@@ -136,7 +137,7 @@ class NewsController extends Controller
 
         $news->update($validated);
 
-        return redirect()->route('news.index')
+        return redirect()->route('superadmin.news.index')
             ->with('success', 'Berita berhasil diupdate');
     }
 
@@ -151,7 +152,7 @@ class NewsController extends Controller
 
         $news->delete();
 
-        return redirect()->route('news.index')
+        return redirect()->route('superadmin.news.index')
             ->with('success', 'Berita berhasil dihapus');
     }
 }
