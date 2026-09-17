@@ -123,7 +123,6 @@ export default function CategoriesIndex({ categories }: Props) {
                 </DialogContent>
             </Dialog>
 
-            {/* Modal Edit */}
             <Dialog open={!!editTarget} onOpenChange={open => { if (!open) { setEditTarget(null); editForm.reset(); } }}>
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>
@@ -155,7 +154,6 @@ export default function CategoriesIndex({ categories }: Props) {
                 </DialogContent>
             </Dialog>
 
-            {/* AlertDialog Konfirmasi Delete */}
             <AlertDialog open={!!deleteTarget} onOpenChange={open => { if (!open) setDeleteTarget(null); }}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
@@ -189,7 +187,6 @@ export default function CategoriesIndex({ categories }: Props) {
                     </Button>
                 </div>
 
-                {/* Tabel Kategori */}
                 <div className="dashboard-content flex-1 overflow-auto">
                     <table className="w-full text-sm">
                         <thead className="table-header-background">
