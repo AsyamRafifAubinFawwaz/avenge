@@ -34,8 +34,8 @@ export default function Welcome({ latestNews }: Props) {
                 <WorldSection />
                 <MarqueeSeparator />
                 <CharacterSection />
-                <TeamSection />
                 <NewsSection latestNews={latestNews} />
+                <TeamSection />
             </MainLayout>
         </>
     );
