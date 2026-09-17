@@ -475,11 +475,27 @@ body {
 }
 
 .dashboard-admin-page .dashboard-content tbody tr {
-    border: 1px solid #5c3828;
     transition: border-color 100ms steps(2), color 100ms steps(2);
 }
 
+.dashboard-admin-page .dashboard-content tbody td {
+    border-top: 1px solid #5c3828;
+    border-bottom: 1px solid #5c3828;
+}
+
+.dashboard-admin-page .dashboard-content tbody td:first-child {
+    border-left: 1px solid #5c3828;
+}
+
+.dashboard-admin-page .dashboard-content tbody td:last-child {
+    border-right: 1px solid #5c3828;
+}
+
 .dashboard-admin-page .dashboard-content tbody tr:hover {
+    border-color: #a66a3f;
+}
+
+.dashboard-admin-page .dashboard-content tbody tr:hover td {
     border-color: #a66a3f;
 }
 
