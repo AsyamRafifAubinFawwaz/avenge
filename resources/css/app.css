@@ -541,3 +541,13 @@ body {
 .pixel-button:hover {
     background-color: color-mix(in srgb, var(--pixel-button-color) 88%, white);
 }
+
+
+
+/* ifaruz css ygy */
+/* di globals.css atau file css lo */
+.ifaruz-pixel-wrapper canvas {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
