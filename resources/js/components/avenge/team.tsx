@@ -65,8 +65,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
             className="group flex cursor-pointer flex-col items-center select-none"
             onClick={() => setIsFlipped(!isFlipped)}
         >
-            {/* 3D Flip Container (Matching size on front and back) */}
-            <div className="relative mb-2 flex h-56 w-full items-center justify-center [perspective:1000px] sm:h-64 md:h-72">
+            <div className="relative mb-2 flex h-52 w-full items-center justify-center [perspective:1000px] sm:h-64 md:h-72">
                 <div
                     className={`relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d] ${
                         isFlipped
@@ -74,7 +73,6 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                             : 'group-hover:[transform:rotateY(180deg)]'
                     }`}
                 >
-                    {/* FRONT SIDE: Pixelated Photo */}
                     <div className="absolute inset-0 flex items-center justify-center [backface-visibility:hidden]">
                         {member.image ? (
                             <img
@@ -102,7 +100,6 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                         )}
                     </div>
 
-                    {/* BACK SIDE: Pixel Bounty Poster Layout */}
                     <div
                         className="absolute inset-0 flex [transform:rotateY(180deg)] flex-col items-center justify-between p-3 sm:p-4 text-center [backface-visibility:hidden]"
                         style={{
@@ -113,9 +110,8 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                             filter: 'drop-shadow(4px 6px 0px rgba(0,0,0,0.6))',
                         }}
                     >
-                        {/* Rectangular Photo Frame (True Pixel Art Border Style) */}
                         <div
-                            className="relative mt-1 flex h-24 sm:h-28 md:h-32 w-[82%] items-center justify-center bg-[#2a1d0f] shrink-0 p-1"
+                            className="relative mt-4 flex h-20 sm:h-28 md:h-32 w-[80%] items-center justify-center bg-[#2a1d0f] shrink-0 p-1"
                             style={{
                                 boxShadow:
                                     '0 -3px 0 0 #3a2815, 0 3px 0 0 #3a2815, -3px 0 0 0 #3a2815, 3px 0 0 0 #3a2815, 0 4px 0 0 rgba(0,0,0,0.5)',
@@ -136,17 +132,10 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                             </div>
                         </div>
 
-                        {/* Name, Quote, and Instagram CTA */}
-                        <div className="mb-0.5 flex w-full flex-col items-center justify-center px-1">
-                            <span className="font-depixel text-[7px] font-bold tracking-widest text-[#4a351b] uppercase">
-                                DEAD OR ALIVE
-                            </span>
-                            <h3 className="font-kemco text-xs sm:text-sm font-bold uppercase tracking-wider text-[#2a1d0f] leading-tight drop-shadow-[1px_1px_0px_rgba(255,255,255,0.4)]">
-                                {member.name.split(' ')[0]}
-                            </h3>
+                        <div className="mb-3 flex w-full flex-col items-center justify-center px-3">
 
                             {member.quote && (
-                                <p className="mt-0.5 font-depixel text-[8px] italic font-medium text-[#4a351b] leading-tight max-w-[95%] drop-shadow-[1px_1px_0px_rgba(255,255,255,0.3)]">
+                                <p className="mt-0.5 font-depixel text-[9px] sm:text-xs italic font-medium text-[#4a351b] leading-tight max-w-[95%] drop-shadow-[1px_1px_0px_rgba(255,255,255,0.3)]">
                                     "{member.quote}"
                                 </p>
                             )}
@@ -157,7 +146,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
-                                    className="btn-pixelated mt-1 inline-flex items-center gap-1 px-2 py-0.5 font-depixel text-[8px] font-bold tracking-wider text-white"
+                                    className="btn-pixelated mt-2 sm:mt-3 inline-flex items-center gap-1 px-4 sm:px-8 py-0.5 font-depixel text-[8px] font-bold tracking-wider text-white"
                                 >
                                     <Instagram className="h-2.5 w-2.5" />
                                     INSTAGRAM
@@ -168,7 +157,6 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                 </div>
             </div>
 
-            {/* Below Photo: Member Name & Role (Shown on front) */}
             <div className={`flex flex-col items-center px-1 text-center transition-opacity duration-300 ${isFlipped ? 'opacity-0' : 'opacity-100'}`}>
                 <h3 className="font-kemco text-sm leading-tight text-white drop-shadow-[2px_2px_0px_#000] sm:text-base">
                     {member.name}
@@ -183,7 +171,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
 
 export default function TeamSection({ members = DEFAULT_MEMBERS }: Props) {
     return (
-        <section className="relative w-full overflow-hidden bg-[#121212]/80 py-16">
+        <section className="relative w-full overflow-hidden bg-[#211818] py-16">
             <div className="mx-auto max-w-6xl px-6">
                 <div className="mb-12 flex items-center justify-center gap-4">
                     <div className="flex flex-col gap-1">
@@ -211,7 +199,7 @@ export default function TeamSection({ members = DEFAULT_MEMBERS }: Props) {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:gap-8 lg:grid-cols-4">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-8 lg:grid-cols-4">
                     {members.map((member) => (
                         <PixelTeamCard key={member.id} member={member} />
                     ))}

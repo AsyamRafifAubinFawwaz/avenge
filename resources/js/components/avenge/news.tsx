@@ -35,7 +35,7 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
             className="group block cursor-pointer select-none"
         >
             <div
-                className="relative transition-transform duration-100 group-hover:-translate-y-2 group-active:translate-y-[2px]"
+                className="relative transition-transform duration-100 group-hover:-translate-y-2 group-active:translate-y-0.5"
                 style={{ filter: 'drop-shadow(4px 6px 0px rgba(0,0,0,0.65))' }}
             >
                 <img
@@ -75,7 +75,7 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
 
 
                     <div className="flex flex-col pt-3 flex-1 min-h-0 overflow-hidden">
-                        <p className="font-kemco text-[#030200]/80 text-lg sm:text-xl leading-snug uppercase font-bold line-clamp-2 mb-1">
+                        <p className="mb-1 line-clamp-2 font-kemco text-base font-bold uppercase leading-snug text-[#030200]/80 sm:text-xl">
                             {item.title}
                         </p>
 
@@ -101,21 +101,23 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
 
 export default function NewsSection({ latestNews = [] }: Props) {
     return (
-        <section className="w-full py-20">
+        <section className="w-full py-20 bg-[#8C1C2A]">
 
             <div className="max-w-6xl mx-auto px-6 pt-4">
-                <div className="flex items-center gap-4 mb-10">
-                    <div className="flex flex-col gap-1">
+                <div className="mb-8 flex items-center justify-between gap-2 sm:mb-10 sm:gap-4">
+                    <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+                        <div className="flex shrink-0 flex-col gap-1">
                         <div className="w-3 h-3 bg-amber-500" style={{ boxShadow: '2px 2px 0 #000' }} />
                         <div className="w-3 h-3 bg-amber-400" style={{ boxShadow: '2px 2px 0 #000' }} />
+                        </div>
+                        <h2 className="min-w-0 truncate font-kemco text-lg leading-tight text-white drop-shadow-[3px_3px_0px_rgba(0,0,0,0.8)] sm:text-2xl lg:text-3xl">
+                            BERITA TERBARU
+                        </h2>
                     </div>
-                    <h2 className="font-kemco text-3xl text-white drop-shadow-[3px_3px_0px_rgba(0,0,0,0.8)]">
-                        BERITA TERBARU
-                    </h2>
-                    <div className="flex-1 h-[2px] bg-black/30" />
+                    <div className="hidden h-0.5 flex-1 bg-black/30 sm:block" />
                     <Link
                         href="/news"
-                        className="btn-pixelated text-xs"
+                        className="btn-pixelated shrink-0 px-4! py-2! text-[10px] sm:px-6! sm:py-2! sm:text-xs lg:px-8!"
                         style={{ '--btn-color': '#000' } as React.CSSProperties}
                     >
                         SEMUA BERITA
@@ -131,7 +133,7 @@ export default function NewsSection({ latestNews = [] }: Props) {
                 )}
 
                 {latestNews.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                    <div className="mx-auto grid w-[88%] max-w-sm grid-cols-1 gap-6 sm:w-full sm:max-w-none sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
                         {latestNews.slice(0, 4).map(item => (
                             <PixelNewsCard key={item.id} item={item} />
                         ))}

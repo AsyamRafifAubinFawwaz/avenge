@@ -92,7 +92,7 @@ export const    HeroSection = () => {
             <div ref={textGroup} className="text-group relative z-20 flex flex-col items-center -translate-y-15 px-4 md:px-0 w-full">
                 <h1 className='text-white text-4xl md:text-5xl lg:text-7xl font-kemco text-center drop-shadow-[4px_8px_1px_rgba(0,0,0,0.5)] '>AVENGE THE VILLAGE <br className="hidden md:block"/>IGNITE THE RESISTANCE</h1>
                 <div className='w-full md:w-2/3 text-center mt-4'>
-                    <p className="font-depixel text-white text-sm md:text-base lg:text-lg drop-shadow-md">Lorem ipsum dolor sit amet adispicing polije sip sip sip dupaktiting jos jis solid solid solid</p>
+                    <p className="font-depixel text-white text-sm md:text-base lg:text-lg drop-shadow-md">Lorem ipsum dolor sit amet adispicing polije sip sip sip dupaktiting </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-5 mt-8 w-full px-4 sm:px-0">
                         <a href="#" className="btn-pixelated w-full sm:w-auto text-center">Pre-Register</a>
                         <a href="#" className="btn-pixelated w-full sm:w-auto text-center">Watch Trailer</a>

@@ -1,11 +1,12 @@
 import { Head } from '@inertiajs/react';
-import CharacterSection from '@/components/avenge/character';
+import Footer from '@/components/avenge/footer';
 import { HeroSection } from '@/components/avenge/hero';
 import MarqueeSeparator from '@/components/avenge/marquee_separator';
 import { NavbarHome } from '@/components/avenge/navbar';
 import NewsSection from '@/components/avenge/news';
 import TeamSection from '@/components/avenge/team';
 import MainLayout from '@/layouts/MainLayouts';
+import TrailerSection from '../components/avenge/trailer';
 import WorldSection from './section/world';
 
 type NewsItem = {
@@ -24,7 +25,6 @@ type Props = {
 };
 
 export default function Welcome({ latestNews }: Props) {
-
     return (
         <>
             <Head title="Avenge: Last Manager Kopdes" />
@@ -33,12 +33,12 @@ export default function Welcome({ latestNews }: Props) {
                 <HeroSection />
                 <WorldSection />
                 <MarqueeSeparator />
-                <CharacterSection />
+                <TrailerSection />
+                {/* <CharacterSection /> */}
                 <NewsSection latestNews={latestNews} />
                 <TeamSection />
+                <Footer />
             </MainLayout>
         </>
     );
 }
-
-
