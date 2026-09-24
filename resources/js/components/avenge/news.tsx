@@ -75,7 +75,7 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
 
 
                     <div className="flex flex-col pt-3 flex-1 min-h-0 overflow-hidden">
-                        <p className="mb-1 line-clamp-2 font-kemco text-base font-bold uppercase leading-snug text-[#030200]/80 sm:text-xl">
+                        <p className="mb-1 line-clamp-2 font-kemco text-xs font-bold uppercase leading-snug text-[#030200]/80 sm:text-xl">
                             {item.title}
                         </p>
 
@@ -133,7 +133,7 @@ export default function NewsSection({ latestNews = [] }: Props) {
                 )}
 
                 {latestNews.length > 0 && (
-                    <div className="mx-auto grid w-[88%] max-w-sm grid-cols-1 gap-6 sm:w-full sm:max-w-none sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:gap-8">
                         {latestNews.slice(0, 4).map(item => (
                             <PixelNewsCard key={item.id} item={item} />
                         ))}

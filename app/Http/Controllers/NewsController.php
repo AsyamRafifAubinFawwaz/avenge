@@ -22,7 +22,7 @@ class NewsController extends Controller
             });
         }
 
-        $news = $query->paginate(12)->withQueryString();
+        $news = $query->paginate(3)->withQueryString();
         $categories = Category::orderBy('name', 'asc')->get();
 
         return Inertia::render('News/Index', [
@@ -62,7 +62,6 @@ class NewsController extends Controller
             ->take(5)
             ->get();
 
-        // Jika tidak ada artikel di kategori yang sama, ambil berita terbaru dari semua kategori
         if ($related->isEmpty()) {
             $related = News::with('category')
                 ->where('id', '!=', $news->id)
