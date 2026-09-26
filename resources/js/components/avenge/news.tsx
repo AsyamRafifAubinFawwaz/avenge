@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
-import CardNewsBG from '../../../assets/CardNewsBG.png';
+import CardNewsBG from '../../../assets/bg_card_news.png';
+import paperNewsBackground from '../../../assets/bg_paper_berita.png';
 
 type NewsItem = {
     id: number;
@@ -32,62 +33,62 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
     return (
         <Link
             href={`/news/${item.slug}`}
-            className="group block cursor-pointer select-none"
+            aria-label={`Baca berita: ${item.title}`}
+            className="group block cursor-pointer select-none rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
         >
             <div
-                className="relative transition-transform duration-100 group-hover:-translate-y-2 group-active:translate-y-[2px]"
+                className="relative transition-transform duration-200 ease-out group-hover:-translate-y-2 group-active:translate-y-0.5"
                 style={{ filter: 'drop-shadow(4px 6px 0px rgba(0,0,0,0.65))' }}
             >
                 <img
                     src={CardNewsBG}
                     alt=""
                     aria-hidden
-                    className="w-full h-auto block pointer-events-none"
+                    className="pointer-events-none absolute inset-0 block h-full w-full select-none"
                     style={{ imageRendering: 'pixelated' }}
                 />
 
-                <div className="absolute inset-0 flex flex-col px-[12%] pt-[9%] pb-[13%]">
+                <div className="relative flex flex-col px-[12%] pt-[9%] pb-[12%]">
                     <div
-                        className="relative w-full flex-[0_0_55%] overflow-hidden bg-[#998568] border-4 border-[#998568]"
+                        className="relative aspect-[4/3] w-full overflow-hidden bg-[#998568]"
                         style={{
-                            boxShadow: '4px 4px 0px rgba(0,0,0,0.5)',
+                            clipPath: 'polygon(0 6px, 6px 6px, 6px 0, calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px))',
                         }}
                     >
                         {item.image ? (
                             <img
                                 src={`/storage/${item.image}`}
                                 alt={item.title}
-                                className="absolute inset-0 w-full h-full object-cover"
+                                className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                                 style={{ imageRendering: 'pixelated' }}
                             />
                         ) : (
                             <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="font-depixel text-[#5a3a00]/40 text-base">[ NO IMG ]</span>
+                                <span className="font-depixel text-xs text-[#5a3a00]/40 sm:text-base">[ NO IMG ]</span>
                             </div>
                         )}
                         <div
-                            className="absolute inset-0 pointer-events-none z-10"
+                            className="pointer-events-none absolute inset-0 z-10"
                             style={{
                                 boxShadow: 'inset 5px 5px 8px rgba(0,0,0,0.55), inset -4px -4px 6px rgba(0,0,0,0.2)',
                             }}
                         />
                     </div>
 
-
-                    <div className="flex flex-col pt-3 flex-1 min-h-0 overflow-hidden">
-                        <p className="font-kemco text-[#030200]/80 text-lg sm:text-xl leading-snug uppercase font-bold line-clamp-2 mb-1">
+                    <div className="flex flex-col gap-1 pt-3">
+                        <p className="line-clamp-3 break-words font-kemco text-sm font-bold leading-snug text-[#030200]/80 uppercase sm:text-base lg:text-lg">
                             {item.title}
                         </p>
 
-                        <p className="font-depixel text-[#030200]/60 text-xs leading-relaxed line-clamp-3 overflow-hidden">
+                        <p className="line-clamp-3 break-words font-depixel text-[10px] leading-relaxed text-[#030200]/60 sm:text-xs">
                             {stripHtml(item.description)}
                         </p>
 
-                        <div className="flex items-center justify-between mt-auto pt-2">
-                            <p className="font-depixel font-bold text-[#030200]/60 text-[10px] uppercase truncate mr-2">
-                                {item.category?.name}
+                        <div className="mt-2 flex items-start justify-between gap-2 border-t border-[#030200]/15 pt-2">
+                            <p className="break-words font-depixel text-[9px] font-bold text-[#030200]/60 uppercase sm:text-[10px]">
+                                {item.category?.name ?? 'UMUM'}
                             </p>
-                            <p className="font-depixel text-[#030200]/50 text-[10px] shrink-0">
+                            <p className="shrink-0 text-right font-depixel text-[9px] text-[#030200]/50 sm:text-[10px]">
                                 {formatDate(item.created_at)}
                             </p>
                         </div>
@@ -101,18 +102,24 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
 
 export default function NewsSection({ latestNews = [] }: Props) {
     return (
-        <section className="w-full py-20">
+        <section
+            className="relative z-10 -mt-8 w-full overflow-hidden bg-transparent pt-28 pb-32 sm:-mt-10 sm:pt-20"
+        >
+            <div
+                className="pointer-events-none absolute inset-0 z-10 bg-cover bg-center"
+                style={{ backgroundImage: `url(${paperNewsBackground})` }}
+            />
 
-            <div className="max-w-6xl mx-auto px-6 pt-4">
+            <div className="relative z-20 mx-auto max-w-6xl px-6 pt-4">
                 <div className="flex items-center gap-4 mb-10">
                     <div className="flex flex-col gap-1">
                         <div className="w-3 h-3 bg-amber-500" style={{ boxShadow: '2px 2px 0 #000' }} />
                         <div className="w-3 h-3 bg-amber-400" style={{ boxShadow: '2px 2px 0 #000' }} />
                     </div>
-                    <h2 className="font-kemco text-3xl text-white drop-shadow-[3px_3px_0px_rgba(0,0,0,0.8)]">
+                    <div className="font-kemco text-4xl text-black drop-shadow-">
                         BERITA TERBARU
-                    </h2>
-                    <div className="flex-1 h-[2px] bg-black/30" />
+                    </div>
+                    <div className="flex-1 h-0.5 bg-black/30" />
                     <Link
                         href="/news"
                         className="btn-pixelated text-xs"
@@ -131,7 +138,7 @@ export default function NewsSection({ latestNews = [] }: Props) {
                 )}
 
                 {latestNews.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
                         {latestNews.slice(0, 4).map(item => (
                             <PixelNewsCard key={item.id} item={item} />
                         ))}

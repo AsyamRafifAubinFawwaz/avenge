@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Instagram } from 'lucide-react';
 import RafifImg from '../../../assets/teams/rafif.png';
 import RafifRealImg from '../../../assets/teams/rafif-real.jpg';
@@ -66,16 +66,16 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
             onClick={() => setIsFlipped(!isFlipped)}
         >
             {/* 3D Flip Container (Matching size on front and back) */}
-            <div className="relative mb-2 flex h-56 w-full items-center justify-center [perspective:1000px] sm:h-64 md:h-72">
+            <div className="relative mb-2 flex h-56 w-full items-center justify-center perspective-[1000px] sm:h-64 md:h-72">
                 <div
-                    className={`relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d] ${
+                    className={`relative h-full w-full transition-transform duration-700 transform-3d ${
                         isFlipped
-                            ? '[transform:rotateY(180deg)]'
-                            : 'group-hover:[transform:rotateY(180deg)]'
+                            ? 'transform-[rotateY(180deg)]'
+                            : 'group-hover:transform-[rotateY(180deg)]'
                     }`}
                 >
                     {/* FRONT SIDE: Pixelated Photo */}
-                    <div className="absolute inset-0 flex items-center justify-center [backface-visibility:hidden]">
+                    <div className="absolute inset-0 flex items-center justify-center backface-hidden">
                         {member.image ? (
                             <img
                                 src={member.image}
@@ -104,7 +104,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
 
                     {/* BACK SIDE: Pixel Bounty Poster Layout */}
                     <div
-                        className="absolute inset-0 flex [transform:rotateY(180deg)] flex-col items-center justify-between p-3 sm:p-4 text-center [backface-visibility:hidden]"
+                        className="absolute inset-0 flex transform-[rotateY(180deg)] flex-col items-center justify-between p-3 sm:p-4 text-center backface-hidden"
                         style={{
                             backgroundImage: `url(${PaperFrameBG})`,
                             backgroundSize: '100% 100%',
