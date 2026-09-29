@@ -50,7 +50,7 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
 
                 <div className="relative flex flex-col px-[12%] pt-[9%] pb-[12%]">
                     <div
-                        className="relative aspect-[4/3] w-full overflow-hidden bg-[#998568]"
+                        className="relative aspect-4/3 w-full overflow-hidden bg-[#998568]"
                         style={{
                             clipPath: 'polygon(0 6px, 6px 6px, 6px 0, calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px))',
                         }}
