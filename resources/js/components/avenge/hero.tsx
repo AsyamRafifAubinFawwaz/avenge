@@ -49,7 +49,6 @@ export const    HeroSection = () => {
                 ease: 'back.out(1.7)',
             }, '-=0.4');
 
-        // Continuous floating animation for clouds (pergerakan mengambang yang lebih terasa)
         gsap.to(awanBesar.current, { x: 50, y: 15, duration: 15, repeat: -1, yoyo: true, ease: 'sine.inOut' });
         gsap.to(awanKecil1.current, { x: -40, y: 10, duration: 12, repeat: -1, yoyo: true, ease: 'sine.inOut' });
         gsap.to(awanKecil2.current, { x: 45, y: -10, duration: 18, repeat: -1, yoyo: true, ease: 'sine.inOut' });
@@ -77,8 +76,7 @@ export const    HeroSection = () => {
     }, { scope: container });
 
     return (
-        <div ref={container} className="relative overflow-x-hidden w-screen min-h-[calc(100vh+96px)] flex justify-center items-center flex-col bg-sky-900/20">
-            {/* Background Clouds */}
+        <div ref={container} className="relative overflow-x-hidden w-screen min-h-[calc(100vh+96px)] flex justify-center items-center flex-col bg-[#5A121B]">
             <img ref={awanBesar} src={AwanBesarImg} alt="" className="absolute top-[8%] left-[-2%] w-[80%] md:w-[45%] object-contain pointer-events-none z-0 opacity-80" />
             <img ref={awanKecil1} src={AwanKecil1Img} alt="" className="absolute top-[12%] right-[5%] w-[30%] md:w-[15%] object-contain pointer-events-none z-0 opacity-70" />
             <img ref={awanKecil2} src={AwanKecil2Img} alt="" className="absolute top-[25%] left-[15%] w-[35%] md:w-[18%] object-contain pointer-events-none z-0 opacity-60" />
