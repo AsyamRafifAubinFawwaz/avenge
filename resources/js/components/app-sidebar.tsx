@@ -65,12 +65,19 @@ export function AppSidebar() {
                 } as React.CSSProperties
             }
         >
-            <SidebarHeader className="h-20 justify-center py-2 group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
+            <SidebarHeader className="h-20 items-center justify-center py-2 group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboardUrl} prefetch>
-                                <AppLogo />
+                        <SidebarMenuButton size="lg" asChild tooltip="Avenge Dashboard">
+                            <Link
+                                href={dashboardUrl}
+                                prefetch
+                                className="flex w-full items-center overflow-hidden px-1"
+                            >
+                                {/* Logo: tampil penuh saat expanded, terpotong & center saat icon-only */}
+                                <div className="relative flex w-full items-center overflow-hidden">
+                                    <AppLogo />
+                                </div>
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>

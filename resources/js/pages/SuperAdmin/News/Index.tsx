@@ -99,27 +99,27 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                     if (!open) setDeleteTarget(null);
                 }}
             >
-                <AlertDialogContent className="bg-[#A90C1F] border-4 border-black rounded-none shadow-[8px_8px_0_0_#000] p-0 overflow-hidden max-w-md">
-                    <AlertDialogHeader className="bg-black px-6 py-5 border-b-4 border-black">
-                        <AlertDialogTitle className="font-kemco text-amber-500 text-xl tracking-wider">HAPUS BERITA?</AlertDialogTitle>
+                <AlertDialogContent className="max-w-md overflow-hidden rounded-none border-4 border-[#211818] bg-[#f7f1df] p-0 text-[#211818] shadow-[6px_6px_0_#211818]">
+                    <AlertDialogHeader className="border-b-2 border-[#8C1C2A]/25 bg-[#e8dcc3] px-6 py-5">
+                        <AlertDialogTitle className="font-kemco text-lg tracking-normal text-[#8C1C2A]">HAPUS BERITA?</AlertDialogTitle>
                     </AlertDialogHeader>
-                    <div className="px-6 py-6 font-depixel text-xs text-amber-400 leading-relaxed">
+                    <div className="px-6 py-6 font-depixel text-xs leading-relaxed text-[#514435]">
                         Kamu yakin ingin menghapus berita{' '}
-                        <span className="text-black bg-amber-500 px-1 font-bold">"{deleteTarget?.title}"</span>?
-                        <br/><br/>
-                        <span className="text-amber-400/70">Aksi ini tidak bisa dibatalkan.</span>
+                        <span className="bg-[#FBA819] px-1 font-bold text-[#211818]">"{deleteTarget?.title}"</span>?
+                        <br /><br />
+                        <span className="text-[#8C1C2A]">Aksi ini tidak bisa dibatalkan.</span>
                     </div>
-                    <AlertDialogFooter className="px-6 py-5 bg-[#81081F] border-t-4 border-black sm:justify-start gap-4">
+                    <AlertDialogFooter className="gap-3 border-t-2 border-[#211818]/15 bg-[#e8dcc3] px-6 py-5 sm:justify-end">
                         <AlertDialogCancel
                             disabled={deleting}
-                            className="font-depixel text-xs bg-black text-amber-400 border-4 border-black rounded-none shadow-[4px_4px_0_0_#000] hover:bg-neutral-800 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all px-6 py-6 m-0"
+                            className="m-0 rounded-none border-2 border-[#211818] bg-[#675b4d] px-5 py-3 font-depixel text-xs text-white shadow-[3px_3px_0_#211818] hover:bg-[#514435] hover:text-white"
                         >
                             BATAL
                         </AlertDialogCancel>
                         <AlertDialogAction
                             onClick={handleDelete}
                             disabled={deleting}
-                            className="font-depixel text-xs bg-amber-500 text-black border-4 border-black rounded-none shadow-[4px_4px_0_0_#000] hover:bg-amber-400 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all px-6 py-6 m-0"
+                            className="m-0 rounded-none border-2 border-[#211818] bg-[#8C1C2A] px-5 py-3 font-depixel text-xs text-white shadow-[3px_3px_0_#211818] hover:bg-[#6f1420]"
                         >
                             {deleting ? 'MENGHAPUS...' : 'YA, HAPUS'}
                         </AlertDialogAction>
@@ -131,8 +131,8 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                 {/* Header */}
                 <div className="dashboard-section-header flex items-center justify-between gap-4">
                     <div>
-                        <h1 className="font-kemco text-base leading-tight tracking-normal text-white">Berita</h1>
-                        <p className="mt-1 font-sans text-xs font-normal normal-case tracking-normal text-white/65">
+                        <h1 className="font-kemco text-lg leading-tight tracking-normal text-[#211818]">Berita</h1>
+                        <p className="mt-1 font-sans text-sm font-normal normal-case tracking-normal text-[#514435]">
                             Total {news.total} berita
                         </p>
                     </div>
@@ -153,7 +153,7 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 placeholder="Cari judul berita..."
-                                className="w-full pl-12 pr-4 py-3 bg-[#A90C1F] border-4 border-black text-amber-400 font-depixel text-xs placeholder:text-amber-400/50 focus:outline-none focus:bg-[#81081F] transition-all"
+                                className="w-full border-4 border-black bg-[#8C1C2A] py-3 pr-4 pl-12 font-depixel text-xs text-[#f7f1df] placeholder:text-[#f7f1df]/75 transition-all focus:bg-[#6f1420] focus:outline-none"
                                 style={{ boxShadow: '6px 6px 0 0 #000' }}
                             />
                         </div>
@@ -162,7 +162,7 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                     <select
                         value={filters.category ?? ''}
                         onChange={e => handleCategoryFilter(e.target.value)}
-                        className="px-3 py-2 text-sm outline-none focus-visible:border-amber-400 focus-visible:ring-amber-400/50 focus-visible:ring-[3px]"
+                        className="rounded-none border-2 border-[#211818] bg-[#f7f1df] px-3 py-2 font-depixel text-xs text-[#211818] outline-none focus-visible:border-[#8C1C2A] focus-visible:ring-2 focus-visible:ring-[#8C1C2A]/30"
                     >
                         <option value="">Semua Kategori</option>
                         {categories.map((cat) => (
@@ -178,24 +178,24 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                     <table className="w-full text-sm">
                         <thead className="bg-black border-b-4 border-black">
                             <tr>
-                                <th className="px-4 py-3 text-left font-medium text-amber-400/80 w-12">#</th>
-                                <th className="px-4 py-3 text-left font-medium text-amber-400/80 w-16">Gambar</th>
-                                <th className="px-4 py-3 text-left font-medium text-amber-400/80">Judul</th>
-                                <th className="px-4 py-3 text-left font-medium text-amber-400/80">Kategori</th>
-                                <th className="px-4 py-3 text-right font-medium text-amber-400/80 w-24">Aksi</th>
+                                <th className="w-12 px-4 py-3 text-left font-kemco text-sm font-bold text-[#FBA819]">#</th>
+                                <th className="w-16 px-4 py-3 text-left font-kemco text-sm font-bold text-[#FBA819]">Gambar</th>
+                                <th className="px-4 py-3 text-left font-kemco text-sm font-bold text-[#FBA819]">Judul</th>
+                                <th className="px-4 py-3 text-left font-kemco text-sm font-bold text-[#FBA819]">Kategori</th>
+                                <th className="w-24 px-4 py-3 text-right font-kemco text-sm font-bold text-[#FBA819]">Aksi</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y-4 divide-black">
                             {news.data.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="py-10 text-center text-white/50">
+                                    <td colSpan={5} className="py-10 text-center font-depixel text-sm text-[#514435]">
                                         Belum ada berita
                                     </td>
                                 </tr>
                             ) : (
                                 news.data.map((item, i) => (
-                                    <tr key={item.id} className="hover:bg-muted/30 transition-colors">
-                                        <td className="px-4 py-3 text-white/50">
+                                    <tr key={item.id} className="transition-colors hover:bg-[#8C1C2A]/5">
+                                        <td className="px-4 py-3 font-depixel text-sm font-semibold text-[#514435]">
                                             {(news.current_page - 1) * 10 + i + 1}
                                         </td>
                                         <td className="px-5 py-4">
@@ -207,17 +207,17 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                                                     style={{ imageRendering: 'pixelated', boxShadow: '2px 2px 0 0 rgba(0,0,0,0.5)' }}
                                                 />
                                             ) : (
-                                                <div className="flex h-10 w-12 items-center justify-center bg-white/10 text-xs text-white/45">
+                                                <div className="flex h-10 w-12 items-center justify-center border-2 border-[#211818] bg-[#e8dcc3] font-depixel text-xs text-[#514435]">
                                                     N/A
                                                 </div>
                                             )}
                                         </td>
                                         <td className="px-4 py-3">
-                                            <p className="font-medium line-clamp-1">{item.title}</p>
-                                            <p className="font-mono text-xs text-white/45">{item.slug}</p>
+                                            <p className="line-clamp-1 font-depixel text-sm font-semibold text-[#211818]">{item.title}</p>
+                                            <p className="mt-1 font-depixel text-xs text-[#514435]">{item.slug}</p>
                                         </td>
                                         <td className="px-4 py-3">
-                                            <span className="inline-flex items-center bg-amber-400/15 px-2.5 py-0.5 text-xs font-medium text-amber-300">
+                                            <span className="inline-flex items-center border border-[#211818] bg-[#8C1C2A] px-2.5 py-1 font-depixel text-xs font-medium text-[#f7f1df]">
                                                 {item.category?.name ?? '-'}
                                             </span>
                                         </td>
@@ -225,21 +225,21 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                                             <div className="flex items-center justify-end gap-2">
                                                 <Link
                                                     href={show.url(item.id)}
-                                                    className="p-1.5 text-white/55 transition-colors hover:text-amber-400"
+                                                    className="p-2 text-[#514435] transition-colors hover:text-[#8C1C2A]"
                                                     title="Lihat"
                                                 >
                                                     <Eye className="size-4" />
                                                 </Link>
                                                 <Link
                                                     href={edit.url(item.id)}
-                                                    className="p-1.5 text-white/55 transition-colors hover:text-amber-400"
+                                                    className="p-2 text-[#514435] transition-colors hover:text-[#8C1C2A]"
                                                     title="Edit"
                                                 >
                                                     <Pencil className="size-4" />
                                                 </Link>
                                                 <button
                                                     onClick={() => setDeleteTarget(item)}
-                                                    className="p-1.5 text-white/55 transition-colors hover:text-red-400"
+                                                    className="p-2 text-[#514435] transition-colors hover:text-[#8C1C2A]"
                                                     title="Hapus"
                                                 >
                                                     <Trash2 className="size-4" />
