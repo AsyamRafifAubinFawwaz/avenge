@@ -1,23 +1,7 @@
-
-# ==============================================================================
-# STAGE 1: Kompilasi Aset Frontend (Bun)
-# ==============================================================================
-FROM oven/bun:latest AS frontend-builder
-WORKDIR /build
-
-COPY package.json bun.lockb* ./
-RUN bun install
-
-COPY . .
-RUN bun run build
-
-# ==============================================================================
-# STAGE 2: Runtime Aplikasi (PHP CLI)
-# ==============================================================================
-FROM php:8.3-cli AS runner
+FROM php:8.3-cli
 WORKDIR /app
 
-# 1. Install dependensi OS (Disederhanakan agar stabil di Debian Bookworm)
+# 1. Install dependensi OS untuk PHP
 RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip git curl \
     libzip-dev \
@@ -29,38 +13,40 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && pecl install redis && docker-php-ext-enable redis \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Ambil Composer resmi
+# 2. Suntikkan Composer dan Bun dari image resminya masing-masing
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=oven/bun:latest /usr/local/bin/bun /usr/local/bin/bun
 
-# 3. Copy file composer untuk caching layer
-COPY composer.json composer.lock* ./
+# 3. Copy file konfigurasi dependensi terlebih dahulu (Untuk caching Docker)
+COPY composer.json composer.lock* package.json bun.lockb* ./
 
-# 4. Install dependensi PHP (Bypass memory limit mencegah OOM)
+# 4. Install dependensi PHP (WAJIB dilakukan sebelum JS agar folder vendor/ dan artisan tersedia)
 RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-dev --prefer-dist --no-scripts \
     && rm -rf ~/.composer/cache
 
-# 5. Copy seluruh kode aplikasi Laravel ke dalam container
-COPY --chown=www-data:www-data . /app
+# 5. Copy seluruh sisa kode aplikasi
+COPY . .
 
-# 6. Copy hasil kompilasi aset (Vite) dari STAGE 1
-COPY --from=frontend-builder --chown=www-data:www-data /build/public/build ./public/build
+# 6. Install dependensi Frontend & Lakukan Build JS
+# (Karena PHP dan vendor/ sudah tersedia di tahap ini, plugin Wayfinder akan berhasil dieksekusi)
+RUN bun install && bun run build
 
-# 7. Set permission untuk folder storage dan cache
+# 7. Bersihkan folder node_modules agar ukuran image final tidak membengkak
+RUN rm -rf node_modules ~/.bun
+
+# 8. Set permission folder krusial
 RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache
 
-# BIKIN SYMLINK PAS BUILD (Aman, tidak butuh koneksi DB)
-RUN php artisan storage:link
+# 9. Bikin Symlink (Aman karena database tidak diakses di sini)
+RUN php artisan storage:link || true
 
-# Tambahkan limit upload PHP CLI
+# 10. Tambahkan limit upload PHP CLI
 RUN echo "upload_max_filesize = 20M\npost_max_size = 20M" > /usr/local/etc/php/conf.d/uploads.ini
 
-# Definisikan volume untuk penyimpanan yang persisten agar file tidak hilang
 VOLUME ["/app/storage", "/app/bootstrap/cache"]
-
-# Buka port 8000
 EXPOSE 8000
 
-# 8. Jalankan optimasi Laravel dan jalankan aplikasi saat container start
+# 11. Jalankan aplikasi
 CMD sh -c "php artisan optimize:clear \
     && php artisan optimize \
     && php artisan serve --host=0.0.0.0 --port=8000"
