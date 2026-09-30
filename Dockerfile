@@ -1,7 +1,8 @@
+
 # ==============================================================================
 # STAGE 1: Kompilasi Aset Frontend (Bun)
 # ==============================================================================
-FROM oven/bun:1.1-slim AS frontend-builder
+FROM oven/bun:latest AS frontend-builder
 WORKDIR /build
 
 COPY package.json bun.lockb* ./
