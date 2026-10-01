@@ -29,7 +29,7 @@ class NewsController extends Controller
             });
         }
 
-        $news = $query->orderBy('title', 'asc')->paginate(10)->withQueryString();
+        $news = $query->orderBy('title', 'asc')->paginate(6)->withQueryString();
 
         return Inertia::render('SuperAdmin/News/Index', [
             'news'      => $news,

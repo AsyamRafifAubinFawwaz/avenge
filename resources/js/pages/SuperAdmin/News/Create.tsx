@@ -51,66 +51,66 @@ export default function NewsCreate({ categories }: Props) {
         <>
             <Head title="Tambah Berita" />
 
-            <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 text-[#211818] sm:p-6">
+            <div className="flex w-full max-w-3xl flex-col gap-6 p-4 text-[#f7f1df] sm:p-6">
                 {/* Header */}
                 <div className="flex items-center gap-3">
-                    <Button variant="outline" size="icon" asChild className="rounded-none border-2 border-[#211818] bg-[#f7f1df] text-[#211818] shadow-[3px_3px_0_#211818] hover:bg-[#e8dcc3]">
+                    <Button variant="outline" size="icon" asChild className="rounded-none border-2 border-black bg-[#2a1c0f] text-[#f7f1df] shadow-[3px_3px_0_#000] hover:bg-[#3d2a17]">
                         <Link href={index.url()}>
                             <ArrowLeft className="size-4" />
                         </Link>
                     </Button>
                     <div>
-                        <h1 className="font-kemco text-xl tracking-normal text-[#211818] sm:text-2xl">Tambah Berita</h1>
-                        <p className="mt-1 font-depixel text-xs text-[#514435]">Isi form berikut untuk menambah berita baru</p>
+                        <h1 className="font-kemco text-xl tracking-normal text-white sm:text-2xl">Tambah Berita</h1>
+                        <p className="mt-1 font-depixel text-xs text-white/60">Isi form berikut untuk menambah berita baru</p>
                     </div>
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5 border-4 border-[#211818] bg-[#f7f1df] p-5 shadow-[6px_6px_0_#211818] sm:p-7">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-5 sm:gap-6 pt-2">
                     {/* Judul */}
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="title" className="font-depixel text-xs text-[#211818]">Judul</Label>
+                        <Label htmlFor="title" className="font-depixel text-xs text-[#f7f1df]">Judul</Label>
                         <Input
                             id="title"
                             value={form.data.title}
                             onChange={e => form.setData('title', e.target.value)}
                             placeholder="Judul berita..."
-                            className="h-11 rounded-none border-2 border-[#211818] bg-[#e8dcc3] font-depixel text-sm text-[#211818] placeholder:text-[#746957] focus-visible:border-[#8C1C2A] focus-visible:ring-[#8C1C2A]/25"
+                            className="w-full rounded-none font-depixel text-xs bg-[#1a1515] border-2 border-[#3d2e2e] shadow-[inset_3px_3px_0px_rgba(0,0,0,0.6)] text-[#F8F9FA] px-4 py-3 placeholder:text-[#6a5d5d] focus:outline-none focus:border-[#FBA819] focus:bg-[#211818] transition-colors"
                         />
-                        {form.errors.title && <p className="text-xs text-destructive">{form.errors.title}</p>}
+                        {form.errors.title && <p className="font-depixel text-[10px] text-red-500">{form.errors.title}</p>}
                     </div>
 
                     {/* Kategori */}
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="category_id" className="font-depixel text-xs text-[#211818]">Kategori</Label>
+                        <Label htmlFor="category_id" className="font-depixel text-xs text-[#f7f1df]">Kategori</Label>
                         <select
                             id="category_id"
                             value={form.data.category_id}
                             onChange={e => form.setData('category_id', e.target.value)}
-                            className="h-11 rounded-none border-2 border-[#211818] bg-[#e8dcc3] px-3 py-2 font-depixel text-sm text-[#211818] outline-none focus-visible:border-[#8C1C2A] focus-visible:ring-2 focus-visible:ring-[#8C1C2A]/25"
+                            className="w-full rounded-none font-depixel text-xs bg-[#1a1515] border-2 border-[#3d2e2e] shadow-[inset_3px_3px_0px_rgba(0,0,0,0.6)] text-[#F8F9FA] px-4 py-3 focus:outline-none focus:border-[#FBA819] focus:bg-[#211818] transition-colors"
                         >
-                            <option value="">-- Pilih Kategori --</option>
+                            <option value="" className="bg-[#1a1515] text-[#F8F9FA]">-- Pilih Kategori --</option>
                             {categories.map(cat => (
-                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                <option key={cat.id} value={cat.id} className="bg-[#1a1515] text-[#F8F9FA]">{cat.name}</option>
                             ))}
                         </select>
-                        {form.errors.category_id && <p className="text-xs text-destructive">{form.errors.category_id}</p>}
+                        {form.errors.category_id && <p className="font-depixel text-[10px] text-red-500">{form.errors.category_id}</p>}
                     </div>
 
                     {/* Gambar */}
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="image" className="font-depixel text-xs text-[#211818]">Gambar</Label>
+                        <Label htmlFor="image" className="font-depixel text-xs text-[#f7f1df]">Gambar</Label>
                         <label
                             htmlFor="image"
-                            className="flex cursor-pointer flex-col items-center justify-center gap-2 border-2 border-dashed border-[#8C1C2A] bg-[#e8dcc3] p-6 transition-colors hover:bg-[#dfcfb2]"
+                            className="flex cursor-pointer flex-col items-center justify-center gap-2 p-6 border-4 border-dashed border-[#3d2e2e] bg-[#1a1515] hover:border-[#FBA819] hover:bg-[#FBA819]/5 transition-all"
                         >
                             {preview ? (
-                                <img src={preview} alt="preview" className="max-h-48 border-2 border-[#211818] object-cover" />
+                                <img src={preview} alt="preview" className="max-h-48 border-2 border-[#3d2e2e] object-cover" />
                             ) : (
                                 <>
-                                    <Upload className="size-8 text-[#8C1C2A]" />
-                                    <p className="font-depixel text-xs text-[#211818]">Klik untuk upload gambar</p>
-                                    <p className="font-depixel text-[10px] text-[#514435]">PNG, JPG, GIF — max 2MB</p>
+                                    <Upload className="size-8 text-[#FBA819]" />
+                                    <p className="font-depixel text-xs text-[#FBA819]">Klik untuk upload gambar</p>
+                                    <p className="font-depixel text-[10px] text-gray-400">PNG, JPG, GIF — max 2MB</p>
                                 </>
                             )}
                             <input
@@ -121,31 +121,38 @@ export default function NewsCreate({ categories }: Props) {
                                 onChange={handleImageChange}
                             />
                         </label>
-                        {form.errors.image && <p className="font-depixel text-xs text-[#8C1C2A]">{form.errors.image}</p>}
+                        {form.errors.image && <p className="font-depixel text-[10px] text-red-500">{form.errors.image}</p>}
                     </div>
 
                     {/* Deskripsi */}
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="description" className="font-depixel text-xs text-[#211818]">Deskripsi</Label>
+                        <Label htmlFor="description" className="font-depixel text-xs text-[#f7f1df]">Deskripsi</Label>
                         <textarea
                             id="description"
                             value={form.data.description}
                             onChange={e => form.setData('description', e.target.value)}
                             rows={6}
                             placeholder="Isi berita..."
-                            className="resize-none rounded-none border-2 border-[#211818] bg-[#e8dcc3] px-3 py-2 font-depixel text-sm text-[#211818] outline-none placeholder:text-[#746957] focus-visible:border-[#8C1C2A] focus-visible:ring-2 focus-visible:ring-[#8C1C2A]/25"
+                            className="w-full resize-none rounded-none font-depixel text-xs bg-[#1a1515] border-2 border-[#3d2e2e] shadow-[inset_3px_3px_0px_rgba(0,0,0,0.6)] text-[#F8F9FA] px-4 py-3 placeholder:text-[#6a5d5d] focus:outline-none focus:border-[#FBA819] focus:bg-[#211818] transition-colors"
                         />
-                        {form.errors.description && <p className="font-depixel text-xs text-[#8C1C2A]">{form.errors.description}</p>}
+                        {form.errors.description && <p className="font-depixel text-[10px] text-red-500">{form.errors.description}</p>}
                     </div>
 
                     {/* Actions */}
-                    <div className="flex flex-col-reverse justify-end gap-3 pt-2 sm:flex-row">
-                        <Button type="button" variant="outline" asChild className="btn-pixelated rounded-none! border-0! bg-[#675b4d]! px-5 text-white shadow-none">
-                            <Link href={index.url()}>Batal</Link>
-                        </Button>
-                        <Button type="submit" disabled={form.processing} className="btn-pixelated rounded-none! border-0! bg-[#FBA819]! px-5 text-[#211818] shadow-none">
+                    <div className="flex flex-col-reverse justify-end gap-3 pt-4 sm:flex-row">
+                        <Link 
+                            href={index.url()}
+                            className="inline-flex items-center justify-center rounded-none font-kemco text-xs transition-colors bg-[#2b2222] text-[#F8F9FA] border-t-2 border-l-2 border-[#4a3b3b] border-b-4 border-r-4 border-[#120e0e] hover:bg-[#3d2e2e] active:border-t-4 active:border-l-4 active:border-[#120e0e] active:border-b-2 active:border-r-2 active:border-[#4a3b3b] px-6 py-2"
+                        >
+                            Batal
+                        </Link>
+                        <button 
+                            type="submit" 
+                            disabled={form.processing} 
+                            className="inline-flex items-center justify-center rounded-none font-kemco text-xs font-bold bg-[#FBA819] text-[#211818] border-t-2 border-l-2 border-[#ffd465] border-b-4 border-r-4 border-[#b97a0f] active:border-t-4 active:border-l-4 active:border-[#b97a0f] active:border-b-2 active:border-r-2 active:border-[#ffd465] px-6 py-2"
+                        >
                             {form.processing ? 'Menyimpan...' : 'Simpan Berita'}
-                        </Button>
+                        </button>
                     </div>
                 </form>
             </div>

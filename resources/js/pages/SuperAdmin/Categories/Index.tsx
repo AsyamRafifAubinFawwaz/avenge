@@ -176,22 +176,61 @@ export default function CategoriesIndex({ categories }: Props) {
                 </AlertDialogContent>
             </AlertDialog>
 
-            <div className="dashboard-admin-page flex h-full flex-1 flex-col gap-4 p-4">
-                <div className="dashboard-section-header flex items-center justify-between gap-4">
+            <div className="dashboard-admin-page flex h-full flex-1 flex-col gap-4 p-2 sm:p-4">
+                <div className="dashboard-section-header flex flex-wrap items-center justify-between gap-3 sm:gap-4">
                     <div>
-                        <h1 className="font-kemco text-lg leading-tight tracking-normal text-[#211818]">Kategori</h1>
-                        <p className="mt-1 font-sans text-sm font-normal normal-case tracking-normal text-[#514435]">
+                        <h1 className="font-kemco text-base sm:text-lg leading-tight tracking-normal text-[#211818]">Kategori</h1>
+                        <p className="mt-1 font-sans text-xs sm:text-sm font-normal normal-case tracking-normal text-[#514435]">
                             Kelola kategori berita
                         </p>
                     </div>
-                    <Button onClick={() => setAddOpen(true)} className="pixel-button pixel-button--default shrink-0">
-                        <Plus className="size-4" />
+                    <Button onClick={() => setAddOpen(true)} className="pixel-button pixel-button--default shrink-0 text-xs px-3 py-1.5 sm:px-4 sm:py-2">
+                        <Plus className="size-3.5 sm:size-4" />
                         Tambah Kategori
                     </Button>
                 </div>
 
-                <div className="dashboard-content flex-1 overflow-auto">
-                    <table className="w-full text-sm">
+                {/* Mobile Card List & Desktop Table */}
+                <div className="dashboard-content flex-1">
+                    {/* Mobile Card List */}
+                    <div className="flex flex-col divide-y-2 divide-dashed divide-[#8c7b60] sm:hidden">
+                        {categories.length === 0 ? (
+                            <div className="py-8 text-center font-depixel text-xs text-[#514435]">
+                                Belum ada kategori
+                            </div>
+                        ) : (
+                            categories.map((category, i) => (
+                                <div key={category.id} className="flex items-center justify-between gap-2 py-3 px-1">
+                                    <div className="flex flex-col gap-0.5">
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-depixel text-xs font-bold text-[#8C1C2A]">#{i + 1}</span>
+                                            <span className="font-depixel text-xs font-bold text-[#211818]">{category.name}</span>
+                                        </div>
+                                        <span className="font-depixel text-[10px] text-[#514435]">{category.slug}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1 bg-[#211818]/10 p-1 border border-[#211818]/20 shrink-0">
+                                        <button
+                                            onClick={() => openEdit(category)}
+                                            className="p-1 text-[#514435] hover:text-[#8C1C2A]"
+                                            title="Edit"
+                                        >
+                                            <Pencil className="size-4" />
+                                        </button>
+                                        <button
+                                            onClick={() => setDeleteTarget(category)}
+                                            className="p-1 text-[#514435] hover:text-[#8C1C2A]"
+                                            title="Hapus"
+                                        >
+                                            <Trash2 className="size-4" />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+
+                    {/* Desktop Table */}
+                    <table className="hidden sm:table w-full text-sm">
                         <thead className="table-header-background">
                             <tr>
                                 <th className="w-12 px-4 py-3 text-left font-kemco text-sm font-bold text-[#FBA819]">#</th>

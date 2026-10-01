@@ -36,11 +36,6 @@ export function AppSidebar() {
 
     const mainNavItems: NavItem[] = [
         {
-            title: 'Dashboard',
-            href: dashboardUrl,
-            icon: LayoutGrid,
-        },
-        {
             title: 'Kategori',
             href: categoriesIndex.url(),
             icon: Tags,
@@ -70,7 +65,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild tooltip="Avenge Dashboard">
                             <Link
-                                href={dashboardUrl}
+                                href={categoriesIndex.url()}
                                 prefetch
                                 className="flex w-full items-center overflow-hidden px-1"
                             >
