@@ -1,11 +1,68 @@
 import { Link } from '@inertiajs/react';
+import gsap from 'gsap';
+import { useEffect, useRef, useState } from 'react';
 import { home } from '@/routes';
 import type { AuthLayoutProps } from '@/types';
+import BijanGif from '../../../assets/characters/bijan.gif';
+import IfaruzGif from '../../../assets/characters/ifaruz.gif';
+import KingGif from '../../../assets/characters/king.gif';
+import ZawwafGif from '../../../assets/characters/zawwaf.gif';
+import TatakanKarakter from '../../../assets/tatakan-character.png';
+
+const CHARACTERS = [
+    { name: 'IFARUZ', level: 'LVL. 07', gif: IfaruzGif, sizeClass: 'h-48 sm:h-52' },
+    { name: 'ZAWWAF', level: 'LVL. 07', gif: ZawwafGif, sizeClass: 'h-48 sm:h-52 scale-[1.75] origin-bottom -translate-y-2' },
+    { name: 'YOR BIJAN', level: 'LVL. 06', gif: BijanGif, sizeClass: 'h-48 sm:h-52 scale-[1.4] origin-bottom -translate-y-1' },
+    { name: 'KING AVEHS', level: 'LVL. 08', gif: KingGif, sizeClass: 'h-48 sm:h-52' },
+];
 
 export default function AuthSimpleLayout({
     children,
     title,
 }: AuthLayoutProps) {
+    const [characterIndex, setCharacterIndex] = useState(0);
+    const spriteRef = useRef<HTMLImageElement>(null);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCharacterIndex((prev) => (prev + 1) % CHARACTERS.length);
+        }, 3500);
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        if (!spriteRef.current) return;
+
+        const tl = gsap.timeline();
+        tl.fromTo(
+            spriteRef.current,
+            {
+                y: -140,
+                scaleX: 0.8,
+                scaleY: 1.3,
+                opacity: 0,
+                filter: 'brightness(2.5)',
+                transformOrigin: '50% 100%',
+            },
+            { y: 0, opacity: 1, duration: 0.25, ease: 'power2.in' }
+        )
+            .to(spriteRef.current, {
+                scaleX: 1.2,
+                scaleY: 0.8,
+                filter: 'brightness(1)',
+                duration: 0.08,
+                ease: 'power1.out',
+            })
+            .to(spriteRef.current, {
+                scaleX: 1,
+                scaleY: 1,
+                duration: 0.45,
+                ease: 'elastic.out(1, 0.35)',
+            });
+    }, [characterIndex]);
+
+    const currentCharacter = CHARACTERS[characterIndex];
+
     return (
         <div className="flex min-h-svh items-center justify-center bg-[#211818] px-4 py-8 sm:px-8">
             <div className="grid w-full max-w-4xl overflow-hidden rounded-2xl border-4 border-black/70 bg-[#f7f1df] shadow-[8px_10px_0_rgba(0,0,0,0.45)] lg:min-h-[560px] lg:grid-cols-2">
@@ -29,25 +86,36 @@ export default function AuthSimpleLayout({
                     </div>
                 </main>
 
-                <aside className="relative hidden min-h-[360px] flex-col items-center overflow-hidden bg-[#8c1c2a] px-6 py-12 sm:min-h-[440px] sm:px-12 sm:py-14 lg:flex lg:min-h-0 lg:py-10">
-                    <div className="text-center">
-                        <p className="font-kemco text-3xl tracking-[0.12em] text-[#fbe7b2] drop-shadow-[3px_3px_0_#211818] sm:text-5xl">
+                <aside className="relative hidden min-h-[360px] flex-col items-center justify-center overflow-hidden bg-[#8c1c2a] px-6 py-6 sm:min-h-[440px] sm:px-12 sm:py-8 lg:flex lg:min-h-0">
+                    <div className="text-center pt-2">
+                        <p className="font-kemco text-3xl tracking-[0.12em] text-[#fbe7b2] drop-shadow-[3px_3px_0_#211818] sm:text-4xl lg:text-5xl">
                             AVENGE
                         </p>
-                        <p className="mt-3 font-depixel text-[10px] tracking-[0.2em] text-[#fbe7b2]/75 uppercase">
+                        <p className="mt-2 font-depixel text-[10px] tracking-[0.2em] text-[#fbe7b2]/75 uppercase">
                             Last Manager Kopdes
                         </p>
                     </div>
 
-                    <div className="relative mt-12 flex h-[210px] w-full max-w-[280px] shrink-0 items-center justify-center border-2 border-dashed border-[#fbe7b2]/60 bg-[#211818]/20 sm:mt-14 sm:h-[230px] sm:max-w-[310px] lg:mt-14 lg:h-[230px] lg:max-w-[320px]">
-                        <div className="absolute -top-3 left-6 bg-[#fbe7b2] px-2 py-1 font-depixel text-[8px] text-[#211818]">
-                            CHARACTER SLOT
+                    <div className="relative mt-2 flex flex-col items-center justify-center w-full">
+                        <div className="relative flex h-56 sm:h-60 flex-col items-center justify-end w-full">
+                            <img
+                                ref={spriteRef}
+                                key={currentCharacter.name}
+                                src={currentCharacter.gif}
+                                alt={currentCharacter.name}
+                                className={`relative z-10 ${currentCharacter.sizeClass} w-auto object-contain drop-shadow-[4px_4px_0_rgba(0,0,0,0.5)]`}
+                                style={{ imageRendering: 'pixelated' }}
+                            />
+                            <img
+                                src={TatakanKarakter}
+                                alt="Tatakan"
+                                className="-mt-14 relative z-0 h-14 w-56 sm:w-64 object-contain"
+                                style={{ imageRendering: 'pixelated' }}
+                            />
                         </div>
-                        <div className="text-center font-depixel text-xs leading-relaxed text-[#fbe7b2]/70">
-                            <div className="mx-auto mb-3 h-14 w-14 border-2 border-[#fbe7b2]/50 bg-[#211818]/30 sm:h-16 sm:w-16" />
-                            [ CHARACTER ART ]
-                            <br />
-                            COMING SOON
+                        <div className="mt-3 flex items-center gap-2 border-2 border-[#211818] bg-[#fbe7b2] px-3.5 py-1 text-[#211818] shadow-[2px_2px_0_#211818] z-10">
+                            <span className="font-kemco text-xs tracking-wider">{currentCharacter.name}</span>
+                            <span className="font-depixel text-[9px] text-[#8c1c2a] font-bold">{currentCharacter.level}</span>
                         </div>
                     </div>
                 </aside>
