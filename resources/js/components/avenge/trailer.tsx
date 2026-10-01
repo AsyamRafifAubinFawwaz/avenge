@@ -1,45 +1,60 @@
 import { Play } from 'lucide-react';
 import { useState } from 'react';
-import PaperFrame from '../../../assets/dashboard/paperframe-background.png';
+import TrailerBorder from '../../../assets/border-trailer.png'; // pakai PNG yang udah di-crop (1618x685)
 
 export default function TrailerSection() {
     const [hasStarted, setHasStarted] = useState(false);
 
     return (
         <section
-            id="trailer"
+            id="gameplay"
             aria-labelledby="trailer-title"
-            className="relative overflow-hidden bg-[#8C1C2A] px-2 py-8 sm:px-4 lg:px-8 lg:py-10"
+            className="relative overflow-hidden px-2 py-8 sm:px-4 lg:px-8 lg:py-10"
         >
-            <div className="mx-auto max-w-2xl">
-                <h2
-                    id="trailer-title"
-                    className="sr-only"
+            <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-[0.8fr_1.5fr] lg:gap-14">
+                <div className="max-w-md lg:max-w-none">
+                    <h2
+                        id="trailer-title"
+                        className="font-kemco text-3xl leading-tight text-white drop-shadow-[3px_3px_0_#000] sm:text-5xl"
+                    >
+                        We Are Avenge
+                    </h2>
+                    <p className="mt-3 max-w-sm font-depixel text-xs leading-7 text-white/75 sm:text-sm">
+                        Saksikan perjalanan para pahlawan Avenge dalam melawan antek-antek asing.
+                    </p>
+                </div>
+
+                {/* Container: patokan satuan cqw */}
+                <div
+                    className="mx-auto w-full max-w-3xl sm:w-[95%] lg:w-full"
+                    style={{ containerType: 'inline-size' }}
                 >
-                    Trailer
-                </h2>
-
-                <div className="relative mx-auto aspect-543/420 w-[90%] max-w-2xl sm:w-full">
-                    <img
-                        src={PaperFrame}
-                        alt=""
-                        aria-hidden="true"
-                        className="absolute inset-0 h-full w-full object-fill"
-                    />
-
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <div
+                        className="relative"
+                        style={
+                            {
+                                '--u': 'calc(100cqw / 1618)',
+                                '--inset': 'calc(var(--u) * 80)',
+                                padding: 'var(--inset)',
+                            } as React.CSSProperties
+                        }
+                    >
                         <div
-                            className="relative h-[76%] w-[80%] overflow-hidden border-4 border-[#998568] bg-black"
-                            style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.5)' }}
-                        >
+                            aria-hidden="true"
+                            className="absolute bg-black"
+                            style={{ inset: 'calc(var(--u) * 40)' }}
+                        />
+
+                        <div className="relative aspect-video w-full overflow-hidden bg-black">
                             <iframe
-                                className="relative z-0 h-full w-full border-0"
-                                src={`https://www.youtube.com/embed/CnEqrgMlWLQ?autoplay=${hasStarted ? '1' : '0'}&rel=0`}
+                                className="absolute inset-0 h-full w-full border-0"
+                                src={`https://www.youtube.com/embed/4LI8k4Uo9pU?autoplay=${hasStarted ? '1' : '0'}&rel=0`}
                                 title="Avenge trailer"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 referrerPolicy="strict-origin-when-cross-origin"
                                 allowFullScreen
                             />
+
                             {!hasStarted && (
                                 <button
                                     type="button"
@@ -51,17 +66,18 @@ export default function TrailerSection() {
                                 </button>
                             )}
                         </div>
+
+                        <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 z-10"
+                            style={{
+                                borderStyle: 'solid',
+                                borderWidth: 'calc(var(--u) * 112)',
+                                borderImage: `url("${TrailerBorder}") 112 / calc(var(--u) * 112) stretch`,
+                                imageRendering: 'pixelated',
+                            }}
+                        />
                     </div>
-
-                    <div
-                        className="absolute left-[8%] top-[8%] h-[12%] w-[12%] rounded-full border-[clamp(3px,0.5vw,6px)] border-amber-500 bg-amber-500 shadow-[3px_4px_0_#3b1b18]"
-                        aria-hidden="true"
-                    />
-
-                    {/* <div className="absolute bottom-[11%] left-1/2 flex -translate-x-1/2 items-center gap-2 border-2 border-black bg-[#f3a000] px-3 py-1 font-kemco text-[clamp(6px,0.8vw,12px)] uppercase text-black shadow-[2px_2px_0_#4b2918]">
-                        <span className="inline-block h-2 w-2 bg-black" aria-hidden="true" />
-                        Now playing
-                    </div> */}
                 </div>
             </div>
         </section>

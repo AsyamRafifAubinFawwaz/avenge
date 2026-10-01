@@ -1,6 +1,12 @@
+import { useGSAP } from '@gsap/react';
 import { Link } from '@inertiajs/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import CardNewsBG from '../../../assets/bg_card_news.png';
 import paperNewsBackground from '../../../assets/bg_paper_berita.png';
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type NewsItem = {
     id: number;
@@ -101,8 +107,44 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
 
 
 export default function NewsSection({ latestNews = [] }: Props) {
+    const sectionRef = useRef<HTMLElement | null>(null);
+
+    useGSAP(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+
+        const newsItems = gsap.utils.toArray<HTMLElement>('.news-card');
+        const timeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 82%',
+                toggleActions: 'play none none none',
+                once: true,
+            },
+            defaults: {
+                ease: 'power2.out',
+            },
+        });
+
+        timeline
+            .from('.news-heading', {
+                y: 18,
+                autoAlpha: 0,
+                duration: 0.45,
+            })
+            .from(newsItems, {
+                y: 28,
+                autoAlpha: 0,
+                duration: 0.5,
+                stagger: 0.08,
+                clearProps: 'transform,opacity,visibility',
+            }, '-=0.2');
+    }, { scope: sectionRef });
+
     return (
         <section
+            ref={sectionRef}
             className="relative z-10 -mt-8 w-full overflow-hidden bg-transparent pt-28 pb-32 sm:-mt-10 sm:pt-20"
         >
             <div
@@ -111,7 +153,7 @@ export default function NewsSection({ latestNews = [] }: Props) {
             />
 
             <div className="relative z-20 mx-auto max-w-6xl px-6 pt-4">
-                <div className="flex items-center gap-4 mb-10">
+                <div className="news-heading mb-10 flex items-center gap-4">
                     <div className="flex flex-col gap-1">
                         <div className="w-3 h-3 bg-amber-500" style={{ boxShadow: '2px 2px 0 #000' }} />
                         <div className="w-3 h-3 bg-amber-400" style={{ boxShadow: '2px 2px 0 #000' }} />
@@ -140,7 +182,9 @@ export default function NewsSection({ latestNews = [] }: Props) {
                 {latestNews.length > 0 && (
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
                         {latestNews.slice(0, 4).map(item => (
-                            <PixelNewsCard key={item.id} item={item} />
+                            <div key={item.id} className="news-card">
+                                <PixelNewsCard item={item} />
+                            </div>
                         ))}
                     </div>
                 )}

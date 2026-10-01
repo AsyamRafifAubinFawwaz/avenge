@@ -43,6 +43,13 @@
         </x-inertia::head>
     </head>
     <body class="font-sans antialiased">
+        @if ($page['component'] === 'welcome' || str_starts_with($page['component'], 'News/'))
+        <div
+            id="initial-loading-screen"
+            aria-hidden="true"
+            style="position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;background:#080808;pointer-events:none;"
+        ></div>
+        @endif
         <x-inertia::app />
     </body>
 </html>

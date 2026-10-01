@@ -6,10 +6,12 @@ import { NavbarHome } from '@/components/avenge/navbar';
 import NewsSection from '@/components/avenge/news';
 import TeamSection from '@/components/avenge/team';
 import MainLayout from '@/layouts/MainLayouts';
-import sharedNewsCharacterBackground from '../../assets/bg_news_n_character.png';
+import sharedNewsCharacterBackground from '../../assets/bg_section.png';
 import TrailerSection from '../components/avenge/trailer';
 import WorldSection from './section/world';
 import CharacterSection from '@/components/avenge/character';
+import { GameplaySection } from '@/components/avenge/gameplay';
+import LoadingScreen from '@/components/avenge/LoadingScreen';
 
 type NewsItem = {
     id: number;
@@ -31,11 +33,11 @@ export default function Welcome({ latestNews }: Props) {
         <>
             <Head title="Avenge: Last Manager Kopdes" />
             <MainLayout>
+                <LoadingScreen />
                 <NavbarHome />
                 <HeroSection />
                 <WorldSection />
                 <MarqueeSeparator />
-                <TrailerSection />  
                 <div
                     className="relative overflow-hidden bg-cover bg-center bg-no-repeat"
                     style={{
@@ -45,7 +47,9 @@ export default function Welcome({ latestNews }: Props) {
                     }}
                 >
                     <div className="pointer-events-none absolute inset-0 z-0 bg-black/50" />
+                    <TrailerSection />  
                     <CharacterSection />
+                    <GameplaySection/>
                     <NewsSection latestNews={latestNews} />
                 </div>
                 <TeamSection />

@@ -25,6 +25,7 @@
 
 body {
     font-family: 'DePixelKlein', sans-serif;
+    scroll-behavior: smooth;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -182,6 +183,79 @@ body {
 }
 
 @layer components {
+    .loading-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background: #111216;
+        color: #ffffff;
+    }
+
+    .route-loading-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: block;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0;
+        image-rendering: pixelated;
+        transition: opacity 80ms linear;
+    }
+
+    .route-loading-screen.is-visible {
+        pointer-events: auto;
+        opacity: 1;
+    }
+
+    .loading-wrapper {
+        width: min(78vw, 26rem);
+    }
+
+    .loading-logo {
+        display: block;
+        width: min(100%, 20rem);
+        height: auto;
+        margin-inline: auto;
+        image-rendering: pixelated;
+        transform-origin: center;
+    }
+
+    .loading-info {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        font-family: 'KemcoPixelBold', sans-serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+    }
+
+    .loading-line {
+        height: 0.25rem;
+        margin-top: 0.75rem;
+        overflow: hidden;
+        background: rgb(255 255 255 / 20%);
+    }
+
+    .loading-line-fill {
+        width: 100%;
+        height: 100%;
+        background: #facc15;
+        transform: scaleX(0);
+        transform-origin: left center;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .loading-screen {
+            display: none;
+        }
+    }
+
     .table-header-background {
         background-image: url('../assets/dashboard/background-table-header.png');
         background-size: contain;
@@ -510,7 +584,13 @@ body {
     --pixel-button-color: #790221;
 
     background-color: var(--pixel-button-color);
-    background-image: none;
+    background-image:
+        linear-gradient(var(--pixel-button-color), var(--pixel-button-color)),
+        url('../assets/dashboard/base-button.png');
+    background-blend-mode: color, normal;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     border: 0;
     border-radius: 0;
     color: #ffffff;
@@ -534,10 +614,96 @@ body {
     --pixel-button-color: #c58b16;
 }
 
+.pixel-button--amber {
+    --pixel-button-color: #f59e0b;
+}
+
 .pixel-button--green {
     --pixel-button-color: #28734a;
 }
 
 .pixel-button:hover {
     background-color: color-mix(in srgb, var(--pixel-button-color) 88%, white);
+}
+
+
+/* LOADING COY */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+    background: transparent;
+
+  overflow: hidden;
+}
+
+.loading-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.loading-logo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    image-rendering: pixelated;
+}
+
+.loading-fire {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    image-rendering: pixelated;
+}
+
+.loading-info {
+  width: 237px;
+
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 22px;
+
+  font-family: monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+
+  color: #fff;
+
+  opacity: 0.65;
+}
+
+.loading-line {
+    position: absolute;
+    z-index: 2;
+    bottom: 8vh;
+    left: 50%;
+  width: 237px;
+  height: 3px;
+    transform: translateX(-50%);
+  background: #222;
+
+  overflow: hidden;
+}
+
+.loading-line-fill {
+  width: 100%;
+  height: 100%;
+
+  background: #fff;
+
+  transform: scaleX(0);
+  transform-origin: left;
 }

@@ -65,7 +65,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
             className="group flex cursor-pointer flex-col items-center select-none"
             onClick={() => setIsFlipped(!isFlipped)}
         >
-            <div className="relative mb-2 flex h-52 w-full items-center justify-center [perspective:1000px] sm:h-64 md:h-72">
+            <div className="relative mb-2 flex h-52 w-full items-center justify-center perspective-[1000px] sm:h-64 md:h-72">
                 <div
                     className={`relative h-full w-full transition-transform duration-700 transform-3d ${
                         isFlipped
@@ -73,7 +73,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                             : 'group-hover:transform-[rotateY(180deg)]'
                     }`}
                 >
-                    <div className="absolute inset-0 flex items-center justify-center [backface-visibility:hidden]">
+                    <div className="absolute inset-0 flex items-center justify-center backface-hidden">
                         {member.image ? (
                             <img
                                 src={member.image}
@@ -171,7 +171,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
 
 export default function TeamSection({ members = DEFAULT_MEMBERS }: Props) {
     return (
-        <section className="relative w-full overflow-hidden bg-[#211818] py-16">
+        <section id="events" className="relative w-full overflow-hidden bg-[#211818] py-16">
             <div className="mx-auto max-w-6xl px-6">
                 <div className="mb-12 flex items-center justify-center gap-4">
                     <div className="flex flex-col gap-1">

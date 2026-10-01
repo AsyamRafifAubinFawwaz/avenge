@@ -1,12 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import BijanGif from '../../../assets/characters/bijan.gif';
 import IfaruzGif from '../../../assets/characters/ifaruz.gif';
 import IfaruzIdleGif from '../../../assets/characters/ifaruz_idle.gif';
-import SiluetIfaruzImg from '../../../assets/SiluetIfaruz.png';
-import tatakanKarakter from '../../../assets/tatakan-character.png'
+import KingGif from '../../../assets/characters/king.gif';
+import KingActionGif from '../../../assets/characters/king_action.gif';
+import ZawwafGif from '../../../assets/characters/zawwaf.gif';
+import tatakanKarakter from '../../../assets/tatakan-character.png';
+import CharacterSprite from './character-sprite';
 import SoldierLottie from './lottie/soldier';
 import type { SoldierAction } from './lottie/soldier';
 
-type CharacterId = 'ifaruz' | 'soldier';
+type CharacterId = 'ifaruz' | 'soldier' | 'king' | 'bijan' | 'zawwaf';
 
 type Character = {
     id: CharacterId;
@@ -19,45 +24,94 @@ type Character = {
     speed: string;
     power: string;
     lore: string;
+    sprite: string;
+    actionSprite?: string;
+    actionDuration?: number;
 };
 
 const CHARACTERS: Character[] = [
     {
         id: 'ifaruz',
         name: 'IFARUZ',
-        title: 'THE LAST FLAMEBEARER',
+        title: 'YANG BRO RASAKAN',
         className: 'MAGE',
         level: '07',
-        role: 'RANGED',
+        role: 'FIGHTER/MAGE',
         weapon: 'EMBER STAFF',
         speed: '★★★★☆',
         power: '★★★★★',
         lore: 'Penjaga terakhir dari desa yang terbakar. Ifaruz membawa sihir api dan tekad untuk merebut kembali rumahnya dari para penjajah.',
+        sprite: IfaruzIdleGif,
+        actionSprite: IfaruzGif,
+        actionDuration: 3780,
     },
     {
-        id: 'soldier',
-        name: 'SOLDIER',
-        title: 'THE FRONTLINE VANGUARD',
+        id: 'king',
+        name: 'KING AVEHS',
+        title: 'RAJA JAWA',
         className: 'WARRIOR',
-        level: '05',
-        role: 'MELEE',
-        weapon: 'IRON BLADE',
+        level: '08',
+        role: 'FIGHTER',
+        weapon: 'ROYAL BLADE',
         speed: '★★★☆☆',
-        power: '★★★★☆',
-        lore: 'Prajurit garis depan yang berdiri di antara desanya dan kehancuran. Ia tidak mencari kemuliaan, hanya satu kesempatan untuk melindungi mereka yang tersisa.',
+        power: '★★★★★',
+        lore: 'Pemimpin yang kembali ke medan perang untuk merebut kembali kerajaannya dan menjaga rakyatnya tetap berdiri.',
+        sprite: KingGif,
+        actionSprite: KingActionGif,
+        actionDuration: 2380,
+    },
+    {
+        id: 'bijan',
+        name: 'YOR BIJAN',
+        title: 'DUKUN ABNORMAL',
+        className: 'RANGER',
+        level: '??',
+        role: 'MAGE',
+        weapon: 'MOON STAFF',
+        speed: '??????',
+        power: '??????',
+        lore: 'Pemburu sunyi yang membaca jejak musuh sebelum mereka menyadari dirinya sudah berada di dekat mereka.',
+        sprite: BijanGif,
+    },
+    {
+        id: 'zawwaf',
+        name: 'ZAWWAF',
+        title: 'BUILD TANK',
+        className: 'GUARDIAN',
+        level: '07',
+        role: 'TANK',
+        weapon: 'TANGAN KOSONG',
+        speed: '★★☆☆☆',
+        power: '★★★★★',
+        lore: 'Penjaga yang berdiri paling depan saat ancaman datang, menahan serangan agar yang lain bisa bertahan.',
+        sprite: ZawwafGif,
     },
 ];
 
+const prefersReducedMotion = () =>
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export default function CharacterSection() {
     const sectionRef = useRef<HTMLElement | null>(null);
+    const spriteWrapRef = useRef<HTMLDivElement | null>(null);
+    const dustRef = useRef<HTMLDivElement | null>(null);
+    const infoRef = useRef<HTMLDivElement | null>(null);
+    const switchTlRef = useRef<gsap.core.Timeline | null>(null);
+    const prevDisplayIdRef = useRef<CharacterId>('ifaruz');
+    const actionTimeoutRef = useRef<number | null>(null);
+
     const [isInView, setIsInView] = useState(false);
+    // activeCharacter = yang lagi dipilih (thumbnail langsung nyala)
     const [activeCharacter, setActiveCharacter] =
         useState<CharacterId>('ifaruz');
-    const [isIfaruzPlaying, setIsIfaruzPlaying] = useState(false);
+    // displayId = yang beneran ditampilkan (baru ganti setelah animasi "keluar" kelar)
+    const [displayId, setDisplayId] = useState<CharacterId>('ifaruz');
+    const [activeAction, setActiveAction] = useState<CharacterId | null>(null);
     const [soldierAction, setSoldierAction] = useState<SoldierAction>('idle_L');
-    const ifaruzTimeoutRef = useRef<number | null>(null);
+
     const character =
-        CHARACTERS.find(({ id }) => id === activeCharacter) ?? CHARACTERS[0];
+        CHARACTERS.find(({ id }) => id === displayId) ?? CHARACTERS[0];
 
     useEffect(() => {
         const section = sectionRef.current;
@@ -70,9 +124,7 @@ export default function CharacterSection() {
             ([entry]) => {
                 setIsInView(entry.isIntersecting);
             },
-            {
-                threshold: 0.2,
-            },
+            { threshold: 0.2 },
         );
 
         observer.observe(section);
@@ -80,42 +132,240 @@ export default function CharacterSection() {
         return () => {
             observer.disconnect();
 
-            if (ifaruzTimeoutRef.current !== null) {
-                window.clearTimeout(ifaruzTimeoutRef.current);
+            if (actionTimeoutRef.current !== null) {
+                window.clearTimeout(actionTimeoutRef.current);
             }
+
+            switchTlRef.current?.kill();
         };
     }, []);
 
-    function selectCharacter(id: CharacterId) {
-        setActiveCharacter(id);
+    /* ---------- ANIMASI ---------- */
 
-        if (id === 'soldier') {
-            setIsIfaruzPlaying(false);
-            setSoldierAction('idle_L');
+    // Debu pixel kotak-kotak pas karakter mendarat di tatakan
+    function spawnDust() {
+        const box = dustRef.current;
+
+        if (!box) {
+            return;
+        }
+
+        for (let i = 0; i < 12; i++) {
+            const p = document.createElement('span');
+            const size = 4 + Math.round(Math.random() * 3) * 2;
+            const dir = i % 2 === 0 ? -1 : 1;
+
+            p.style.cssText = `position:absolute;left:50%;bottom:0;width:${size}px;height:${size}px;background:${i % 3 === 0 ? '#fbbf24' : '#ffffff'};box-shadow:2px 2px 0 #000;`;
+            box.appendChild(p);
+
+            gsap.to(p, {
+                x: dir * (30 + Math.random() * 100),
+                y: -(15 + Math.random() * 70),
+                opacity: 0,
+                duration: 0.5 + Math.random() * 0.3,
+                ease: 'steps(6)',
+                onComplete: () => p.remove(),
+            });
         }
     }
 
-    function playIfaruz() {
-        if (ifaruzTimeoutRef.current !== null) {
-            window.clearTimeout(ifaruzTimeoutRef.current);
+    // Karakter baru "jatuh" dari atas, mendarat + squash, huruf nama jatuh kayak tetris
+    function playIn() {
+        const wrap = spriteWrapRef.current;
+        const info = infoRef.current;
+
+        if (!wrap || !info || prefersReducedMotion()) {
+            return;
         }
 
-        setIsIfaruzPlaying(true);
+        const infoEls = info.querySelectorAll('[data-info]');
+        const letters = info.querySelectorAll('[data-letter]');
+        const lore = info.querySelector('[data-lore]');
 
-        ifaruzTimeoutRef.current = window.setTimeout(() => {
-            setIsIfaruzPlaying(false);
-            ifaruzTimeoutRef.current = null;
-        }, 3780);
+        switchTlRef.current?.kill();
+
+        const tl = gsap.timeline();
+        switchTlRef.current = tl;
+
+        tl.fromTo(
+            wrap,
+            {
+                y: -180,
+                x: 0,
+                scaleX: 0.8,
+                scaleY: 1.3,
+                opacity: 0,
+                filter: 'brightness(2.5)',
+                transformOrigin: '50% 100%',
+            },
+            { y: 0, opacity: 1, duration: 0.28, ease: 'power2.in' },
+        )
+            .add(spawnDust)
+            // squash pas mendarat
+            .to(wrap, {
+                scaleX: 1.15,
+                scaleY: 0.8,
+                filter: 'brightness(1)',
+                duration: 0.08,
+                ease: 'power1.out',
+            })
+            // mantul balik ke bentuk normal
+            .to(wrap, {
+                scaleX: 1,
+                scaleY: 1,
+                duration: 0.45,
+                ease: 'elastic.out(1, 0.35)',
+            })
+            .fromTo(
+                infoEls,
+                { x: -30, opacity: 0 },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.3,
+                    stagger: 0.07,
+                    ease: 'steps(4)',
+                },
+                0.15,
+            )
+            .fromTo(
+                letters,
+                { y: -40, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.3,
+                    stagger: 0.04,
+                    ease: 'steps(4)',
+                },
+                0.2,
+            );
+
+        if (lore) {
+            tl.fromTo(
+                lore,
+                { clipPath: 'inset(0 100% 0 0)' },
+                {
+                    clipPath: 'inset(0 0% 0 0)',
+                    duration: 0.6,
+                    ease: 'steps(18)',
+                    clearProps: 'clipPath',
+                },
+                0.35,
+            );
+        }
+    }
+
+    // Ganti karakter baru: dispatch animasi keluar dulu, baru swap konten
+    useLayoutEffect(() => {
+        if (prevDisplayIdRef.current === displayId) {
+            return;
+        }
+
+        prevDisplayIdRef.current = displayId;
+        playIn();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [displayId]);
+
+    function selectCharacter(id: CharacterId) {
+        if (id === activeCharacter) {
+            return;
+        }
+
+        setActiveCharacter(id);
+        setActiveAction(null);
+
+        if (id === 'soldier') {
+            setSoldierAction('idle_L');
+        }
+
+        const wrap = spriteWrapRef.current;
+        const info = infoRef.current;
+
+        // reduced motion / ref belum siap: ganti langsung aja
+        if (!wrap || !info || prefersReducedMotion()) {
+            setDisplayId(id);
+            return;
+        }
+
+        switchTlRef.current?.kill();
+        gsap.set(wrap, { x: 0 });
+
+        const infoEls = info.querySelectorAll('[data-info]');
+
+        const tl = gsap.timeline({
+            onComplete: () => {
+                if (id === displayId) {
+                    // klik balik ke karakter yang sama di tengah animasi
+                    playIn();
+                } else {
+                    setDisplayId(id);
+                }
+            },
+        });
+
+        switchTlRef.current = tl;
+
+        tl
+            // glitch: getar + kilat putih
+            .to(wrap, {
+                x: 6,
+                duration: 0.04,
+                repeat: 5,
+                yoyo: true,
+                ease: 'steps(1)',
+            })
+            .to(wrap, { filter: 'brightness(3)', duration: 0.12 }, 0)
+            // terbang ke atas dengan gerakan patah-patah (8-bit vibes)
+            .to(wrap, {
+                y: -70,
+                scaleY: 1.25,
+                scaleX: 0.8,
+                opacity: 0,
+                duration: 0.3,
+                ease: 'steps(5)',
+                transformOrigin: '50% 100%',
+            })
+            .to(
+                infoEls,
+                {
+                    x: 40,
+                    opacity: 0,
+                    duration: 0.25,
+                    stagger: 0.04,
+                    ease: 'steps(4)',
+                },
+                0.1,
+            );
+    }
+
+    function playAction(id: CharacterId) {
+        const actionCharacter = CHARACTERS.find((item) => item.id === id);
+
+        if (!actionCharacter?.actionSprite || !actionCharacter.actionDuration) {
+            return;
+        }
+
+        if (actionTimeoutRef.current !== null) {
+            window.clearTimeout(actionTimeoutRef.current);
+        }
+
+        setActiveAction(id);
+
+        actionTimeoutRef.current = window.setTimeout(() => {
+            setActiveAction(null);
+            actionTimeoutRef.current = null;
+        }, actionCharacter.actionDuration);
     }
 
     return (
         <section
+            id="character"
             ref={sectionRef}
-            className="relative z-10 isolate flex min-h-[90vh] w-full flex-col overflow-hidden bg-transparent py-10 pb-28 text-white sm:py-12 sm:pb-32"
+            className="relative z-10 isolate flex min-h-[95vh] w-full flex-col overflow-hidden bg-transparent py-10 pb-28 text-white sm:py-12 sm:pb-32"
             style={{ contentVisibility: 'auto' }}
         >
             <div className="pointer-events-none absolute inset-0 -z-10 " />
-            <div className="pointer-events-none absolute -bottom-24 left-1/2 -z-10 h-72 w-[min(90vw,48rem)] -translate-x-1/2 rounded-full bg-[#a90c1f]/30 blur-3xl" />
 
             <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6">
                 <div className="mb-10 flex items-center gap-4 sm:mb-14">
@@ -139,40 +389,83 @@ export default function CharacterSection() {
                                 alt="tatakan-karakter"
                                 className="absolute bottom-0 z-0"
                             />
-                            {activeCharacter === 'ifaruz' ? (
-                                <img
-                                    key={isIfaruzPlaying ? 'ifaruz-action' : 'ifaruz-idle'}
-                                    src={isIfaruzPlaying ? IfaruzGif : IfaruzIdleGif}
-                                    alt="Ifaruz"
-                                    onClick={playIfaruz}
-                                    className="relative z-10 h-full w-full cursor-pointer object-contain"
-                                    style={{ imageRendering: 'pixelated' }}
-                                />
-                            ) : (
-                                <SoldierLottie
-                                    action={soldierAction}
-                                    autoplay={isInView}
-                                    loop={isInView}
-                                    className="h-full w-full scale-[1.5] drop-shadow-[8px_10px_0_rgba(0,0,0,0.45)]"
-                                />
-                            )}
+                            {/* wrapper khusus buat GSAP, biar gak bentrok sama transform Tailwind */}
+                            <div
+                                ref={spriteWrapRef}
+                                className="relative z-10 flex h-full w-full items-center justify-center will-change-transform"
+                            >
+                                {displayId === 'soldier' ? (
+                                    <SoldierLottie
+                                        action={soldierAction}
+                                        autoplay={isInView}
+                                        loop={isInView}
+                                        className="h-full w-full scale-[1.5] drop-shadow-[8px_10px_0_rgba(0,0,0,0.45)]"
+                                    />
+                                ) : (
+                                    <CharacterSprite
+                                        key={`${character.id}-${activeAction === character.id ? 'action' : 'idle'}`}
+                                        src={
+                                            activeAction === character.id &&
+                                            character.actionSprite
+                                                ? character.actionSprite
+                                                : character.sprite
+                                        }
+                                        alt={character.name}
+                                        onClick={
+                                            character.actionSprite
+                                                ? () => playAction(character.id)
+                                                : undefined
+                                        }
+                                        className={`relative z-10 h-full w-full drop-shadow-[8px_10px_0_rgba(0,0,0,0.45)] ${character.actionSprite ? 'cursor-pointer' : ''}`}
+                                    />
+                                )}
+                            </div>
+                            {/* tempat debu pixel muncul, sejajar tatakan */}
+                            <div
+                                ref={dustRef}
+                                className="pointer-events-none absolute bottom-[14%] left-0 z-20 h-0 w-full"
+                            />
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-7">
+                    <div ref={infoRef} className="flex flex-col gap-7">
                         <div>
-                            <p className="mb-3 font-depixel text-xs tracking-[0.25em] text-amber-400 uppercase">
+                            <p
+                                data-info
+                                className="mb-3 font-depixel text-xs tracking-[0.25em] text-amber-400 uppercase"
+                            >
                                 {character.title}
                             </p>
-                            <h3 className="font-kemco text-4xl leading-tight text-white drop-shadow-[4px_4px_0_#000] sm:text-6xl">
-                                {character.name}
+                            <h3
+                                key={character.id}
+                                data-info
+                                aria-label={character.name}
+                                className="font-kemco text-4xl leading-tight text-white drop-shadow-[4px_4px_0_#000] sm:text-6xl"
+                            >
+                                {character.name.split('').map((char, i) => (
+                                    <span
+                                        key={`${char}-${i}`}
+                                        data-letter
+                                        aria-hidden="true"
+                                        className="inline-block whitespace-pre"
+                                    >
+                                        {char}
+                                    </span>
+                                ))}
                             </h3>
-                            <p className="mt-5 max-w-lg font-depixel text-sm leading-7 text-white/70 sm:text-base">
+                            <p
+                                data-info
+                                data-lore
+                                className="mt-5 max-w-lg font-depixel text-sm leading-7 text-white/70 sm:text-base"
+                            >
                                 {character.lore}
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-3 border-y-2 border-white/15 py-5 font-depixel text-[10px] tracking-wider uppercase sm:grid-cols-4">
+                        <div
+                            data-info
+                            className="grid grid-cols-2 gap-3 border-y-2 border-white/15 py-5 font-depixel text-[10px] tracking-wider uppercase sm:grid-cols-4"
+                        >
                             <div>
                                 <p className="text-white/40">ROLE</p>
                                 <p className="mt-2 text-amber-300">{character.role}</p>
@@ -194,30 +487,31 @@ export default function CharacterSection() {
 
                     <div className="flex flex-col gap-4 border-t-2 border-white/15 pt-6 lg:border-t-0 lg:border-l-2 lg:pt-0 lg:pl-3">
                         <div className="flex flex-col gap-3">
-                            {CHARACTERS.map(({ id, name }) => (
+                            {CHARACTERS.map((item) => (
                                 <button
-                                    key={id}
+                                    key={item.id}
                                     type="button"
-                                    onClick={() => selectCharacter(id)}
-                                    aria-pressed={activeCharacter === id}
-                                    aria-label={`Select ${name}`}
-                                    title={name}
-                                    className={`aspect-square w-full overflow-hidden border-2 transition-transform active:translate-y-1 ${activeCharacter === id
+                                    onClick={() => selectCharacter(item.id)}
+                                    aria-pressed={activeCharacter === item.id}
+                                    aria-label={`Select ${item.name}`}
+                                    title={item.name}
+                                    className={`aspect-square w-full overflow-hidden border-2 transition-transform active:translate-y-1 ${
+                                        activeCharacter === item.id
                                             ? 'border-amber-300 bg-amber-400 shadow-[3px_3px_0_#000]'
                                             : 'border-white/30 bg-black/30 hover:border-amber-300'
-                                        }`}
+                                    }`}
                                 >
-                                    {id === 'ifaruz' ? (
-                                        <img
-                                            src={SiluetIfaruzImg}
-                                            alt={name}
-                                            className="h-full w-full object-contain"
-                                            style={{ imageRendering: 'pixelated' }}
-                                        />
-                                    ) : (
+                                    {item.id === 'soldier' ? (
                                         <div className="flex h-full w-full items-center justify-center bg-[#780c1c]">
                                             <span className="font-kemco text-2xl text-amber-300">?</span>
                                         </div>
+                                    ) : (
+                                        <CharacterSprite
+                                            src={item.sprite}
+                                            alt={item.name}
+                                            staticPreview
+                                            className="h-full w-full origin-top -translate-y-[16%] scale-[2.2] object-[center_top]"
+                                        />
                                     )}
                                 </button>
                             ))}
