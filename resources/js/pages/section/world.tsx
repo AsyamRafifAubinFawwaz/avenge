@@ -16,7 +16,7 @@ export default function WorldSection() {
     useEffect(() => {
         if (!containerRef.current || !textRef.current || !imageRef.current) return;
 
-        const chars = textRef.current.querySelectorAll('span');
+            const words = textRef.current.querySelectorAll('span');
         const ctx = gsap.context(() => {
             const timeline = gsap.timeline({
                 scrollTrigger: {
@@ -27,12 +27,11 @@ export default function WorldSection() {
                 },
             });
 
-            timeline
-                .from(chars, {
+            timeline.from(words, {
                     opacity: 0.3,
                     duration: 0.05,
-                    stagger: 0.02,
-                }, 0)
+                    stagger: 0.04,
+                }, 0);
 
             gsap.to(imageRef.current, {
                 y: window.innerHeight * 0.15,
@@ -61,9 +60,9 @@ export default function WorldSection() {
                     ref={textRef}
                     className="font-depixel text-lg mt-16 text-white text-center max-w-4xl px-4 z-10 relative leading-relaxed"
                 >
-                    {LORE_TEXT.split('').map((char, i) => (
+                    {LORE_TEXT.split(/(\s+)/).map((word, i) => (
                         <span key={i} className="inline">
-                            {char}
+                            {word}
                         </span>
                     ))}
                 </div>

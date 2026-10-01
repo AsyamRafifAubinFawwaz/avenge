@@ -1,37 +1,89 @@
-import React from 'react'
+import IfaruzGif from '../../../assets/characters/ifaruz.gif';
+import KingGif from '../../../assets/characters/king_action.gif';
+import ZawwafGif from '../../../assets/characters/zawwaf.gif';
+
+const GAMEPLAY_FEATURES = [
+    {
+        number: '01',
+        title: 'BANGUN PERTAHANAN',
+        description:
+            'Susun strategi dan jaga desa tetap berdiri. Setiap posisi menentukan siapa yang bisa bertahan saat serangan datang.',
+        image: IfaruzGif,
+        alt: 'Ifaruz menggunakan kekuatan api',
+    },
+    {
+        number: '02',
+        title: 'KELOLA PASUKAN',
+        description:
+            'Pilih pahlawan yang tepat untuk setiap misi, gabungkan kemampuan mereka, lalu bentuk tim yang siap menghadapi ancaman.',
+        image: KingGif,
+        alt: 'King Avehs bersiap bertarung',
+    },
+    {
+        number: '03',
+        title: 'SERANG BALIK',
+        description:
+            'Bawa pasukanmu keluar dari desa dan rebut kembali wilayah yang dikuasai musuh dalam pertempuran pixel yang brutal.',
+        image: ZawwafGif,
+        alt: 'Zawwaf berdiri sebagai penjaga garis depan',
+    },
+];
 
 export const GameplaySection = () => {
     return (
         <section
-            id="character"
-            className="relative z-10 isolate flex min-h-[95vh] w-full flex-col overflow-hidden bg-transparent py-10 pb-28 text-white sm:py-12 sm:pb-32"
+            id="gameplay"
+            className="relative z-10 isolate w-full overflow-hidden bg-transparent py-12 pb-28 text-white sm:py-16 sm:pb-36"
             style={{ contentVisibility: 'auto' }}
         >
-            <div className="pointer-events-none absolute inset-0 -z-10 " />
-
-            <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6">
-                <div className="mb-10 flex items-center gap-4 sm:mb-14">
+            <div className="mx-auto w-full max-w-6xl px-6">
+                <div className="mb-12 flex items-center gap-4 sm:mb-16">
                     <div className="flex shrink-0 flex-col gap-1">
                         <div className="h-3 w-3 bg-amber-500 shadow-[2px_2px_0_#000]" />
                         <div className="h-3 w-3 bg-amber-400 shadow-[2px_2px_0_#000]" />
                     </div>
-                    <div>
-                        <h2 className="font-kemco text-3xl leading-tight drop-shadow-[3px_3px_0_#000] sm:text-5xl">
-                            Gameplayrawr
-                        </h2>
-                    </div>
+                    <h2 className="font-kemco text-3xl leading-tight drop-shadow-[3px_3px_0_#000] sm:text-5xl">
+                        GAMEPLAY
+                    </h2>
                     <div className="h-1 flex-1 bg-[#a90c1f] shadow-[0_3px_0_#000]" />
                 </div>
-            
-            <div className="flex flex-col gap-6 sm:gap-10">
-                <p className="font-depixel text-lg leading-relaxed sm:text-xl">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-                <p className="font-depixel text-lg leading-relaxed sm:text-xl">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>   
-            </div>
+
+                <div className="flex flex-col gap-16 sm:gap-24">
+                    {GAMEPLAY_FEATURES.map((feature, index) => (
+                        <article
+                            key={feature.number}
+                            className="group grid items-center gap-8 lg:grid-cols-2 lg:gap-16"
+                        >
+                            <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
+                                <div className="relative">
+                                    <div className="absolute -inset-2 bg-black/60 shadow-[6px_6px_0_#000]" aria-hidden="true" />
+                                    <div className="relative aspect-video overflow-hidden border-4 border-black bg-[#3b1118] p-2 shadow-[4px_4px_0_#f59e0b]">
+                                        <img
+                                            src={feature.image}
+                                            alt={feature.alt}
+                                            className="h-full w-full object-contain transition-transform duration-300 ease-out group-hover:scale-105"
+                                            style={{ imageRendering: 'pixelated' }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
+                                <p className="mb-3 font-depixel text-sm tracking-[0.2em] text-amber-300">
+                                    // {feature.number}
+                                </p>
+                                <h3 className="font-kemco text-2xl leading-tight drop-shadow-[3px_3px_0_#000] sm:text-4xl">
+                                    {feature.title}
+                                </h3>
+                                <div className="my-5 h-1 w-24 bg-amber-500 shadow-[3px_3px_0_#000]" />
+                                <p className="max-w-xl font-depixel text-sm leading-7 text-white/75 sm:text-base sm:leading-8">
+                                    {feature.description}
+                                </p>
+                            </div>
+                        </article>
+                    ))}
+                </div>
             </div>
         </section>
-    )
-}
+    );
+};

@@ -92,8 +92,8 @@ export const    HeroSection = () => {
                 <div className='w-full md:w-2/3 text-center mt-4'>
                     <p className="font-depixel text-white text-sm md:text-base lg:text-lg drop-shadow-md">Lorem ipsum dolor sit amet adispicing polije sip sip sip dupaktiting </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-5 mt-8 w-full px-4 sm:px-0">
-                        <a href="#" className="btn-pixelated w-full sm:w-auto text-center">Pre-Register</a>
-                        <a href="#" className="btn-pixelated w-full sm:w-auto text-center">Watch Trailer</a>
+                        <a href="#" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Pre-Register</a>
+                        <a href="#" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Watch Trailer</a>
                     </div>
                 </div>
             </div>
