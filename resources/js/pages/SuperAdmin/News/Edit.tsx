@@ -63,74 +63,75 @@ export default function NewsEdit({ news, categories }: Props) {
         <>
             <Head title="Edit Berita" />
 
-            <div className="flex flex-col gap-6 p-6 max-w-2xl">
+            <div className="flex w-full max-w-3xl flex-col gap-6 p-4 text-[#f7f1df] sm:p-6">
                 {/* Header */}
                 <div className="flex items-center gap-3">
-                    <Button variant="outline" size="icon" asChild>
+                    <Button variant="outline" size="icon" asChild className="rounded-none border-2 border-black bg-[#2a1c0f] text-[#f7f1df] shadow-[3px_3px_0_#000] hover:bg-[#3d2a17]">
                         <Link href={index.url()}>
                             <ArrowLeft className="size-4" />
                         </Link>
                     </Button>
                     <div>
-                        <h1 className="text-2xl font-bold tracking-tight">Edit Berita</h1>
-                        <p className="text-sm text-muted-foreground mt-0.5 font-mono text-xs">{news.slug}</p>
+                        <h1 className="font-kemco text-xl tracking-normal text-white sm:text-2xl">Edit Berita</h1>
+                        <p className="mt-1 font-depixel text-xs text-white/60">{news.slug}</p>
                     </div>
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-5 sm:gap-6 pt-2">
                     {/* Judul */}
-                    <div className="flex flex-col gap-1.5">
-                        <Label htmlFor="title">Judul</Label>
+                    <div className="flex flex-col gap-2">
+                        <Label htmlFor="title" className="font-depixel text-xs text-[#f7f1df]">Judul</Label>
                         <Input
                             id="title"
                             value={form.data.title}
                             onChange={e => form.setData('title', e.target.value)}
                             placeholder="Judul berita..."
+                            className="w-full rounded-none font-depixel text-xs bg-[#1a1515] border-2 border-[#3d2e2e] shadow-[inset_3px_3px_0px_rgba(0,0,0,0.6)] text-[#F8F9FA] px-4 py-3 placeholder:text-[#6a5d5d] focus:outline-none focus:border-[#FBA819] focus:bg-[#211818] transition-colors"
                         />
-                        {form.errors.title && <p className="text-xs text-destructive">{form.errors.title}</p>}
+                        {form.errors.title && <p className="font-depixel text-[10px] text-red-500">{form.errors.title}</p>}
                     </div>
 
                     {/* Kategori */}
-                    <div className="flex flex-col gap-1.5">
-                        <Label htmlFor="category_id">Kategori</Label>
+                    <div className="flex flex-col gap-2">
+                        <Label htmlFor="category_id" className="font-depixel text-xs text-[#f7f1df]">Kategori</Label>
                         <select
                             id="category_id"
                             value={form.data.category_id}
                             onChange={e => form.setData('category_id', e.target.value)}
-                            className="rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                            className="w-full rounded-none font-depixel text-xs bg-[#1a1515] border-2 border-[#3d2e2e] shadow-[inset_3px_3px_0px_rgba(0,0,0,0.6)] text-[#F8F9FA] px-4 py-3 focus:outline-none focus:border-[#FBA819] focus:bg-[#211818] transition-colors"
                         >
-                            <option value="">-- Pilih Kategori --</option>
+                            <option value="" className="bg-[#1a1515] text-[#F8F9FA]">-- Pilih Kategori --</option>
                             {categories.map(cat => (
-                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                <option key={cat.id} value={cat.id} className="bg-[#1a1515] text-[#F8F9FA]">{cat.name}</option>
                             ))}
                         </select>
-                        {form.errors.category_id && <p className="text-xs text-destructive">{form.errors.category_id}</p>}
+                        {form.errors.category_id && <p className="font-depixel text-[10px] text-red-500">{form.errors.category_id}</p>}
                     </div>
 
                     {/* Gambar */}
-                    <div className="flex flex-col gap-1.5">
-                        <Label htmlFor="image">Gambar</Label>
+                    <div className="flex flex-col gap-2">
+                        <Label htmlFor="image" className="font-depixel text-xs text-[#f7f1df]">Gambar</Label>
                         <label
                             htmlFor="image"
-                            className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-input hover:border-primary/50 cursor-pointer transition-colors p-6 gap-2"
+                            className="flex cursor-pointer flex-col items-center justify-center gap-2 p-6 border-4 border-dashed border-[#3d2e2e] bg-[#1a1515] hover:border-[#FBA819] hover:bg-[#FBA819]/5 transition-all"
                         >
                             {preview ? (
-                                <img src={preview} alt="preview baru" className="max-h-48 rounded-md object-cover" />
+                                <img src={preview} alt="preview baru" className="max-h-48 border-2 border-[#3d2e2e] object-cover" />
                             ) : news.image ? (
                                 <div className="flex flex-col items-center gap-2">
                                     <img
                                         src={`/storage/${news.image}`}
                                         alt="gambar saat ini"
-                                        className="max-h-40 rounded-md object-cover"
+                                        className="max-h-40 border-2 border-[#3d2e2e] object-cover"
                                     />
-                                    <p className="text-xs text-muted-foreground">Gambar saat ini — klik untuk ganti</p>
+                                    <p className="font-depixel text-[10px] text-[#FBA819]">Gambar saat ini — klik untuk ganti</p>
                                 </div>
                             ) : (
                                 <>
-                                    <Upload className="size-8 text-muted-foreground" />
-                                    <p className="text-sm text-muted-foreground">Klik untuk upload gambar</p>
-                                    <p className="text-xs text-muted-foreground">PNG, JPG, GIF — max 2MB</p>
+                                    <Upload className="size-8 text-[#FBA819]" />
+                                    <p className="font-depixel text-xs text-[#FBA819]">Klik untuk upload gambar</p>
+                                    <p className="font-depixel text-[10px] text-gray-400">PNG, JPG, GIF — max 2MB</p>
                                 </>
                             )}
                             <input
@@ -141,31 +142,38 @@ export default function NewsEdit({ news, categories }: Props) {
                                 onChange={handleImageChange}
                             />
                         </label>
-                        {form.errors.image && <p className="text-xs text-destructive">{form.errors.image}</p>}
+                        {form.errors.image && <p className="font-depixel text-[10px] text-red-500">{form.errors.image}</p>}
                     </div>
 
                     {/* Deskripsi */}
-                    <div className="flex flex-col gap-1.5">
-                        <Label htmlFor="description">Deskripsi</Label>
+                    <div className="flex flex-col gap-2">
+                        <Label htmlFor="description" className="font-depixel text-xs text-[#f7f1df]">Deskripsi</Label>
                         <textarea
                             id="description"
                             value={form.data.description}
                             onChange={e => form.setData('description', e.target.value)}
                             rows={6}
                             placeholder="Isi berita..."
-                            className="rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none resize-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                            className="w-full resize-none rounded-none font-depixel text-xs bg-[#1a1515] border-2 border-[#3d2e2e] shadow-[inset_3px_3px_0px_rgba(0,0,0,0.6)] text-[#F8F9FA] px-4 py-3 placeholder:text-[#6a5d5d] focus:outline-none focus:border-[#FBA819] focus:bg-[#211818] transition-colors"
                         />
-                        {form.errors.description && <p className="text-xs text-destructive">{form.errors.description}</p>}
+                        {form.errors.description && <p className="font-depixel text-[10px] text-red-500">{form.errors.description}</p>}
                     </div>
 
                     {/* Actions */}
-                    <div className="flex gap-3 justify-end pt-2">
-                        <Button type="button" variant="outline" asChild>
-                            <Link href={index.url()}>Batal</Link>
-                        </Button>
-                        <Button type="submit" disabled={form.processing}>
+                    <div className="flex flex-col-reverse justify-end gap-3 pt-4 sm:flex-row">
+                        <Link 
+                            href={index.url()}
+                            className="inline-flex items-center justify-center rounded-none font-kemco text-xs transition-colors bg-[#2b2222] text-[#F8F9FA] border-t-2 border-l-2 border-[#4a3b3b] border-b-4 border-r-4 border-[#120e0e] hover:bg-[#3d2e2e] active:border-t-4 active:border-l-4 active:border-[#120e0e] active:border-b-2 active:border-r-2 active:border-[#4a3b3b] px-6 py-2"
+                        >
+                            Batal
+                        </Link>
+                        <button 
+                            type="submit" 
+                            disabled={form.processing} 
+                            className="inline-flex items-center justify-center rounded-none font-kemco text-xs font-bold bg-[#FBA819] text-[#211818] border-t-2 border-l-2 border-[#ffd465] border-b-4 border-r-4 border-[#b97a0f] active:border-t-4 active:border-l-4 active:border-[#b97a0f] active:border-b-2 active:border-r-2 active:border-[#ffd465] px-6 py-2"
+                        >
                             {form.processing ? 'Menyimpan...' : 'Update Berita'}
-                        </Button>
+                        </button>
                     </div>
                 </form>
             </div>

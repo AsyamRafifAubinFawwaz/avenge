@@ -1,6 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
 import InputError from '@/components/input-error';
-import PasskeyVerify from '@/components/passkey-verify';
 import PasswordInput from '@/components/password-input';
 import TeamInvitationAlert from '@/components/team-invitation-alert';
 import TextLink from '@/components/text-link';
@@ -36,7 +35,6 @@ export default function Login({
                 />
             )}
 
-            <PasskeyVerify />
 
             <Form
                 {...store.form()}
@@ -56,7 +54,8 @@ export default function Login({
                                     autoFocus
                                     tabIndex={1}
                                     autoComplete="email"
-                                    placeholder="email@example.com"
+                                    placeholder="Masukkan email"
+                                    className="rounded-none border-2 border-[#211818] bg-[#B8AA91] placeholder:text-[#7A7369]"
                                 />
                                 <InputError message={errors.email} />
                             </div>
@@ -67,10 +66,10 @@ export default function Login({
                                     {canResetPassword && (
                                         <TextLink
                                             href={request()}
-                                            className="ml-auto text-sm"
+                                            className="ml-auto font-depixel text-sm text-[#8C1C2A] hover:text-[#FBA819] hover:underline"
                                             tabIndex={5}
                                         >
-                                            Forgot password?
+                                            Lupa password?
                                         </TextLink>
                                     )}
                                 </div>
@@ -80,46 +79,27 @@ export default function Login({
                                     required
                                     tabIndex={2}
                                     autoComplete="current-password"
-                                    placeholder="Password"
+                                    placeholder="Masukkan password"
+                                    className="rounded-none border-2 border-[#211818] bg-[#B8AA91] placeholder:text-[#7A7369]"
                                 />
                                 <InputError message={errors.password} />
                             </div>
 
-                            <div className="flex items-center space-x-3">
-                                <Checkbox
-                                    id="remember"
-                                    name="remember"
-                                    tabIndex={3}
-                                />
-                                <Label htmlFor="remember">Remember me</Label>
-                            </div>
 
                             <Button
                                 type="submit"
-                                className="mt-4 w-full"
+                                className="btn-pixelated mt-4 mb-1! w-full rounded-none!"
+                                style={{ '--btn-color': '#FBA819' } as React.CSSProperties}
                                 tabIndex={4}
                                 disabled={processing}
                                 data-test="login-button"
                             >
                                 {processing && <Spinner />}
-                                Log in
+                                MASUK
                             </Button>
                         </div>
 
-                        <div className="text-center text-sm text-muted-foreground">
-                            Don't have an account?{' '}
-                            <TextLink
-                                href={register({
-                                    query: {
-                                        invitation: teamInvitation?.code,
-                                    },
-                                })}
-                                data-test="register-link"
-                                tabIndex={5}
-                            >
-                                Sign up
-                            </TextLink>
-                        </div>
+
                     </>
                 )}
             </Form>
@@ -134,6 +114,6 @@ export default function Login({
 }
 
 Login.layout = {
-    title: 'Log in to your account',
-    description: 'Enter your email and password below to log in',
+    title: 'LOGIN',
+    // description: 'Jika memiliki akun, silahkan login',
 };
