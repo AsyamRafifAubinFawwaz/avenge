@@ -28,6 +28,19 @@ body {
     scroll-behavior: smooth;
 }
 
+@media (hover: hover) and (pointer: fine) {
+    body,
+    body * {
+        cursor: url('../assets/melee_texture.png') 4 28, auto !important;
+    }
+
+    input,
+    textarea,
+    select {
+        cursor: text !important;
+    }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
