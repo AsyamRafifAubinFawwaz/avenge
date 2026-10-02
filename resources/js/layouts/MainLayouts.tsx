@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ReactNode } from 'react';
+import MusicToggle from '@/components/avenge/music-toggle';
 import { SmoothScrollProvider } from '@/contexts/SmoothScrollContext';
 
 interface MainLayoutProps {
@@ -12,6 +13,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
             <div className="min-h-screen bg-[#81081F] text-foreground selection:bg-primary selection:text-primary-foreground antialiased">
                 {children}
             </div>
+            <MusicToggle />
         </SmoothScrollProvider>
     );
 }
