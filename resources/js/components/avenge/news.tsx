@@ -114,32 +114,42 @@ export default function NewsSection({ latestNews = [] }: Props) {
             return;
         }
 
-        const newsItems = gsap.utils.toArray<HTMLElement>('.news-card');
-        const timeline = gsap.timeline({
+        gsap.from('.news-heading', {
+            y: 18,
+            autoAlpha: 0,
+            duration: 0.45,
+            ease: 'power2.out',
             scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 82%',
-                toggleActions: 'play none none none',
+                trigger: '.news-heading',
+                start: 'top 88%',
                 once: true,
-            },
-            defaults: {
-                ease: 'power2.out',
             },
         });
 
-        timeline
-            .from('.news-heading', {
-                y: 18,
-                autoAlpha: 0,
-                duration: 0.45,
-            })
-            .from(newsItems, {
-                y: 28,
-                autoAlpha: 0,
-                duration: 0.5,
-                stagger: 0.08,
-                clearProps: 'transform,opacity,visibility',
-            }, '-=0.2');
+        const cards = gsap.utils.toArray<HTMLElement>('.news-card');
+
+        if (cards.length === 0) {
+            return;
+        }
+
+        gsap.set(cards, { y: 28, autoAlpha: 0 });
+
+        // Batch: kartu yang masuk layar bareng animasi bareng (stagger),
+        // kartu yang masih jauh di bawah nunggu sampai kelihatan.
+        ScrollTrigger.batch(cards, {
+            start: 'top 90%',
+            once: true,
+            onEnter: (batch) =>
+                gsap.to(batch, {
+                    y: 0,
+                    autoAlpha: 1,
+                    duration: 0.5,
+                    stagger: 0.08,
+                    ease: 'power2.out',
+                    overwrite: true,
+                    clearProps: 'transform,opacity,visibility',
+                }),
+        });
     }, { scope: sectionRef });
 
     return (
@@ -152,16 +162,50 @@ export default function NewsSection({ latestNews = [] }: Props) {
                 style={{ backgroundImage: `url(${paperNewsBackground})` }}
             />
 
-            <div className="relative z-20 mx-auto max-w-6xl px-6 pt-4">
-                <div className="news-heading mb-10 flex items-center gap-4">
-                    <div className="flex flex-col gap-1">
-                        <div className="w-3 h-3 bg-amber-500" style={{ boxShadow: '2px 2px 0 #000' }} />
-                        <div className="w-3 h-3 bg-amber-400" style={{ boxShadow: '2px 2px 0 #000' }} />
+            <div className="relative z-20 mx-auto max-w-6xl px-4 pt-4 sm:px-6">
+                <div className="news-heading mb-8 flex items-center gap-3 sm:mb-10 sm:gap-4">
+                    <div className="flex shrink-0 flex-col gap-1">
+                        <div className="h-3 w-3 bg-amber-500" style={{ boxShadow: '2px 2px 0 #000' }} />
+                        <div className="h-3 w-3 bg-amber-400" style={{ boxShadow: '2px 2px 0 #000' }} />
                     </div>
-                    <div className="font-kemco text-4xl text-black drop-shadow-">
-                        BERITA TERBARU
+
+                    <h2 className="font-kemco text-2xl leading-tight text-black min-[400px]:text-3xl md:text-4xl">
+                        LATEST ARTICLES
+                    </h2>
+
+                    <div className="h-0.5 min-w-3 flex-1 bg-black/30" />
+
+                    <div className="hidden shrink-0 sm:block">
+                        <Link
+                            href="/news"
+                            className="btn-pixelated text-xs"
+                            style={{ '--btn-color': '#000' } as React.CSSProperties}
+                        >
+                            SEMUA BERITA
+                        </Link>
                     </div>
-                    <div className="flex-1 h-0.5 bg-black/30" />
+                </div>
+
+                {latestNews.length === 0 && (
+                    <div className="flex flex-col items-center justify-center gap-4 py-16">
+                        <p className="font-depixel text-xs tracking-widest text-black/50 uppercase">
+                            [ BELUM ADA BERITA ]
+                        </p>
+                    </div>
+                )}
+
+                {latestNews.length > 0 && (
+                    <div className="mx-auto grid max-w-sm grid-cols-1 gap-6 sm:max-w-none sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+                        {latestNews.slice(0, 4).map((item) => (
+                            <div key={item.id} className="news-card">
+                                <PixelNewsCard item={item} />
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Tombol versi HP: di bawah kartu */}
+                <div className="mt-10 flex justify-center sm:hidden">
                     <Link
                         href="/news"
                         className="btn-pixelated text-xs"
@@ -170,27 +214,7 @@ export default function NewsSection({ latestNews = [] }: Props) {
                         SEMUA BERITA
                     </Link>
                 </div>
-
-                {latestNews.length === 0 && (
-                    <div className="flex flex-col items-center justify-center py-16 gap-4">
-                        <p className="font-depixel text-white/40 text-xs uppercase tracking-widest">
-                            [ BELUM ADA BERITA ]
-                        </p>
-                    </div>
-                )}
-
-                {latestNews.length > 0 && (
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-                        {latestNews.slice(0, 4).map(item => (
-                            <div key={item.id} className="news-card">
-                                <PixelNewsCard item={item} />
-                            </div>
-                        ))}
-                    </div>
-                )}
             </div>
-
-
         </section>
     );
-}
+}   

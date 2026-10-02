@@ -31,7 +31,7 @@ type Props = {
 export default function Welcome({ latestNews }: Props) {
     return (
         <>
-            <Head title="Avenge: Last Manager Kopdes" />
+            <Head title="Avenge" />
             <MainLayout>
                 <LoadingScreen />
                 <NavbarHome />

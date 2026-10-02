@@ -33,29 +33,29 @@ const CHARACTERS: Character[] = [
     {
         id: 'ifaruz',
         name: 'IFARUZ',
-        title: 'YANG BRO RASAKAN',
+        title: 'THE VENGEFUL BLADE',
         className: 'MAGE',
         level: '07',
         role: 'FIGHTER/MAGE',
-        weapon: 'EMBER STAFF',
+        weapon: 'IRON BLADE, PEARL OF YOR',
         speed: '★★★★☆',
-        power: '★★★★★',
-        lore: 'Penjaga terakhir dari desa yang terbakar. Ifaruz membawa sihir api dan tekad untuk merebut kembali rumahnya dari para penjajah.',
+        power: '★★★★☆',
+        lore: 'A sole survivor who lost his family and village to King Avhes\' cruelty. Driven by pain and the vow he swore at the cliff\'s edge, he forged himself into a lethal weapon ready to shatter injustice.',
         sprite: IfaruzIdleGif,
         actionSprite: IfaruzGif,
         actionDuration: 3780,
     },
     {
         id: 'king',
-        name: 'KING AVEHS',
-        title: 'RAJA JAWA',
+        name: 'KING AVHES',
+        title: 'THE CRUEL TYRANT',
         className: 'WARRIOR',
         level: '08',
-        role: 'FIGHTER',
-        weapon: 'ROYAL BLADE',
-        speed: '★★★☆☆',
+        role: 'FIGHTER/MAGE',
+        weapon: 'ROYAL BLADE, DARK ORB',
+        speed: '★★★★★',
         power: '★★★★★',
-        lore: 'Pemimpin yang kembali ke medan perang untuk merebut kembali kerajaannya dan menjaga rakyatnya tetap berdiri.',
+        lore: 'A ruthless ruler whose insatiable greed left a peaceful valley in ashes. His oppressive reign ignited the ultimate flame of vengeance that now stalks him from the shadows.',
         sprite: KingGif,
         actionSprite: KingActionGif,
         actionDuration: 2380,
@@ -63,27 +63,27 @@ const CHARACTERS: Character[] = [
     {
         id: 'bijan',
         name: 'YOR BIJAN',
-        title: 'DUKUN ABNORMAL',
+        title: 'THE LEGENDARY MASTER',
         className: 'RANGER',
         level: '??',
         role: 'MAGE',
-        weapon: 'MOON STAFF',
-        speed: '??????',
-        power: '??????',
-        lore: 'Pemburu sunyi yang membaca jejak musuh sebelum mereka menyadari dirinya sudah berada di dekat mereka.',
+        weapon: 'PEARL OF YOR',
+        speed: '★★★☆☆',
+        power: '★★★★★',
+        lore: 'A reclusive veteran warrior hidden deep within the mountain forests. For ten grueling years, he relentlessly tempered Ifaruz\'s combat skills and entrusted him with an ancient ancestral relic.',
         sprite: BijanGif,
     },
     {
         id: 'zawwaf',
         name: 'ZAWWAF',
-        title: 'BUILD TANK',
+        title: 'THE ANCIENT ANCESTOR',
         className: 'GUARDIAN',
         level: '07',
-        role: 'TANK',
-        weapon: 'TANGAN KOSONG',
-        speed: '★★☆☆☆',
-        power: '★★★★★',
-        lore: 'Penjaga yang berdiri paling depan saat ancaman datang, menahan serangan agar yang lain bisa bertahan.',
+        role: 'FIGHTER/MAGE',
+        weapon: 'FIST, PEARL OF YOR',
+        speed: '★★★★☆',
+        power: '★★★★☆',
+        lore: 'A mysterious progenitor who crafted the sacred magic staff. The ancestral power channeled through the Pearl of Yor serves as the catalyst that amplifies Ifaruz\'s arcane abilities.',
         sprite: ZawwafGif,
     },
 ];
@@ -348,7 +348,7 @@ export default function CharacterSection() {
 
         if (actionTimeoutRef.current !== null) {
             window.clearTimeout(actionTimeoutRef.current);
-        }
+        }   
 
         setActiveAction(id);
 
@@ -362,34 +362,32 @@ export default function CharacterSection() {
         <section
             id="character"
             ref={sectionRef}
-            className="relative z-10 isolate flex min-h-[95vh] w-full flex-col overflow-hidden bg-transparent py-10 pb-28 text-white sm:py-12 sm:pb-32"
-            style={{ contentVisibility: 'auto' }}
+            className="relative z-10 isolate flex min-h-[95vh] w-full flex-col overflow-hidden bg-transparent py-8 pb-24 text-white sm:py-12 sm:pb-32"
+            style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 900px' }}
         >
-            <div className="pointer-events-none absolute inset-0 -z-10 " />
+            <div className="pointer-events-none absolute inset-0 -z-10" />
 
-            <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6">
-                <div className="mb-10 flex items-center gap-4 sm:mb-14">
+            <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 sm:px-6">
+                <div className="mb-8 flex items-center gap-3 sm:mb-14 sm:gap-4">
                     <div className="flex shrink-0 flex-col gap-1">
                         <div className="h-3 w-3 bg-amber-500 shadow-[2px_2px_0_#000]" />
                         <div className="h-3 w-3 bg-amber-400 shadow-[2px_2px_0_#000]" />
                     </div>
-                    <div>
-                        <h2 className="font-kemco text-3xl leading-tight drop-shadow-[3px_3px_0_#000] sm:text-5xl">
-                            CHARACTER
-                        </h2>
-                    </div>
+                    <h2 className="font-kemco text-2xl leading-tight drop-shadow-[3px_3px_0_#000] min-[400px]:text-3xl sm:text-5xl">
+                        CHARACTER
+                    </h2>
                     <div className="h-1 flex-1 bg-[#a90c1f] shadow-[0_3px_0_#000]" />
                 </div>
 
-                <div className="grid flex-1 items-center gap-8 lg:grid-cols-[3fr_6fr_1fr] lg:gap-6 xl:gap-10">
-                    <div className="relative aspect-square w-full overflow-hidden lg:scale-110">
+                <div className="grid flex-1 items-center gap-6 lg:grid-cols-[3fr_6fr_1fr] lg:gap-6 xl:gap-10">
+                    {/* 1. SPRITE — di HP dibatasi ukurannya & dipusatkan */}
+                    <div className="relative order-1 mx-auto aspect-square w-full max-w-[280px] overflow-hidden sm:max-w-[360px] lg:order-none lg:max-w-none lg:scale-110">
                         <div className="absolute inset-0 flex items-center justify-center">
                             <img
                                 src={tatakanKarakter}
                                 alt="tatakan-karakter"
-                                className="absolute bottom-0 z-0"
+                                className="absolute bottom-0 z-0 max-w-full"
                             />
-                            {/* wrapper khusus buat GSAP, biar gak bentrok sama transform Tailwind */}
                             <div
                                 ref={spriteWrapRef}
                                 className="relative z-10 flex h-full w-full items-center justify-center will-change-transform"
@@ -406,7 +404,7 @@ export default function CharacterSection() {
                                         key={`${character.id}-${activeAction === character.id ? 'action' : 'idle'}`}
                                         src={
                                             activeAction === character.id &&
-                                            character.actionSprite
+                                                character.actionSprite
                                                 ? character.actionSprite
                                                 : character.sprite
                                         }
@@ -416,11 +414,10 @@ export default function CharacterSection() {
                                                 ? () => playAction(character.id)
                                                 : undefined
                                         }
-                                        className={`relative z-10 h-full w-full drop-shadow-[8px_10px_0_rgba(0,0,0,0.45)] ${character.actionSprite ? 'cursor-pointer' : ''}`}
+                                        className={`relative z-10 h-full w-full touch-manipulation drop-shadow-[8px_10px_0_rgba(0,0,0,0.45)] [-webkit-tap-highlight-color:transparent] ${character.actionSprite ? 'cursor-pointer' : ''}`}
                                     />
                                 )}
                             </div>
-                            {/* tempat debu pixel muncul, sejajar tatakan */}
                             <div
                                 ref={dustRef}
                                 className="pointer-events-none absolute bottom-[14%] left-0 z-20 h-0 w-full"
@@ -428,11 +425,12 @@ export default function CharacterSection() {
                         </div>
                     </div>
 
-                    <div ref={infoRef} className="flex flex-col gap-7">
+                    {/* 3. INFO — di HP muncul paling bawah */}
+                    <div ref={infoRef} className="order-3 flex flex-col gap-6 lg:order-none lg:gap-7">
                         <div>
                             <p
                                 data-info
-                                className="mb-3 font-depixel text-xs tracking-[0.25em] text-amber-400 uppercase"
+                                className="mb-2 font-depixel text-[11px] tracking-[0.2em] text-amber-400 uppercase sm:mb-3 sm:text-xs sm:tracking-[0.25em]"
                             >
                                 {character.title}
                             </p>
@@ -440,7 +438,7 @@ export default function CharacterSection() {
                                 key={character.id}
                                 data-info
                                 aria-label={character.name}
-                                className="font-kemco text-4xl leading-tight text-white drop-shadow-[4px_4px_0_#000] sm:text-6xl"
+                                className="font-kemco text-3xl leading-tight text-white drop-shadow-[3px_3px_0_#000] min-[400px]:text-4xl sm:text-6xl sm:drop-shadow-[4px_4px_0_#000]"
                             >
                                 {character.name.split('').map((char, i) => (
                                     <span
@@ -456,7 +454,7 @@ export default function CharacterSection() {
                             <p
                                 data-info
                                 data-lore
-                                className="mt-5 max-w-lg font-depixel text-sm leading-7 text-white/70 sm:text-base"
+                                className="mt-4 max-w-lg font-depixel text-[13px] leading-6 text-white/70 sm:mt-5 sm:text-base sm:leading-7"
                             >
                                 {character.lore}
                             </p>
@@ -464,29 +462,30 @@ export default function CharacterSection() {
 
                         <div
                             data-info
-                            className="grid grid-cols-2 gap-3 border-y-2 border-white/15 py-5 font-depixel text-[10px] tracking-wider uppercase sm:grid-cols-4"
+                            className="grid grid-cols-2 gap-x-3 gap-y-4 border-y-2 border-white/15 py-4 font-depixel text-[10px] tracking-wider uppercase sm:grid-cols-4 sm:py-5"
                         >
                             <div>
                                 <p className="text-white/40">ROLE</p>
-                                <p className="mt-2 text-amber-300">{character.role}</p>
+                                <p className="mt-2 break-words text-amber-300">{character.role}</p>
                             </div>
                             <div>
                                 <p className="text-white/40">WEAPON</p>
-                                <p className="mt-2 text-amber-300">{character.weapon}</p>
+                                <p className="mt-2 break-words text-amber-300">{character.weapon}</p>
                             </div>
                             <div>
                                 <p className="text-white/40">SPEED</p>
-                                <p className="mt-2 text-amber-300">{character.speed}</p>
+                                <p className="mt-2 break-words text-amber-300">{character.speed}</p>
                             </div>
                             <div>
                                 <p className="text-white/40">POWER</p>
-                                <p className="mt-2 text-amber-300">{character.power}</p>
+                                <p className="mt-2 break-words text-amber-300">{character.power}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-4 border-t-2 border-white/15 pt-6 lg:border-t-0 lg:border-l-2 lg:pt-0 lg:pl-3">
-                        <div className="flex flex-col gap-3">
+                    {/* 2. THUMBNAIL — di HP jadi baris horizontal tepat di bawah sprite */}
+                    <div className="order-2 lg:order-none lg:border-l-2 lg:border-white/15 lg:pl-3">
+                        <div className="mx-auto grid max-w-sm grid-cols-4 gap-2 sm:gap-3 lg:mx-0 lg:max-w-none lg:grid-cols-1">
                             {CHARACTERS.map((item) => (
                                 <button
                                     key={item.id}
@@ -495,11 +494,10 @@ export default function CharacterSection() {
                                     aria-pressed={activeCharacter === item.id}
                                     aria-label={`Select ${item.name}`}
                                     title={item.name}
-                                    className={`aspect-square w-full overflow-hidden border-2 transition-transform active:translate-y-1 ${
-                                        activeCharacter === item.id
+                                    className={`aspect-square w-full touch-manipulation overflow-hidden border-2 transition-transform active:translate-y-1 [-webkit-tap-highlight-color:transparent] ${activeCharacter === item.id
                                             ? 'border-amber-300 bg-amber-400 shadow-[3px_3px_0_#000]'
-                                            : 'border-white/30 bg-black/30 hover:border-amber-300'
-                                    }`}
+                                            : 'border-white/30 bg-black/30 [@media(hover:hover)]:hover:border-amber-300'
+                                        }`}
                                 >
                                     {item.id === 'soldier' ? (
                                         <div className="flex h-full w-full items-center justify-center bg-[#780c1c]">
@@ -510,7 +508,7 @@ export default function CharacterSection() {
                                             src={item.sprite}
                                             alt={item.name}
                                             staticPreview
-                                            className="h-full w-full origin-top -translate-y-[16%] scale-[2.2] object-[center_top]"
+                                            className={`h-full w-full origin-top ${item.id === 'zawwaf' ? '-translate-y-[34%]' : item.id === 'bijan' ? '-translate-y-[26%]' : '-translate-y-[16%]'} scale-[2.2] object-[center_top]`}
                                         />
                                     )}
                                 </button>
