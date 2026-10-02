@@ -65,7 +65,7 @@ export const    HeroSection = () => {
 
         tl.to(gunung1.current, { yPercent: 10, ease: 'none' }, 0)
             .to(gunung2.current, { yPercent: 12, ease: 'none' }, 0)
-            .to(rumah.current, { yPercent: -15, scale: 1.08, ease: 'none' }, 0)
+            .to(rumah.current, { yPercent: -10, scale: 1.08, ease: 'none' }, 0)
             .to(siluet.current, { yPercent: -35, xPercent: -8, ease: 'none' }, 0)
             .to(textGroup.current, { yPercent: -80, opacity: 0, ease: 'none' }, 0)
             .to(awanBesar.current, { yPercent: 10, xPercent: 3, ease: 'none' }, 0)
@@ -84,15 +84,15 @@ export const    HeroSection = () => {
 
             <img ref={gunung1} src={GunungImg} alt="" className="absolute bottom-[-5%] scale-150 left-0 w-[70%] md:w-[40%] object-contain pointer-events-none z-0" />
             <img ref={gunung2} src={GunungImg} alt="" className="absolute bottom-[-15%] right-0 w-[70%] md:w-[40%] scale-150 object-contain pointer-events-none z-10 scale-x-[-1]" />
-            <img ref={siluet} src={SiluetIfaruzImg} alt="" className="absolute bottom-[-40%] left-[-10%] md:left-[8%] w-[60%] md:w-[30%] scale-150 object-contain pointer-events-none z-[15]" />
-            <video ref={rumah} src={RumahTerbakarVid} autoPlay loop muted playsInline className="absolute bottom-[-3%] left-1/2 -translate-x-1/2 w-[95%] md:w-[60%] object-contain pointer-events-none z-5" />
+            <img ref={siluet} src={SiluetIfaruzImg} alt="" className="absolute bottom-[5%] left-[-20%] md:bottom-[-40%] md:left-[8%] w-[85%] md:w-[30%] scale-150 object-contain pointer-events-none z-[15]" />
+            <video ref={rumah} src={RumahTerbakarVid} autoPlay loop muted playsInline className="absolute scale-200 md:scale-100 bottom-[-5%] left-1/2 -translate-x-1/2 md:bottom-[-3%] w-[165%] md:w-[60%] object-contain pointer-events-none z-5" />
 
             <div ref={textGroup} className="text-group relative z-20 flex flex-col items-center -translate-y-15 px-4 md:px-0 w-full">
-                <h1 className='text-white text-4xl md:text-5xl lg:text-7xl font-kemco text-center drop-shadow-[4px_8px_1px_rgba(0,0,0,0.5)] '>AVENGE THE VILLAGE <br className="hidden md:block"/>IGNITE THE RESISTANCE</h1>
+                <h1 className='text-white text-4xl md:text-5xl lg:text-7xl font-kemco text-center drop-shadow-[4px_8px_1px_rgba(0,0,0,0.5)] '>THE PATH OF IFARUZ <br className="hidden md:block"/>FROM THE ASHES</h1>
                 <div className='w-full md:w-2/3 text-center mt-4'>
-                    <p className="font-depixel text-white text-sm md:text-base lg:text-lg drop-shadow-md">Lorem ipsum dolor sit amet adispicing polije sip sip sip dupaktiting </p>
+                    <p className="font-depixel text-white text-sm md:text-base lg:text-lg drop-shadow-md">Stripped of his home and freedom, Ifaruz rises from the embers of destruction. Armed with the Pearl of Yor, he walks a dark path toward ultimate retribution.</p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-5 mt-8 w-full px-4 sm:px-0">
-                        <a href="#" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Pre-Register</a>
+                        <a href="#section-alur" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Explore Journey</a>
                         <a href="#" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Watch Trailer</a>
                     </div>
                 </div>

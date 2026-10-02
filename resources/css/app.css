@@ -724,3 +724,7 @@ body {
   transform: scaleX(0);
   transform-origin: left;
 }
+
+.pixelated {
+    image-rendering: pixelated;
+}

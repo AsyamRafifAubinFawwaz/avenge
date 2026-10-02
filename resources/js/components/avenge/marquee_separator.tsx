@@ -6,7 +6,7 @@ export default function MarqueeSeparator() {
             <div className="font-kemco text-xl text-black flex animate-marquee whitespace-nowrap min-w-max">
                 {[...Array(6)].map((_, i) => (
                     <span key={i} className="mx-4">
-                        AVENGE THE VILLAGE <span className="mx-4">•</span> IGNITE THE RESISTANCE <span className="mx-4">•</span>
+                        AVENGE <span className="mx-4">•</span> THE PATH OF IFARUZ <span className="mx-4">•</span> NO MERCY <span className="mx-4">•</span> NO RETREAT <span className="mx-4">•</span>
                     </span>
                 ))}
             </div>

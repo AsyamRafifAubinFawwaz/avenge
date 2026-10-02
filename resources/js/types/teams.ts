@@ -11,6 +11,10 @@ export type Team = {
 };
 
 export type TeamMember = {
+    image: string;
+    quote: import("react").JSX.Element;
+    instagram: import("react").JSX.Element;
+    realImage: string;
     id: number;
     name: string;
     email: string;

@@ -1,5 +1,5 @@
 import { FaChevronRight } from 'react-icons/fa';
-import AvengeLogo from '../../../assets/logo.png';
+import AvengeLogo from '../../../assets/logo_avenge.png';
 const footerLinks = [
     { label: 'Home', href: '#' },
     { label: 'Character', href: '#character' },
@@ -20,14 +20,14 @@ export default function Footer() {
                             alt="Avenge"
                             className="h-20 w-20 object-contain drop-shadow-[4px_4px_0px_#000]"
                         />
-                        <div>
+                        {/* <div>
                             <p className="font-depixel text-[10px] tracking-[0.35em] text-amber-300">
                                 THE WORLD OF
                             </p>
                             <h2 className="font-kemco text-3xl tracking-wider text-white drop-shadow-[3px_3px_0px_#000] sm:text-4xl">
                                 AVENGE
                             </h2>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="mt-10 border-l-4 border-amber-400 pl-4">

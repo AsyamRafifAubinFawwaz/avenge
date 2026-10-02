@@ -1,31 +1,32 @@
-import IfaruzGif from '../../../assets/characters/ifaruz.gif';
-import KingGif from '../../../assets/characters/king_action.gif';
-import ZawwafGif from '../../../assets/characters/zawwaf.gif';
+import BackgroundPaper from '../../../assets/bg_kertas_gameplay.png';
+import FootageOne from '../../../assets/gameplay/footage_1.webm';
+import FootageThree from '../../../assets/gameplay/footage_3.webm';
+import FootageTwo from '../../../assets/gameplay/footage_2.webm';
 
 const GAMEPLAY_FEATURES = [
     {
         number: '01',
-        title: 'BANGUN PERTAHANAN',
+        title: 'Slash through the enemies ahead!',
         description:
             'Susun strategi dan jaga desa tetap berdiri. Setiap posisi menentukan siapa yang bisa bertahan saat serangan datang.',
-        image: IfaruzGif,
-        alt: 'Ifaruz menggunakan kekuatan api',
+        video: FootageOne,
+        alt: 'Gameplay membangun pertahanan',
     },
     {
         number: '02',
-        title: 'KELOLA PASUKAN',
+        title: 'Master every skill combo.',
         description:
             'Pilih pahlawan yang tepat untuk setiap misi, gabungkan kemampuan mereka, lalu bentuk tim yang siap menghadapi ancaman.',
-        image: KingGif,
-        alt: 'King Avehs bersiap bertarung',
+        video: FootageTwo,
+        alt: 'Gameplay mengelola pasukan',
     },
     {
         number: '03',
-        title: 'SERANG BALIK',
+        title: 'Face enemies in every stage.',
         description:
             'Bawa pasukanmu keluar dari desa dan rebut kembali wilayah yang dikuasai musuh dalam pertempuran pixel yang brutal.',
-        image: ZawwafGif,
-        alt: 'Zawwaf berdiri sebagai penjaga garis depan',
+        video: FootageThree,
+        alt: 'Gameplay menyerang balik',
     },
 ];
 
@@ -42,7 +43,7 @@ export const GameplaySection = () => {
                         <div className="h-3 w-3 bg-amber-500 shadow-[2px_2px_0_#000]" />
                         <div className="h-3 w-3 bg-amber-400 shadow-[2px_2px_0_#000]" />
                     </div>
-                    <h2 className="font-kemco text-3xl leading-tight drop-shadow-[3px_3px_0_#000] sm:text-5xl">
+                    <h2 className="font-kemco text-3xl leading-tight sm:text-5xl">
                         GAMEPLAY
                     </h2>
                     <div className="h-1 flex-1 bg-[#a90c1f] shadow-[0_3px_0_#000]" />
@@ -55,14 +56,19 @@ export const GameplaySection = () => {
                             className="group grid items-center gap-8 lg:grid-cols-2 lg:gap-16"
                         >
                             <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                                <div className="relative">
-                                    <div className="absolute -inset-2 bg-black/60 shadow-[6px_6px_0_#000]" aria-hidden="true" />
-                                    <div className="relative aspect-video overflow-hidden border-4 border-black bg-[#3b1118] p-2 shadow-[4px_4px_0_#f59e0b]">
-                                        <img
-                                            src={feature.image}
-                                            alt={feature.alt}
-                                            className="h-full w-full object-contain transition-transform duration-300 ease-out group-hover:scale-105"
-                                            style={{ imageRendering: 'pixelated' }}
+                                <div
+                                    className={`relative mx-auto aspect-video w-[96%] overflow-hidden bg-contain bg-center bg-no-repeat p-8 sm:p-10 lg:p-14 ${index % 2 === 0 ? '-rotate-2' : 'rotate-2'}`}
+                                    style={{ backgroundImage: `url(${BackgroundPaper})` }}
+                                >
+                                    <div className="relative h-full w-full overflow-hidden border-4 border-[#5a321e] bg-[#3b1118] p-1">
+                                        <video
+                                            src={feature.video}
+                                            aria-label={feature.alt}
+                                            autoPlay
+                                            muted
+                                            loop
+                                            playsInline
+                                            className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                                         />
                                     </div>
                                 </div>
@@ -75,7 +81,7 @@ export const GameplaySection = () => {
                                 <h3 className="font-kemco text-2xl leading-tight drop-shadow-[3px_3px_0_#000] sm:text-4xl">
                                     {feature.title}
                                 </h3>
-                                <div className="my-5 h-1 w-24 bg-amber-500 shadow-[3px_3px_0_#000]" />
+                                <div className="my-5 h-1 w-24 bg-amber-500" />
                                 <p className="max-w-xl font-depixel text-sm leading-7 text-white/75 sm:text-base sm:leading-8">
                                     {feature.description}
                                 </p>

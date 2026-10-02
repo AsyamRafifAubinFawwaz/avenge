@@ -431,7 +431,7 @@ export default function NewsIndex({
 
     return (
         <>
-            <Head title="Berita — Avenge: Last Manager Kopdes" />
+            <Head title="Berita — Avenge" />
             <MainLayout>
                 <NavbarHome />
 

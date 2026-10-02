@@ -53,8 +53,16 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             const EXIT_GRID = 8;
             const viewportWidth = Math.max(window.innerWidth, 1);
             const viewportHeight = Math.max(window.innerHeight, 1);
-            const logoOffsetX = Math.floor((viewportWidth - WIDTH) / 2);
-            const logoOffsetY = Math.floor((viewportHeight - HEIGHT) / 2);
+            const desiredLogoScale = viewportWidth >= 768 ? 1.12 : 1;
+            const logoScale = Math.min(
+                desiredLogoScale,
+                (viewportWidth * 0.9) / WIDTH,
+                (viewportHeight * 0.75) / HEIGHT
+            );
+            const logoWidth = Math.floor(WIDTH * logoScale);
+            const logoHeight = Math.floor(HEIGHT * logoScale);
+            const logoOffsetX = Math.floor((viewportWidth - logoWidth) / 2);
+            const logoOffsetY = Math.floor((viewportHeight - logoHeight) / 2);
 
             canvas.width = viewportWidth;
             canvas.height = viewportHeight;
@@ -75,24 +83,29 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                 return;
             }
 
-            tempCanvas.width = WIDTH;
-            tempCanvas.height = HEIGHT;
+            tempCanvas.width = logoWidth;
+            tempCanvas.height = logoHeight;
             tempCtx.imageSmoothingEnabled = false;
-            tempCtx.drawImage(img, 0, 0);
+            tempCtx.drawImage(img, 0, 0, logoWidth, logoHeight);
 
             let imageData: ImageData | null = null;
             let canRevealPixels = true;
 
             try {
-                imageData = tempCtx.getImageData(0, 0, WIDTH, HEIGHT);
+                imageData = tempCtx.getImageData(
+                    0,
+                    0,
+                    logoWidth,
+                    logoHeight
+                );
             } catch {
                 canRevealPixels = false;
                 ctx.drawImage(
                     img,
                     logoOffsetX,
                     logoOffsetY,
-                    WIDTH,
-                    HEIGHT
+                    logoWidth,
+                    logoHeight
                 );
             }
 
@@ -104,21 +117,21 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             }[] = [];
 
             // Cari block yang memiliki piksel logo (non-transparan)
-            for (let y = 0; y < HEIGHT; y += GRID) {
-                for (let x = 0; x < WIDTH; x += GRID) {
+            for (let y = 0; y < logoHeight; y += GRID) {
+                for (let x = 0; x < logoWidth; x += GRID) {
                     let found = false;
 
                     for (
                         let py = y;
-                        py < Math.min(y + GRID, HEIGHT);
+                        py < Math.min(y + GRID, logoHeight);
                         py++
                     ) {
                         for (
                             let px = x;
-                            px < Math.min(x + GRID, WIDTH);
+                            px < Math.min(x + GRID, logoWidth);
                             px++
                         ) {
-                            const index = (py * WIDTH + px) * 4;
+                            const index = (py * logoWidth + px) * 4;
                             const alpha = imageData?.data[index + 3] ?? 0;
 
                             if (alpha > 50) {
@@ -136,8 +149,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                         cells.push({
                             x: logoOffsetX + x,
                             y: logoOffsetY + y,
-                            width: Math.min(GRID, WIDTH - x),
-                            height: Math.min(GRID, HEIGHT - y),
+                            width: Math.min(GRID, logoWidth - x),
+                            height: Math.min(GRID, logoHeight - y),
                         });
                     }
                 }
@@ -147,8 +160,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                 cells.push({
                     x: logoOffsetX,
                     y: logoOffsetY,
-                    width: WIDTH,
-                    height: HEIGHT,
+                    width: logoWidth,
+                    height: logoHeight,
                 });
             }
 

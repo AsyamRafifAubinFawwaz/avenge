@@ -35,7 +35,7 @@ export default function AuthSimpleLayout({
                             AVENGE
                         </p>
                         <p className="mt-3 font-depixel text-[10px] tracking-[0.2em] text-[#fbe7b2]/75 uppercase">
-                            Last Manager Kopdes
+                            
                         </p>
                     </div>
 

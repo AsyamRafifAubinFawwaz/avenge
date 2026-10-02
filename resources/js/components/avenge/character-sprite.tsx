@@ -15,6 +15,7 @@ export default function CharacterSprite({
     onClick,
     staticPreview = false,
 }: CharacterSpriteProps) {
+    const isVideo = src.endsWith('.webm');
     const imageRef = useRef<HTMLImageElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -73,6 +74,22 @@ export default function CharacterSprite({
                     style={{ imageRendering: 'pixelated' }}
                 />
             </>
+        );
+    }
+
+    if (isVideo) {
+        return (
+            <video
+                src={src}
+                aria-label={alt}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className={`object-contain ${className}`}
+                onClick={onClick}
+                style={{ imageRendering: 'pixelated' }}
+            />
         );
     }
 
