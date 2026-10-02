@@ -54,7 +54,7 @@ export default function TrailerSection() {
     return (
         <section
             ref={sectionRef}
-            id="gameplay"
+            id="about"
             aria-labelledby="trailer-title"
             className="relative overflow-hidden px-2 py-8 sm:px-4 lg:px-8 lg:py-10"
         >

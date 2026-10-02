@@ -57,8 +57,8 @@ const CORNER_OFF = { x: 6, y: -6, opacity: 0.25 };
 const CORNER_ON = { x: 0, y: 0, opacity: 1 };
 
 // Lebar kartu normal & pas di-hover (melebar dikit)
-const CARD_W = 190;
-const CARD_W_HOVER = 218;
+const CARD_W = 205;
+const CARD_W_HOVER = 232;
 
 // ---- Pengaturan buku (sesuaikan kalau ukuran/posisi lubang di PNG beda) ----
 // Rasio lebar/tinggi buku_modal.png (kira-kira 650x345)
@@ -685,13 +685,13 @@ export default function StorySection() {
                             onBlur={onCardFocus(i, false)}
                             aria-haspopup="dialog"
                             aria-label={`Baca Chapter ${i + 1}: ${c.title}`}
-                            className={`group relative block w-full max-w-47.5 justify-self-center text-left cursor-pointer aspect-9/15 md:aspect-auto md:h-[clamp(280px,44vh,400px)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ffb400] ${
+                            className={`group relative block w-full max-w-51.25 justify-self-center text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ffb400] ${
                                 i % 2 === 1 ? 'mt-5 md:mt-10' : 'mt-0'
                             }`}
                         >
                             {/* Frame */}
-                            <span className="absolute inset-0 block border-2 border-[#7a2a30] bg-[#14070a] shadow-[0_0_8px_#7a2a3066] transition-[border-color,box-shadow] duration-300 group-hover:border-[#ffb400] group-hover:shadow-[0_0_10px_#ffb400,0_0_24px_#ff6a0066] group-focus-visible:border-[#ffb400]">
-                                <span className="block w-full h-[68%] overflow-hidden">
+                            <span className="relative flex flex-col border-2 border-[#7a2a30] bg-[#14070a] shadow-[0_0_8px_#7a2a3066] transition-[border-color,box-shadow] duration-300 group-hover:border-[#ffb400] group-hover:shadow-[0_0_10px_#ffb400,0_0_24px_#ff6a0066] group-focus-visible:border-[#ffb400]">
+                                <span className="block aspect-4/3 w-full shrink-0 overflow-hidden">
                                     <img
                                         src={c.image}
                                         alt=""
@@ -700,7 +700,7 @@ export default function StorySection() {
                                     />
                                 </span>
 
-                                <span className="flex h-[32%] flex-col overflow-hidden px-2 pt-2 md:px-3 md:pt-3">
+                                <span className="flex h-auto shrink-0 flex-col overflow-hidden px-2 pb-2 pt-2 md:px-3 md:pb-3 md:pt-3">
                                     <span className="block font-depixel text-xs md:text-sm text-[#ffb400] leading-none">
                                         {String(i + 1).padStart(2, '0')}
                                     </span>

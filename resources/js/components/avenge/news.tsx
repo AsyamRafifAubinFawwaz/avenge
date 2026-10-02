@@ -154,6 +154,7 @@ export default function NewsSection({ latestNews = [] }: Props) {
 
     return (
         <section
+        id="article"
             ref={sectionRef}
             className="relative z-10 -mt-8 w-full overflow-hidden bg-transparent pt-28 pb-32 sm:-mt-10 sm:pt-20"
         >

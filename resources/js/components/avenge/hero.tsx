@@ -76,7 +76,7 @@ export const    HeroSection = () => {
     }, { scope: container });
 
     return (
-        <div id="home" ref={container} className="relative overflow-x-hidden w-screen min-h-[calc(100vh+96px)] flex justify-center items-center flex-col bg-[#5A121B]">
+        <div id="home" ref={container} className="relative max-h-screen md:max-h-none overflow-x-hidden w-screen min-h-[calc(100vh+96px)] flex justify-center items-center flex-col bg-[#5A121B]">
             <img ref={awanBesar} src={AwanBesarImg} alt="" className="absolute top-[8%] left-[-2%] w-[80%] md:w-[45%] object-contain pointer-events-none z-0 opacity-80" />
             <img ref={awanKecil1} src={AwanKecil1Img} alt="" className="absolute top-[12%] right-[5%] w-[30%] md:w-[15%] object-contain pointer-events-none z-0 opacity-70" />
             <img ref={awanKecil2} src={AwanKecil2Img} alt="" className="absolute top-[25%] left-[15%] w-[35%] md:w-[18%] object-contain pointer-events-none z-0 opacity-60" />
@@ -92,8 +92,8 @@ export const    HeroSection = () => {
                 <div className='w-full md:w-2/3 text-center mt-4'>
                     <p className="font-depixel text-white text-sm md:text-base lg:text-lg drop-shadow-md">Stripped of his home and freedom, Ifaruz rises from the embers of destruction. Armed with the Pearl of Yor, he walks a dark path toward ultimate retribution.</p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-5 mt-8 w-full px-4 sm:px-0">
-                        <a href="#section-alur" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Explore Journey</a>
-                        <a href="#" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Watch Trailer</a>
+                        <a href="#story" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Explore Journey</a>
+                        <a href="https://www.youtube.com/embed/1KKUyxEqR9g?rel=0" target="_blank" rel="noopener noreferrer" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Watch Trailer</a>
                     </div>
                 </div>
             </div>
