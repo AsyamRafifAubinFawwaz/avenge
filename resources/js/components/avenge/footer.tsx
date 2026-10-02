@@ -4,6 +4,7 @@ import LogoMotrackImg from '../../../assets/motrack.png';
 import LogoSaranbacaImg from '../../../assets/saranbaca.webp';
 import LogoGleveritImg from '../../../assets/gleverit.png';
 import BgKertas from '../../../assets/bg_paper_footer.png';
+import HannajibLogo from '../../../assets/hannajib.svg';
 
 const footerLinks = [
     { label: 'Home', href: '#' },
@@ -16,6 +17,7 @@ const supportedByLogos = [
     { src: LogoMotrackImg, alt: 'Motrack' },
     { src: LogoSaranbacaImg, alt: 'Saranbaca' },
     { src: LogoGleveritImg, alt: 'gleverit' },
+    { src: HannajibLogo, alt: 'Hannajib' },
 ];
 
 function SponsorLogo({ src, alt }: { src: string; alt: string }) {
