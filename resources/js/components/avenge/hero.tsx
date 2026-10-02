@@ -93,7 +93,7 @@ export const    HeroSection = () => {
                     <p className="font-depixel text-white text-sm md:text-base lg:text-lg drop-shadow-md">Stripped of his home and freedom, Ifaruz rises from the embers of destruction. Armed with the Pearl of Yor, he walks a dark path toward ultimate retribution.</p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-5 mt-8 w-full px-4 sm:px-0">
                         <a href="#story" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Explore Journey</a>
-                        <a href="https://www.youtube.com/embed/1KKUyxEqR9g?rel=0" target="_blank" rel="noopener noreferrer" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Watch Trailer</a>
+                        <a href="https://www.youtube.com/1KKUyxEqR9g?rel=0" target="_blank" rel="noopener noreferrer" className="pixel-button pixel-button--amber inline-flex w-full items-center justify-center px-5 py-2 text-center text-sm sm:w-auto md:text-base">Watch Trailer</a>
                     </div>
                 </div>
             </div>
