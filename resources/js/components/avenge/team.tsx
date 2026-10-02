@@ -4,8 +4,11 @@ import { Instagram } from 'lucide-react';
 import RafifImg from '../../../assets/teams/rafif.png';
 import RafifRealImg from '../../../assets/teams/rafif-real.jpg';
 import RoyhanImg from '../../../assets/teams/royhan.png';
+import RoyhanRealImg from '../../../assets/teams/royhan-real.png';
 import GathanImg from '../../../assets/teams/gathan.png';
+import GathanRealImg from '../../../assets/teams/gathan-real.png';
 import ShevaImg from '../../../assets/teams/sheva.png';
+import ShevaRealImg from '../../../assets/teams/sheva-real.png';
 import PixelFrameFilled from '../../../assets/pixil-frame-filled.png';
 import TeamFrame from '../../../assets/frame-teams.png';
 import { TeamMember } from '@/types/teams';
@@ -30,7 +33,7 @@ const CONTENT_INSET = 'inset-[8%]';
 const DEFAULT_MEMBERS: TeamMember[] = [
     {
         id: 1,
-        name: 'Asyam Rafif',
+        name: 'Rafif',
         email: '',
         role: 'owner',
         role_label: 'Code and Web Dev',
@@ -38,6 +41,7 @@ const DEFAULT_MEMBERS: TeamMember[] = [
         realImage: RafifRealImg,
         quote: <>Ikan hiu makan nasi</>,
         instagram: <Instagram className="h-2.5 w-2.5" />,
+        linkIG: 'https://www.instagram.com/rafif3207'
     },
     {
         id: 2,
@@ -46,9 +50,10 @@ const DEFAULT_MEMBERS: TeamMember[] = [
         role: 'member',
         role_label: 'Team Member',
         image: RoyhanImg,
-        realImage: RoyhanImg,
+        realImage: RoyhanRealImg,
         quote: <></>,
         instagram: <Instagram className="h-2.5 w-2.5" />,
+        linkIG: 'https://www.instagram.com/handefined'
     },
     {
         id: 3,
@@ -57,9 +62,10 @@ const DEFAULT_MEMBERS: TeamMember[] = [
         role: 'member',
         role_label: 'Team Member',
         image: GathanImg,
-        realImage: GathanImg,
+        realImage: GathanRealImg,
         quote: <></>,
         instagram: <Instagram className="h-2.5 w-2.5" />,
+        linkIG: 'https://www.instagram.com/gtfrzidn'
     },
     {
         id: 4,
@@ -68,9 +74,10 @@ const DEFAULT_MEMBERS: TeamMember[] = [
         role: 'member',
         role_label: 'Team Member',
         image: ShevaImg,
-        realImage: ShevaImg,
+        realImage: ShevaRealImg,
         quote: <></>,
         instagram: <Instagram className="h-2.5 w-2.5" />,
+        linkIG: 'https://www.instagram.com/shevdza_'
     },
 ];
 
@@ -291,7 +298,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
 
                                         {member.instagram && (
                                             <a
-                                                href="https://instagram.com/"
+                                                href={member.linkIG}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 onClick={(e) => e.stopPropagation()}

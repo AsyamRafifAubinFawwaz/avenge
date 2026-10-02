@@ -11,6 +11,7 @@ export type Team = {
 };
 
 export type TeamMember = {
+    linkIG: string | undefined;
     image: string;
     quote: import("react").JSX.Element;
     instagram: import("react").JSX.Element;

@@ -40,10 +40,10 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
         <Link
             href={`/news/${item.slug}`}
             aria-label={`Baca berita: ${item.title}`}
-            className="group block cursor-pointer select-none rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+            className="group block h-full cursor-pointer select-none rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
         >
             <div
-                className="relative transition-transform duration-200 ease-out group-hover:-translate-y-2 group-active:translate-y-0.5"
+                className="relative h-full transition-transform duration-200 ease-out group-hover:-translate-y-2 group-active:translate-y-0.5"
                 style={{ filter: 'drop-shadow(4px 6px 0px rgba(0,0,0,0.65))' }}
             >
                 <img
@@ -54,9 +54,9 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
                     style={{ imageRendering: 'pixelated' }}
                 />
 
-                <div className="relative flex flex-col px-[12%] pt-[9%] pb-[12%]">
+                <div className="relative flex h-full min-w-0 flex-col px-[12%] pt-[9%] pb-[12%]">
                     <div
-                        className="relative aspect-4/3 w-full overflow-hidden bg-[#998568]"
+                        className="relative aspect-4/3 w-full shrink-0 overflow-hidden bg-[#998568]"
                         style={{
                             clipPath: 'polygon(0 6px, 6px 6px, 6px 0, calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px))',
                         }}
@@ -65,6 +65,8 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
                             <img
                                 src={`/storage/${item.image}`}
                                 alt={item.title}
+                                loading="lazy"
+                                decoding="async"
                                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                                 style={{ imageRendering: 'pixelated' }}
                             />
@@ -81,17 +83,17 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
                         />
                     </div>
 
-                    <div className="flex flex-col gap-1 pt-3">
-                        <p className="line-clamp-3 break-words font-kemco text-sm font-bold leading-snug text-[#030200]/80 uppercase sm:text-base lg:text-lg">
+                    <div className="flex min-w-0 flex-1 flex-col gap-1 pt-3">
+                        <p className="line-clamp-3 min-w-0 break-words font-kemco text-sm font-bold leading-snug text-[#030200]/80 uppercase sm:text-base lg:text-sm xl:text-lg">
                             {item.title}
                         </p>
 
-                        <p className="line-clamp-3 break-words font-depixel text-[10px] leading-relaxed text-[#030200]/60 sm:text-xs">
+                        <p className="line-clamp-3 min-w-0 break-words font-depixel text-[10px] leading-relaxed text-[#030200]/60 sm:text-xs">
                             {stripHtml(item.description)}
                         </p>
 
-                        <div className="mt-2 flex items-start justify-between gap-2 border-t border-[#030200]/15 pt-2">
-                            <p className="break-words font-depixel text-[9px] font-bold text-[#030200]/60 uppercase sm:text-[10px]">
+                        <div className="mt-auto flex flex-wrap items-start justify-between gap-x-2 gap-y-1 border-t border-[#030200]/15 pt-2">
+                            <p className="min-w-0 break-words font-depixel text-[9px] font-bold text-[#030200]/60 uppercase sm:text-[10px]">
                                 {item.category?.name ?? 'UMUM'}
                             </p>
                             <p className="shrink-0 text-right font-depixel text-[9px] text-[#030200]/50 sm:text-[10px]">
@@ -104,7 +106,6 @@ function PixelNewsCard({ item }: { item: NewsItem }) {
         </Link>
     );
 }
-
 
 export default function NewsSection({ latestNews = [] }: Props) {
     const sectionRef = useRef<HTMLElement | null>(null);
@@ -150,11 +151,19 @@ export default function NewsSection({ latestNews = [] }: Props) {
                     clearProps: 'transform,opacity,visibility',
                 }),
         });
+
+        // Hitung ulang posisi trigger setelah semua aset (font/gambar) selesai
+        // dimuat, supaya di HP kartu tidak telat/tidak muncul karena layout bergeser.
+        const refresh = () => ScrollTrigger.refresh();
+        window.addEventListener('load', refresh);
+        document.fonts?.ready.then(refresh);
+
+        return () => window.removeEventListener('load', refresh);
     }, { scope: sectionRef });
 
     return (
         <section
-        id="article"
+            id="article"
             ref={sectionRef}
             className="relative z-10 -mt-8 w-full overflow-hidden bg-transparent pt-28 pb-32 sm:-mt-10 sm:pt-20"
         >
@@ -163,14 +172,14 @@ export default function NewsSection({ latestNews = [] }: Props) {
                 style={{ backgroundImage: `url(${paperNewsBackground})` }}
             />
 
-            <div className="relative z-20 mx-auto max-w-6xl px-4 pt-4 sm:px-6">
+            <div className="relative z-20 mx-auto w-full max-w-6xl px-4 pt-4 sm:px-6">
                 <div className="news-heading mb-8 flex items-center gap-3 sm:mb-10 sm:gap-4">
                     <div className="flex shrink-0 flex-col gap-1">
                         <div className="h-3 w-3 bg-amber-500" style={{ boxShadow: '2px 2px 0 #000' }} />
                         <div className="h-3 w-3 bg-amber-400" style={{ boxShadow: '2px 2px 0 #000' }} />
                     </div>
 
-                    <h2 className="font-kemco text-2xl leading-tight text-black min-[400px]:text-3xl md:text-4xl">
+                    <h2 className="shrink-0 font-kemco text-2xl leading-tight text-black min-[400px]:text-3xl md:text-4xl">
                         LATEST ARTICLES
                     </h2>
 
@@ -189,16 +198,22 @@ export default function NewsSection({ latestNews = [] }: Props) {
 
                 {latestNews.length === 0 && (
                     <div className="flex flex-col items-center justify-center gap-4 py-16">
-                        <p className="font-depixel text-xs tracking-widest text-black/50 uppercase">
+                        <p className="text-center font-depixel text-xs tracking-widest text-black/50 uppercase">
                             [ BELUM ADA BERITA ]
                         </p>
                     </div>
                 )}
 
                 {latestNews.length > 0 && (
-                    <div className="mx-auto grid max-w-sm grid-cols-1 gap-6 sm:max-w-none sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-                        {latestNews.slice(0, 4).map((item) => (
-                            <div key={item.id} className="news-card">
+                    <div
+                        className="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pt-3 pb-6 scrollbar-none sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pt-0 sm:pb-0 lg:grid-cols-4 lg:gap-8 [&::-webkit-scrollbar]:hidden"
+                    >
+                        {latestNews.slice(0, 5).map((item, index) => (
+                            <div
+                                key={item.id}
+                                className={`news-card h-full w-[78%] min-w-0 shrink-0 snap-center sm:w-auto ${index >= 4 ? 'sm:hidden' : ''
+                                    }`}
+                            >
                                 <PixelNewsCard item={item} />
                             </div>
                         ))}
@@ -218,4 +233,4 @@ export default function NewsSection({ latestNews = [] }: Props) {
             </div>
         </section>
     );
-}   
+}
