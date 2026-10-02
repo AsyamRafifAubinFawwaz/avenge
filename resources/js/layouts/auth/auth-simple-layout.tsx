@@ -7,6 +7,7 @@ import BijanGif from '../../../assets/characters/bijan.gif';
 import IfaruzGif from '../../../assets/characters/ifaruz.gif';
 import KingGif from '../../../assets/characters/king.gif';
 import ZawwafGif from '../../../assets/characters/zawwaf.gif';
+import LogoAvenge from '../../../assets/logo_avenge.png';
 import TatakanKarakter from '../../../assets/tatakan-character.png';
 
 const CHARACTERS = [
@@ -87,10 +88,13 @@ export default function AuthSimpleLayout({
                 </main>
 
                 <aside className="relative hidden min-h-[360px] flex-col items-center justify-center overflow-hidden bg-[#8c1c2a] px-6 py-6 sm:min-h-[440px] sm:px-12 sm:py-8 lg:flex lg:min-h-0">
-                    <div className="text-center pt-2">
-                        <p className="font-kemco text-3xl tracking-[0.12em] text-[#fbe7b2] drop-shadow-[3px_3px_0_#211818] sm:text-4xl lg:text-5xl">
-                            AVENGE
-                        </p>
+                    <div className="flex flex-col items-center text-center pt-2">
+                        <img
+                            src={LogoAvenge}
+                            alt="AVENGE"
+                            className="h-10 sm:h-12 w-auto object-contain drop-shadow-[3px_3px_0_#211818]"
+                            style={{ imageRendering: 'pixelated' }}
+                        />
                         <p className="mt-2 font-depixel text-[10px] tracking-[0.2em] text-[#fbe7b2]/75 uppercase">
                             Last Manager Kopdes
                         </p>

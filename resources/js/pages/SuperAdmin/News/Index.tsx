@@ -146,7 +146,7 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                     </div>
                     <Button
                         asChild
-                        className="pixel-button pixel-button--default shrink-0 text-xs px-3 py-1.5 sm:px-4 sm:py-2"
+                        className="pixel-button pixel-button--gold shrink-0 text-xs px-3 py-1.5 sm:px-4 sm:py-2"
                     >
                         <Link href={create.url()}>
                             <Plus className="size-3.5 sm:size-4" />
@@ -173,7 +173,7 @@ export default function NewsIndex({ news, categories, filters }: Props) {
                         </div>
                         <button
                             type="submit"
-                            className="pixel-button pixel-button--default inline-flex shrink-0 items-center gap-1.5 px-3 py-2 sm:px-4 font-kemco text-[10px] sm:text-xs"
+                            className="pixel-button pixel-button--gold inline-flex shrink-0 items-center gap-1.5 px-3 py-2 sm:px-4 font-kemco text-[10px] sm:text-xs"
                         >
                             <Search className="size-3" />
                             Cari

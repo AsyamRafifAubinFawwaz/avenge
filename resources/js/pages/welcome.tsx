@@ -6,7 +6,7 @@ import { NavbarHome } from '@/components/avenge/navbar';
 import NewsSection from '@/components/avenge/news';
 import TeamSection from '@/components/avenge/team';
 import MainLayout from '@/layouts/MainLayouts';
-import sharedNewsCharacterBackground from '../../assets/bg_section.png';
+import sharedNewsCharacterBackground from '../../assets/bg_section.webp';
 import TrailerSection from '../components/avenge/trailer';
 import WorldSection from './section/world';
 import CharacterSection from '@/components/avenge/character';

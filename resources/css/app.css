@@ -600,7 +600,7 @@ body {
 .pixel-button {
     --pixel-button-color: #790221;
 
-    background-color: var(--pixel-button-color);
+    background-color: var(--pixel-button-color) !important;
     background-image:
         linear-gradient(var(--pixel-button-color), var(--pixel-button-color)),
         url('../assets/dashboard/base-button.png');
@@ -609,8 +609,8 @@ body {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     border: 0;
-    border-radius: 0;
-    color: #ffffff;
+    border-radius: 0 !important;
+    color: #ffffff !important;
     image-rendering: pixelated;
     text-shadow: 1px 1px 0 #7f0000;
     -webkit-mask-image: url('../assets/dashboard/base-button.png');
@@ -640,7 +640,7 @@ body {
 }
 
 .pixel-button:hover {
-    background-color: color-mix(in srgb, var(--pixel-button-color) 88%, white);
+    background-color: color-mix(in srgb, var(--pixel-button-color) 88%, white) !important;
 }
 
 

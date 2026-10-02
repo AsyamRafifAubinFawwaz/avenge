@@ -1,11 +1,34 @@
 import { FaChevronRight } from 'react-icons/fa';
-import AvengeLogo from '../../../assets/logo.png';
+import LogoAvenge from '../../../assets/logo_avenge.png';
+import LogoMotrackImg from '../../../assets/motrack.png';
+import LogoSaranbacaImg from '../../../assets/saranbaca.webp';
+import LogoGleveritImg from '../../../assets/gleverit.png';
+import BgKertas from '../../../assets/bg_paper_footer.png';
+
 const footerLinks = [
     { label: 'Home', href: '#' },
     { label: 'Character', href: '#character' },
     { label: 'Gameplay', href: '#gameplay' },
     { label: 'Events', href: '#events' },
 ];
+
+const supportedByLogos = [
+    { src: LogoMotrackImg, alt: 'Motrack' },
+    { src: LogoSaranbacaImg, alt: 'Saranbaca' },
+    { src: LogoGleveritImg, alt: 'gleverit' },
+];
+
+function SponsorLogo({ src, alt }: { src: string; alt: string }) {
+    return (
+        <img
+            src={src}
+            alt={alt}
+            title={alt}
+            className="h-10 w-10 object-contain sm:h-12 sm:w-12"
+            style={{ imageRendering: 'pixelated' }}
+        />
+    );
+}
 
 export default function Footer() {
     return (
@@ -14,27 +37,23 @@ export default function Footer() {
 
             <div className="relative mx-auto grid max-w-6xl gap-12 px-6 py-14 md:grid-cols-[1.2fr_1fr_1fr] md:gap-16 md:py-20">
                 <div className="flex flex-col items-start">
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col items-start gap-1.5">
+                        <p className="font-depixel text-[10px] tracking-[0.35em] text-amber-300 uppercase">
+                            THE WORLD OF
+                        </p>
                         <img
-                            src={AvengeLogo}
-                            alt="Avenge"
-                            className="h-20 w-20 object-contain drop-shadow-[4px_4px_0px_#000]"
+                            src={LogoAvenge}
+                            alt="AVENGE"
+                            className="h-16 w-auto object-contain drop-shadow-[4px_4px_0px_#000] sm:h-20"
+                            style={{ imageRendering: 'pixelated' }}
                         />
-                        <div>
-                            <p className="font-depixel text-[10px] tracking-[0.35em] text-amber-300">
-                                THE WORLD OF
-                            </p>
-                            <h2 className="font-kemco text-3xl tracking-wider text-white drop-shadow-[3px_3px_0px_#000] sm:text-4xl">
-                                AVENGE
-                            </h2>
-                        </div>
                     </div>
 
                     <div className="mt-10 border-l-4 border-amber-400 pl-4">
                         <p className="font-depixel text-xs leading-6 text-amber-100/75 sm:text-sm">
-                            BUILD THE VILLAGE.
+                            THE PATH OF IFARUZ
                             <br />
-                            IGNITE THE RESISTANCE.
+                            FROM THE ASHES
                         </p>
                     </div>
                 </div>
@@ -61,12 +80,21 @@ export default function Footer() {
                     <h2 className="font-kemco text-xl text-[#F8F9FA] drop-shadow-[2px_2px_0px_#000]">
                         SUPPORTED BY
                     </h2>
-                    <div className="mt-7 flex w-full max-w-md justify-start md:justify-end">
-                        <img
-                            src={AvengeLogo}
-                            alt="Avenge partner logo"
-                            className="h-20 w-20 object-contain sm:h-24 sm:w-24"
-                        />
+                    <div
+                        className="relative mt-6 flex w-full items-center justify-center gap-6 px-8 py-5"
+                        style={{
+                            backgroundImage: `url(${BgKertas})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                        }}
+                    >
+                        {supportedByLogos.map((logo) => (
+                            <SponsorLogo
+                                key={logo.alt}
+                                src={logo.src}
+                                alt={logo.alt}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>

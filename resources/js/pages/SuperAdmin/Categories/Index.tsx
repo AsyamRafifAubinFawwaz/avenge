@@ -184,7 +184,7 @@ export default function CategoriesIndex({ categories }: Props) {
                             Kelola kategori berita
                         </p>
                     </div>
-                    <Button onClick={() => setAddOpen(true)} className="pixel-button pixel-button--default shrink-0 text-xs px-3 py-1.5 sm:px-4 sm:py-2">
+                    <Button onClick={() => setAddOpen(true)} className="pixel-button pixel-button--gold shrink-0 text-xs px-3 py-1.5 sm:px-4 sm:py-2">
                         <Plus className="size-3.5 sm:size-4" />
                         Tambah Kategori
                     </Button>
