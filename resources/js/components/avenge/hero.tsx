@@ -76,7 +76,7 @@ export const    HeroSection = () => {
     }, { scope: container });
 
     return (
-        <div id="home" ref={container} className="relative scrollbar- md:scroll-auto max-h-[80vh] overflow-x-hidden w-screen min-h-[80vh] flex justify-center items-center flex-col bg-[#5A121B] md:max-h-none md:min-h-[calc(100vh+96px)]">
+        <div id="home" ref={container} className="relative max-h-screen overflow-hidden w-screen min-h-screen flex justify-center items-center flex-col bg-[#5A121B] md:max-h-none md:min-h-[calc(100vh+96px)]">
             <img ref={awanBesar} src={AwanBesarImg} alt="" className="absolute top-[8%] left-[-2%] w-[80%] md:w-[45%] object-contain pointer-events-none z-0 opacity-80" />
             <img ref={awanKecil1} src={AwanKecil1Img} alt="" className="absolute top-[12%] right-[5%] w-[30%] md:w-[15%] object-contain pointer-events-none z-0 opacity-70" />
             <img ref={awanKecil2} src={AwanKecil2Img} alt="" className="absolute top-[25%] left-[15%] w-[35%] md:w-[18%] object-contain pointer-events-none z-0 opacity-60" />
