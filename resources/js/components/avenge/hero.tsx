@@ -66,7 +66,7 @@ export const    HeroSection = () => {
         tl.to(gunung1.current, { yPercent: 10, ease: 'none' }, 0)
             .to(gunung2.current, { yPercent: 12, ease: 'none' }, 0)
             .to(rumah.current, { yPercent: -10, scale: 1.08, ease: 'none' }, 0)
-            .to(siluet.current, { yPercent: -35, xPercent: -8, ease: 'none' }, 0)
+            .to(siluet.current, { yPercent: -10, ease: 'none' }, 0)
             .to(textGroup.current, { yPercent: -80, opacity: 0, ease: 'none' }, 0)
             .to(awanBesar.current, { yPercent: 10, xPercent: 3, ease: 'none' }, 0)
             .to(awanKecil1.current, { yPercent: 14, xPercent: -3, ease: 'none' }, 0)
@@ -84,7 +84,7 @@ export const    HeroSection = () => {
 
             <img ref={gunung1} src={GunungImg} alt="" className="absolute bottom-[-5%] scale-150 left-0 w-[70%] md:w-[40%] object-contain pointer-events-none z-0" />
             <img ref={gunung2} src={GunungImg} alt="" className="absolute bottom-[-15%] right-0 w-[70%] md:w-[40%] scale-150 object-contain pointer-events-none z-10 scale-x-[-1]" />
-            <img ref={siluet} src={SiluetIfaruzImg} alt="" className="absolute bottom-[5%] left-[-20%] md:bottom-[-40%] md:left-[8%] w-[85%] md:w-[30%] scale-150 object-contain pointer-events-none z-[15]" />
+            <img ref={siluet} src={SiluetIfaruzImg} alt="" className="absolute bottom-[-3%] left-0 w-[78%] scale-125 object-contain pointer-events-none z-15 md:left-[4%] md:w-[27%] lg:left-[6%] lg:w-[25%]" />
             <video ref={rumah} src={RumahTerbakarVid} autoPlay loop muted playsInline className="absolute scale-200 md:scale-100 bottom-[-5%] left-1/2 -translate-x-1/2 md:bottom-[-3%] w-[165%] md:w-[60%] object-contain pointer-events-none z-5" />
 
             <div ref={textGroup} className="text-group relative z-20 flex flex-col items-center -translate-y-15 px-4 md:px-0 w-full">

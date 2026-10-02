@@ -545,7 +545,6 @@ export default function StorySection() {
         return () => ctx.revert();
     }, [openIdx, isWide, pageDirection, turningChapter]);
 
-    // WorldImage: parallax, naik pelan dari bawah sampai pas nempel
     useEffect(() => {
         if (!containerRef.current || !imageRef.current) {
             return;
@@ -632,7 +631,7 @@ export default function StorySection() {
                             style={{ boxShadow: '2px 2px 0 #000' }}
                         />
                     </div>
-                    <h2 className="font-kemco text-3xl tracking-wider text-white drop-shadow-[4px_4px_0px_rgba(0,0,0,0.9)] md:text-4xl">
+                    <h2 className="font-kemco text-center text-3xl tracking-wider text-white drop-shadow-[4px_4px_0px_rgba(0,0,0,0.9)] md:text-4xl">
                         A TALE WRITTEN IN BLOOD
                     </h2>
                     <div className="flex flex-col gap-1">
@@ -747,7 +746,7 @@ export default function StorySection() {
                     ref={imageRef}
                     src={WorldImage}
                     alt="World"
-                    className="relative z-1 min-w-screen mt-0 w-full object-contain object-bottom will-change-transform pointer-events-none"
+                    className="relative z-1 min-w-screen mt-0 scale-125 sm:scale-125 md:scale-100 w-full object-contain object-bottom will-change-transform pointer-events-none"
                 />
 
                 <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-trom-[#211818] to-transparent z-20 pointer-events-none" />
@@ -818,13 +817,13 @@ export default function StorySection() {
                                           </p>
                                           <h2
                                               data-story-title
-                                              className="font-depixel text-[clamp(14px,1.8vw,28px)] leading-tight text-[#4a1d0a] shrink-0"
+                                              className="font-depixel text-[clamp(16px,2vw,30px)] leading-tight text-[#4a1d0a] shrink-0"
                                           >
                                               {chapter.title}
                                           </h2>
                                           <div className="h-px w-full bg-[#4a1d0a55] my-[0.6em] shrink-0" />
                                           <div className="flex-1 min-h-0 overflow-y-auto pr-2">
-                                              <p className="font-depixel text-[clamp(9px,0.95vw,15px)] leading-relaxed">
+                                              <p className="font-depixel text-[clamp(10px,1.05vw,16px)] leading-relaxed">
                                                   <Words text={chapter.text} />
                                               </p>
                                           </div>
@@ -851,7 +850,6 @@ export default function StorySection() {
                                   </button>
                               </div>
                           ) : (
-                              /* ===== MODE BIASA (mobile / tablet) ===== */
                               <div
                                   ref={panelRef}
                                   className="relative w-full max-w-5xl max-h-[90vh] md:h-[min(80vh,640px)] flex flex-col md:flex-row border-2 border-[#ffb400] bg-[#14070a] shadow-[0_0_10px_#ffb400,0_0_24px_#ff6a0066]"
@@ -905,7 +903,6 @@ export default function StorySection() {
                                       </div>
                                   </div>
 
-                                  {/* Tombol tutup */}
                                   <button
                                       ref={closeBtnRef}
                                       type="button"
@@ -916,7 +913,6 @@ export default function StorySection() {
                                       <CloseIcon />
                                   </button>
 
-                                  {/* Corner di 4 pojok modal */}
                                   {CORNERS.map((corner) => (
                                       <div
                                           key={corner.key}

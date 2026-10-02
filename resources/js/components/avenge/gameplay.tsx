@@ -8,7 +8,7 @@ const GAMEPLAY_FEATURES = [
         number: '01',
         title: 'Slash through the enemies ahead!',
         description:
-            'Susun strategi dan jaga desa tetap berdiri. Setiap posisi menentukan siapa yang bisa bertahan saat serangan datang.',
+            'Experience fast-paced combat and clear your path through relentless foes.',
         video: FootageOne,
         alt: 'Gameplay membangun pertahanan',
     },
@@ -16,7 +16,7 @@ const GAMEPLAY_FEATURES = [
         number: '02',
         title: 'Master every skill combo.',
         description:
-            'Pilih pahlawan yang tepat untuk setiap misi, gabungkan kemampuan mereka, lalu bentuk tim yang siap menghadapi ancaman.',
+            'Chain your abilities together to unleash devastating sequence attacks.',
         video: FootageTwo,
         alt: 'Gameplay mengelola pasukan',
     },
@@ -24,7 +24,7 @@ const GAMEPLAY_FEATURES = [
         number: '03',
         title: 'Face enemies in every stage.',
         description:
-            'Bawa pasukanmu keluar dari desa dan rebut kembali wilayah yang dikuasai musuh dalam pertempuran pixel yang brutal.',
+            'Battle through wave after wave of hostile forces leading up to the final boss showdown.',
         video: FootageThree,
         alt: 'Gameplay menyerang balik',
     },

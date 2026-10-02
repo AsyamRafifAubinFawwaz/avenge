@@ -44,7 +44,13 @@ export const NavbarHome = () => {
         href: string,
     ) => {
         const target = document.querySelector(href)
-        if (!target) return
+
+        if (!target) {
+            event.preventDefault()
+            closeMenu()
+            window.location.assign(`/${href}`)
+            return
+        }
 
         event.preventDefault()
         closeMenu() // unlock scroll dulu biar scrollTo gak keblok
