@@ -742,6 +742,11 @@ export default function StorySection() {
                     Click on the cards to read the story.
                 </p>
 
+                <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute bottom-[8%] left-1/2 z-0 h-[38%] w-[68%] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(255,190,72,0.58)_0%,rgba(255,91,26,0.3)_48%,transparent_82%)] blur-lg"
+                />
+
                 <img
                     ref={imageRef}
                     src={WorldImage}
