@@ -28,8 +28,14 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({
     const reqIdRef = useRef<number | null>(null);
 
     useEffect(() => {
+        // ponytail: disable on mobile/touch devices for perf
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        if (isTouchDevice) {
+            return;
+        }
+
         const instance = new Lenis({
-            duration: 1.2,
+            duration: 1,
             easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: 'vertical',
             gestureOrientation: 'vertical',

@@ -49,17 +49,23 @@ export const    HeroSection = () => {
                 ease: 'back.out(1.7)',
             }, '-=0.4');
 
-        gsap.to(awanBesar.current, { x: 50, y: 15, duration: 15, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        gsap.to(awanKecil1.current, { x: -40, y: 10, duration: 12, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        gsap.to(awanKecil2.current, { x: 45, y: -10, duration: 18, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        gsap.to(awanKecil3.current, { x: -50, y: 12, duration: 20, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        // ponytail: skip cloud anims on low-end or mobile
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isMobile = window.innerWidth < 768;
+        
+        if (!prefersReducedMotion && !isMobile) {
+            gsap.to(awanBesar.current, { x: 50, y: 15, duration: 15, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+            gsap.to(awanKecil1.current, { x: -40, y: 10, duration: 12, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+            gsap.to(awanKecil2.current, { x: 45, y: -10, duration: 18, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+            gsap.to(awanKecil3.current, { x: -50, y: 12, duration: 20, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        }
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: container.current,
                 start: 'top top',
                 end: 'bottom top',
-                scrub: 1.2,
+                scrub: 0.5,
             }
         });
 
@@ -77,15 +83,15 @@ export const    HeroSection = () => {
 
     return (
         <div id="home" ref={container} className="relative max-h-screen overflow-hidden w-screen min-h-screen flex justify-center items-center flex-col bg-[#5A121B] md:max-h-none md:min-h-[calc(100vh+96px)]">
-            <img ref={awanBesar} src={AwanBesarImg} alt="" className="absolute top-[8%] left-[-2%] w-[80%] md:w-[45%] object-contain pointer-events-none z-0 opacity-80" />
-            <img ref={awanKecil1} src={AwanKecil1Img} alt="" className="absolute top-[12%] right-[5%] w-[30%] md:w-[15%] object-contain pointer-events-none z-0 opacity-70" />
-            <img ref={awanKecil2} src={AwanKecil2Img} alt="" className="absolute top-[25%] left-[15%] w-[35%] md:w-[18%] object-contain pointer-events-none z-0 opacity-60" />
-            <img ref={awanKecil3} src={AwanKecil3Img} alt="" className="absolute top-[22%] right-[20%] w-[30%] md:w-[14%] object-contain pointer-events-none z-0 opacity-75" />
+            <img ref={awanBesar} src={AwanBesarImg} alt="" loading="eager" className="absolute top-[8%] left-[-2%] w-[80%] md:w-[45%] object-contain pointer-events-none z-0 opacity-80 will-change-transform" />
+            <img ref={awanKecil1} src={AwanKecil1Img} alt="" loading="eager" className="absolute top-[12%] right-[5%] w-[30%] md:w-[15%] object-contain pointer-events-none z-0 opacity-70 will-change-transform" />
+            <img ref={awanKecil2} src={AwanKecil2Img} alt="" loading="eager" className="absolute top-[25%] left-[15%] w-[35%] md:w-[18%] object-contain pointer-events-none z-0 opacity-60 will-change-transform" />
+            <img ref={awanKecil3} src={AwanKecil3Img} alt="" loading="eager" className="absolute top-[22%] right-[20%] w-[30%] md:w-[14%] object-contain pointer-events-none z-0 opacity-75 will-change-transform" />
 
-            <img ref={gunung1} src={GunungImg} alt="" className="absolute bottom-[-5%] scale-150 left-0 w-[70%] md:w-[40%] object-contain pointer-events-none z-0" />
-            <img ref={gunung2} src={GunungImg} alt="" className="absolute bottom-[-15%] right-0 w-[70%] md:w-[40%] scale-150 object-contain pointer-events-none z-10 scale-x-[-1]" />
-            <img ref={siluet} src={SiluetIfaruzImg} alt="" className="absolute bottom-[-3%] left-0 w-[78%] scale-125 object-contain pointer-events-none z-15 md:left-[4%] md:w-[27%] lg:left-[6%] lg:w-[25%]" />
-            <video ref={rumah} src={RumahTerbakarVid} autoPlay loop muted playsInline className="absolute scale-200 md:scale-100 bottom-[-5%] left-1/2 -translate-x-1/2 md:bottom-[-3%] w-[165%] md:w-[60%] object-contain pointer-events-none z-5" />
+            <img ref={gunung1} src={GunungImg} alt="" loading="eager" className="absolute bottom-[-5%] scale-150 left-0 w-[70%] md:w-[40%] object-contain pointer-events-none z-0 will-change-transform" />
+            <img ref={gunung2} src={GunungImg} alt="" loading="eager" className="absolute bottom-[-15%] right-0 w-[70%] md:w-[40%] scale-150 object-contain pointer-events-none z-10 scale-x-[-1] will-change-transform" />
+            <img ref={siluet} src={SiluetIfaruzImg} alt="" loading="eager" className="absolute bottom-[-3%] left-0 w-[78%] scale-125 object-contain pointer-events-none z-15 md:left-[4%] md:w-[27%] lg:left-[6%] lg:w-[25%] will-change-transform" />
+            <video ref={rumah} src={RumahTerbakarVid} autoPlay loop muted playsInline preload="auto" className="absolute scale-200 md:scale-100 bottom-[-5%] left-1/2 -translate-x-1/2 md:bottom-[-3%] w-[165%] md:w-[60%] object-contain pointer-events-none z-5 will-change-transform" />
 
             <div ref={textGroup} className="text-group relative z-20 flex flex-col items-center -translate-y-15 px-4 md:px-0 w-full">
                 <h1 className='text-white text-4xl md:text-5xl lg:text-7xl font-kemco text-center drop-shadow-[4px_8px_1px_rgba(0,0,0,0.5)] '>THE PATH OF IFARUZ <br className="hidden md:block"/>FROM THE ASHES</h1>

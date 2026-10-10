@@ -220,6 +220,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                                     src={PixelFrameFilled}
                                     alt=""
                                     aria-hidden="true"
+                                    loading="lazy"
                                     className="absolute inset-0 h-full w-full object-fill"
                                     style={{ imageRendering: 'pixelated' }}
                                 />
@@ -228,6 +229,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                                 <img
                                     src={member.image ?? RafifImg}
                                     alt={member.name}
+                                    loading="lazy"
                                     className="absolute inset-0 z-10 h-full w-full object-cover object-top"
                                     style={{ imageRendering: 'pixelated' }}
                                 />
@@ -269,6 +271,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                                     src={PixelFrameFilled}
                                     alt=""
                                     aria-hidden="true"
+                                    loading="lazy"
                                     className="absolute inset-0 h-full w-full object-fill"
                                     style={{ imageRendering: 'pixelated' }}
                                 />
@@ -277,6 +280,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                                 <img
                                     src={member.realImage ?? RafifRealImg}
                                     alt={`${member.name} Real`}
+                                    loading="lazy"
                                     className="absolute inset-0 z-10 h-full w-full object-cover"
                                 />
 
@@ -316,6 +320,7 @@ export function PixelTeamCard({ member }: { member: TeamMember }) {
                                     src={TeamFrame}
                                     alt=""
                                     aria-hidden="true"
+                                    loading="lazy"
                                     className="pointer-events-none absolute inset-0 z-20 h-full w-full object-fill"
                                     style={{ imageRendering: 'pixelated' }}
                                 />

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import BackgroundPaper from '../../../assets/bg_kertas_gameplay.png';
 import FootageOne from '../../../assets/gameplay/footage_1.webm';
 import FootageThree from '../../../assets/gameplay/footage_3.webm';
@@ -30,6 +31,44 @@ const GAMEPLAY_FEATURES = [
     },
 ];
 
+function GameplayVideo({ src, alt }: { src: string; alt: string }) {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting);
+                if (entry.isIntersecting) {
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            },
+            { threshold: 0.25 }
+        );
+
+        observer.observe(video);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <video
+            ref={videoRef}
+            src={src}
+            aria-label={alt}
+            muted
+            loop
+            playsInline
+            preload="none"
+            className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+        />
+    );
+}
+
 export const GameplaySection = () => {
     return (
         <section
@@ -61,15 +100,7 @@ export const GameplaySection = () => {
                                     style={{ backgroundImage: `url(${BackgroundPaper})` }}
                                 >
                                     <div className="relative h-full w-full overflow-hidden border-4 border-[#5a321e] bg-[#3b1118] p-1">
-                                        <video
-                                            src={feature.video}
-                                            aria-label={feature.alt}
-                                            autoPlay
-                                            muted
-                                            loop
-                                            playsInline
-                                            className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-                                        />
+                                        <GameplayVideo src={feature.video} alt={feature.alt} />
                                     </div>
                                 </div>
                             </div>

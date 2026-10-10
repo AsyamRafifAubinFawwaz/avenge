@@ -651,6 +651,7 @@ export default function StorySection() {
                         src={c.image}
                         alt=""
                         aria-hidden="true"
+                        loading="lazy"
                         className={`absolute inset-0 w-full h-full object-cover scale-110 blur-md transition-opacity duration-700 [image-rendering:pixelated] pointer-events-none ${
                             i === bgIdx ? 'opacity-30' : 'opacity-0'
                         }`}
@@ -696,6 +697,7 @@ export default function StorySection() {
                                         src={c.image}
                                         alt=""
                                         aria-hidden="true"
+                                        loading="lazy"
                                         className="w-full h-full object-cover [image-rendering:pixelated]"
                                     />
                                 </span>
@@ -729,6 +731,7 @@ export default function StorySection() {
                                             src={cornerCerita}
                                             alt=""
                                             aria-hidden="true"
+                                            loading="lazy"
                                             className="block w-full h-auto [image-rendering:pixelated]"
                                         />
                                     </span>
@@ -751,6 +754,7 @@ export default function StorySection() {
                     ref={imageRef}
                     src={WorldImage}
                     alt="World"
+                    loading="lazy"
                     className="relative z-1 min-w-screen mt-0 scale-125 sm:scale-125 md:scale-100 w-full object-contain object-bottom will-change-transform pointer-events-none"
                 />
 
@@ -788,6 +792,7 @@ export default function StorySection() {
                                               data-modal-img
                                               src={chapter.image}
                                               alt={chapter.title}
+                                              loading="lazy"
                                               className="w-full h-full object-cover [image-rendering:pixelated]"
                                           />
                                       </div>
@@ -865,6 +870,7 @@ export default function StorySection() {
                                           data-modal-img
                                           src={chapter.image}
                                           alt={chapter.title}
+                                          loading="lazy"
                                           className="w-full h-full object-cover [image-rendering:pixelated]"
                                       />
                                   </div>
